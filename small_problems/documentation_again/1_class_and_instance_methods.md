@@ -23,4 +23,4 @@ puts File.path('bin')
 f = File.new('my-file.txt')
 puts f.path
 ```
-In the above examples, the class method `File:path` is called directly on the `File` class. However, the instance method `File#path` is called on `f`, the object of the `File` class.
+In the above examples, the class method `File::path` is called directly on the `File` class. However, the instance method `File#path` is called on `f`, the object of the `File` class.
