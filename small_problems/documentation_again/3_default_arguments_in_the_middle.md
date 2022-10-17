@@ -2,7 +2,7 @@
 
 This behavior is due to the use of *default positional arguments*, which are described in the 'Calling Methods' page in the Ruby documentation.
 
-When the method defines default arguments, we do not need to supply all arguments to the method. Ruby will fill in the missing arguments in order.
+When the method defines default arguments, we do not need to supply all arguments to the method. Ruby will fill in positional arguments first, followed by default arguments with any supplied values, and finally, default values are applied to anything remaining.
 
 In simple cases when default arguments appear on the right, Ruby fills in the missing arguments from left to right, e.g:
 ```ruby
