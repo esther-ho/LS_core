@@ -16,7 +16,9 @@ The method `#fetch` can be found in the documentation for the `Array` class. We 
 - `fetch(index, default) → obj`
 - `fetch(index) { |index| block } → obj`
 
-The signatures show that `#fetch` takes an argument `index` and returns an object. `index` is the index of the element of the `Array` we want `#fetch` to return.
+The signatures show that `#fetch` takes an argument `index` and returns an object. `index` is the index of the element of the `Array` we want `#fetch` to return. `#fetch` differs from `#[]` as it also does bounds checking; it checks if the specified element exists before fetching it, and raises an error if it does not.
+
+Having multiple signatures is another way the documentation can indicate an argument is optional. In this case, both `default` and the block are optional arguments but they can't be used together.
 
 In the case of the first signature, `#fetch`is defined as only accepting one argument. It will raise an `IndexError` if the index lies outside the array bounds. Therefore, `a.fetch(7)` raises an error since there is no element at index `7`.
 
