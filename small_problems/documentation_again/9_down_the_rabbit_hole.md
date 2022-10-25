@@ -1,0 +1,3 @@
+`YAML::load_file` can be found in the section of the `YAML` module in older Ruby documentation e.g. version 1.8.6 of the Ruby documentation. However, it can't be found in newer versions.
+
+It is mentioned on the `YAML` module page that `Psych` is an alias of `YAML`. `Psych` is able to parse and produce YAML documents. Looking at the `Psych` module page, we see that there is an method `Psych::load_file` available which is the equivalent to `YAML::load_file`. `::load_file` returns the YAML document (passed as an argument) as a Ruby object.
