@@ -9,8 +9,10 @@ Given a collection of integers,
 
 Iterate through the collection by two instead of one by one.
 - Set the new collection as empty.
+- Set the value of the position in the new collection as 1.
 - For each iteration,
-  - Append the current integer to the new collection.
+  - Assign the current value within the numbers collection at space "iterator" to the current position in the new collection.
+  - Increment the current position by 1.
 
 After iterating through the collection, return the new collection.
 ```
@@ -23,12 +25,14 @@ START
 
 SET iterator = 1
 SET new_collection = []
+SET new_position = 1
 
 WHILE iterator <= length of numbers
-  Append value within numbers collection at space "iterator" to new_collection
+  value in new_collection at new_position = value within numbers collection at space "iterator"
 
+  new_position = new_position + 1
   iterator = iterator + 2
-
+  
 PRINT new_collection
 
 END
