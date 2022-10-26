@@ -4,11 +4,10 @@ Casual pseudo-code:
 ```
 Given two integers,
 
-Initialize the current sum as zero.
-Add the second integer to the first integer.
-Assign the new sum as the current sum.
+Add the two integers.
+Save the result to a variable.
 
-Return the current sum.
+Return the result.
 ```
 
 Formal pseudo-code:
@@ -17,11 +16,9 @@ START
 
 # Given two integers, "number_1" and "number_2"
 
-SET current_sum = 0
-new_sum = number_1 + number_2
-current_sum = new_sum
+sum = number_1 + number_2
 
-PRINT current_sum
+PRINT sum
 
 END
 
