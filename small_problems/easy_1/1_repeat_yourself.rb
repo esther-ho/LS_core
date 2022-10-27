@@ -4,13 +4,13 @@ Write a method that takes two arguments, a string and a positive integer, and pr
 # repeat('Hello', 3) # => Prints 'Hello' on a new line 3 times
 
 ----- P
-Inputs: A single string, a positive whole number
+Inputs: A single string, and a positive whole number
 
 Output: The given string printed to the screen 'integer'-number of times
 
 Implicit rules:
 - The string is printed on a new line each time
-- The method does not mutate the input
+- The method does not mutate the string
 - The return value is not important.
 
 ----- E
