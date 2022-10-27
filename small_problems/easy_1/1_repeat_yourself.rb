@@ -16,6 +16,7 @@ Implicit rules:
 ----- E
 repeat('Hello', 3) => Prints 'Hello' on a new line 3 times
 repeat('Hello world', 5) => Prints 'Hello world' on a new line 5 times
+repeat('Print this string 2 times!', 2) => Print 'Print this string 2 times' on a new line 2 times
 
 ----- D
 
@@ -38,3 +39,4 @@ end
 
 repeat('Hello', 3)
 repeat('Hello world', 5)
+repeat('Print this string 2 times!', 2)
