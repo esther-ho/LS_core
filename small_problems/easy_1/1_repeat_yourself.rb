@@ -21,10 +21,10 @@ repeat('Hello world', 5) => Prints 'Hello world' on a new line 5 times
 
 ----- A
 - Set a counter to count the iterations as 1
-- While the counter is less than or equal to the given positive number,
-  - Print the given string
-  - Increment the counter by 1
-  
+- While the counter is less than or equal to the given positive number, loop through a block that:
+  - Prints the given string
+  - Increments the counter by 1
+
 =end
 
 def repeat(string, number)
