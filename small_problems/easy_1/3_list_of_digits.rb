@@ -28,8 +28,9 @@ Implicit rules:
 Use an array to store the list of digits as the output
 
 ----- A
-- Split the number into any array of individual digits
-- Change the order of the array so that the digits are arranged from left to right following the given integer
+- Split the number into its individual digits contained in an array
+  - The digit in the ones place is listed as the first element, followed by the digit in the tens place, and so on...
+- Reverse the order of the array so that the digits are arranged from left to right following the given integer
 
 =end
 
