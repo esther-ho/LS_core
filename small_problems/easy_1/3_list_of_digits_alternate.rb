@@ -31,9 +31,9 @@ Use an array to store the list of digits as the output
 If #digits was not available
 - Create an empty array
 - While the given number is greater than 0,
-  - Push the modulo of the number when divided 10 into the empty array
+  - Push the modulo of the number when divided by 10 into the empty array
   - Divide the number by 10 and reassign it as the number
-- Reverse the array so the digits are ordered from left to right as they appear
+- Reverse the array so the digits are ordered from left to right as they appear in the number
 
 =end
 
