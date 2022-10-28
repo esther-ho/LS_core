@@ -35,9 +35,9 @@ Implicit rules:
 
 ----- A
 - Convert the integer to its absolute value
-- Check if the number returns a modulus of 0 when divided by 2
-  - If it does not return `0`, return true
-  - If it returns `0`, return `false`
+- Check if the number returns a modulus of '0' when divided by 2
+  - If it does not return '0', return `true`
+  - If it returns '0', return `false`
 
 =end
 
