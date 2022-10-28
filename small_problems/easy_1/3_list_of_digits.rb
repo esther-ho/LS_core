@@ -13,8 +13,8 @@ Output: A list of individual digits making up the input number
 
 Implicit rules:
 - The digits are listed in the order they appear in the number from left to right
-  - Digit in the ones' place is the last digit in the list
-  - Followed by the digit in the ten's place, etc
+  - Digit in the ones place is the last digit in the list
+  - Followed by the digit in the tens place, etc
 - Digits can appear multiple times in the list if they are repeated in the number
 - 0 is a valid digit if the number is larger than 0
 
