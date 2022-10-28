@@ -34,15 +34,15 @@ Implicit rules:
 ----- D
 
 ----- A
-- Convert the integer to its absolute value
 - Check if the number returns a modulus of '0' when divided by 2
   - If it does not return '0', return `true`
   - If it returns '0', return `false`
+  - Note: The modulus function returns a positive modulus if the divisor is positive
 
 =end
 
 def is_odd?(integer)
-  integer.abs % 2 != 0
+  integer % 2 != 0
 end
 
 puts is_odd?(2)    # => false
