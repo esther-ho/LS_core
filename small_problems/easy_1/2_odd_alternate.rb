@@ -34,9 +34,9 @@ Implicit rules:
 ----- A
 - Check if the integer is a negative number
   - If it is negative, multiply it by '-1' to convert it to a positive number
-- Check if the number returns a modulus of 0 when divided by 2
-  - If it does not return `0`, return true
-  - If it returns `0`, return `false`
+- Check if the number returns a modulus of '0' when divided by 2
+  - If it does not return '0', return `true`
+  - If it returns '0', return `false`
 
 =end
 
