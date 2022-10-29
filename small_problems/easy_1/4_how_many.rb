@@ -4,12 +4,14 @@ Write a method that counts the number of occurrences of each element in a given 
 
 ----- P
 Input:
-- An unsorted array of string
+- An unsorted array of strings
 Output:
-- Every unique element in the array printed on a new line with the number of times it appears in the array e.g. car => 4
+- Every unique word in the array printed on a new line with the number of times it appears in the array e.g. 'car => 4'
+
+Explicit rules:
+- The same word but with a different letter case is considered a separate word
 
 Implicit rules:
-- Similar words with different letter case are considered unique words
 - The letter case of each word should not change
 - The output is not ordered
 - The input can be mutated
