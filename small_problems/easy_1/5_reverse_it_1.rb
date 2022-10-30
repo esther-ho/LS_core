@@ -34,7 +34,7 @@ Use an array to store the words and change their order
 =end
 
 def reverse_sentence(sentence)
-  sentence.split(' ').reverse.join(' ')
+  sentence.split.reverse.join(' ')
 end
 
 puts reverse_sentence('Hello World') == 'World Hello'
