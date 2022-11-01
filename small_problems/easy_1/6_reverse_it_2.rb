@@ -34,9 +34,7 @@ Use an array to store the individual letters in each word and to change their po
 - Iterate through the array of words
 - For each iteration, find the length of each word
   - If the word is 5 characters or longer,
-    - Split the word into its individual characters stored in an array
-    - Reverse the order of the characters
-    - Join the characters back to form the new word
+    - Reverse the order of the word
   - Otherwise, if the word is shorter than 5 characters
     - Return the current word
 - Return the new sentence
