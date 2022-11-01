@@ -43,11 +43,7 @@ Use an array to store the individual letters in each word and to change their po
 
 def reverse_words(sentence)
   words = sentence.split.map! do |word|
-    if word.length >= 5
-      word.chars.reverse.join
-    else
-      word
-    end
+    word.length >= 5 ? word.reverse : word
   end
   
   words.join(' ')
