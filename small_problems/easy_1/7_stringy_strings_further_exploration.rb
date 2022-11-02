@@ -31,11 +31,13 @@ Implicit rules:
       - Assign 0 to the variable 'number'
     - Otherwise, if the current iteration is odd,
       - Assign 1 to the variable 'number'
+    - Append the integer assigned to 'number' to the 'numbers' array
   - Otherwise, if '1' is passed as the optional argument,
     - If the current iteration is even,
       - Assign 1 to the variable 'number'
     - Otherwise, if the current iteration is even,
       - Assign 0 to the variable 'number'
+    - Append the integer assigned to 'number' to the 'numbers' array
   - Join the integers in the array to form a new string
   - Return the new string
 
