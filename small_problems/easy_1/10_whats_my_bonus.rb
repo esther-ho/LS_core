@@ -20,16 +20,16 @@ puts calculate_bonus(50000, true) == 25000
 
 --- A
 - Check if the given boolean is `true` or `false`
-- If true,
+- If `true`,
   - Divide the given number by 2
   - Return the result
-- If false,
+- Otherwise, if `false`,
   - Return 0
 
 =end
 
 def calculate_bonus(salary, bonus)
-  bonus ? salary / 2 : 0
+  bonus ? (salary / 2) : 0
 end
 
 puts calculate_bonus(2800, true) == 1400
