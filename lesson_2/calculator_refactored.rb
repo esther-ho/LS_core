@@ -43,12 +43,11 @@ loop do
   else
     break
   end
-end 
+end
 
 prompt("Hi #{name}!")
 
 loop do
-
   number1 = ''
   loop do
     prompt("What's the first number?")
@@ -112,7 +111,6 @@ loop do
   prompt('Do you want to perform another calculation? (Y to calculate again)')
   answer = Kernel.gets().chomp()
   break unless answer.downcase().start_with?('y')
-
 end
 
 prompt('Thank you for using the calculator. Goodbye!')
