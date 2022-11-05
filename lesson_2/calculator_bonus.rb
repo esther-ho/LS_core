@@ -20,7 +20,7 @@ require 'psych'
 config = Psych.load_file('config.yml')
 
 def prompt(message)
-  Kernel.puts("=> #{message}")
+  puts("=> #{message}")
 end
 
 def number?(number)
@@ -45,9 +45,9 @@ prompt(config['welcome'])
 
 name = ''
 loop do
-  name = Kernel.gets().chomp()
+  name = gets.chomp
 
-  if name.empty?()
+  if name.empty?
     prompt(config['valid_name'])
   else
     break
@@ -60,7 +60,7 @@ loop do
   number1 = ''
   loop do
     prompt(config['first_num'])
-    number1 = Kernel.gets().chomp()
+    number1 = gets.chomp
 
     if number?(number1)
       break
@@ -72,7 +72,7 @@ loop do
   number2 = ''
   loop do
     prompt(config['second_num'])
-    number2 = Kernel.gets().chomp()
+    number2 = gets.chomp
 
     if number?(number2)
       break
@@ -85,7 +85,7 @@ loop do
 
   operator = ''
   loop do
-    operator = Kernel.gets().chomp()
+    operator = gets.chomp
 
     if %w(1 2 3 4).include?(operator)
       break
@@ -110,7 +110,7 @@ loop do
   prompt(config['result'] + result.to_s)
 
   prompt(config['again'])
-  answer = Kernel.gets().chomp()
+  answer = gets.chomp
   break unless answer.downcase().start_with?('y')
 end
 
