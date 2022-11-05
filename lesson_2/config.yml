@@ -12,6 +12,10 @@ operator_prompt: "What operation would you like to perform?\n
                   3) multiply\n
                   4) divide\n"
 valid_operator: "Must choose 1, 2, 3, or 4."
+add: "Adding"
+subtract: "Subtracting"
+multiply: "Multiplying"
+divide: "Dividing"
 operator_message: " the two numbers.."
 
 result: "The result is "
