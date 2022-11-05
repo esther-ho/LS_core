@@ -27,16 +27,16 @@ def number?(number)
   number == number.to_i.to_s || number == number.to_f.to_s
 end
 
-def operation_to_message(operator)
+def operation_to_message(operator, config)
   message = case operator
             when '1'
-              'Adding'
+              config['add']
             when '2'
-              'Subtracting'
+              config['subtract']
             when '3'
-              'Multiplying'
+              config['multiply']
             when '4'
-              'Dividing'
+              config['divide']
             end
   message
 end
@@ -94,7 +94,7 @@ loop do
     end
   end
 
-  prompt(operation_to_message(operator).to_s + config['operator_message'])
+  prompt(operation_to_message(operator, config).to_s + config['operator_message'])
 
   result =  case operator
             when '1'
