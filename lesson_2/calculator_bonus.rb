@@ -11,11 +11,13 @@
   - Check if the operation is valid
   - Display the operation that is being performed
   - Perform the operation on the two numbers
+  - Simplify the result
   - Display / Output the result
 - Ask the user if they want to repeat the operation again
 =end
 
 require 'psych'
+require "pry"
 
 config = Psych.load_file('config.yml')
 
@@ -41,6 +43,14 @@ def operation_to_message(operator, config)
   message
 end
 
+def simplify_result(number)
+  if number.to_s.end_with?('.0')
+    number.to_s.sub('.0','')
+  else
+    number.to_s
+  end
+end
+
 prompt(config['welcome'])
 
 name = ''
@@ -63,6 +73,7 @@ loop do
     number1 = gets.chomp
 
     if number?(number1)
+      number1 = number1.to_f
       break
     else
       prompt(config['valid_num'])
@@ -75,6 +86,7 @@ loop do
     number2 = gets.chomp
 
     if number?(number2)
+      number2 = number2.to_f
       break
     else
       prompt(config['valid_num'])
@@ -98,20 +110,20 @@ loop do
 
   result =  case operator
             when '1'
-              number1.to_i() + number2.to_i()
+              number1 + number2
             when '2'
-              number1.to_i() - number2.to_i()
+              number1 - number2
             when '3'
-              number1.to_i() * number2.to_i()
+              number1 * number2
             when '4'
-              number1.to_f() / number2.to_f()
+              number1 / number2
             end
 
-  prompt(config['result'] + result.to_s)
+  prompt(config['result'] + simplify_result(result))
 
   prompt(config['again'])
   answer = gets.chomp
-  break unless answer.downcase().start_with?('y')
+  break unless answer.downcase.start_with?('y')
 end
 
 prompt(config['bye'])
