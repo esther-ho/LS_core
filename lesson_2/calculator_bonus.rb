@@ -17,7 +17,6 @@
 =end
 
 require 'psych'
-require "pry"
 
 config = Psych.load_file('config.yml')
 
