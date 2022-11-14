@@ -1,25 +1,50 @@
+en:
+  welcome: "Welcome to Calculator! Enter your name: "
+  valid_name: "Make sure to use a valid name."
 
-welcome: "Welcome to Calculator! Enter your name: "
-valid_name: "Make sure to use a valid name."
+  first_num: "What's the first number?"
+  second_num: "What's the second number?"
+  valid_num: "Hmm... that doesn't look like a valid number."
 
-first_num: "What's the first number?"
-second_num: "What's the second number?"
-valid_num: "Hmm... that doesn't look like a valid number."
+  operator_prompt: "What operation would you like to perform?\n
+                    1) add\n
+                    2) subtract\n
+                    3) multiply\n
+                    4) divide\n"
+  valid_operator: "Must choose 1, 2, 3, or 4."
+  add: "Adding"
+  subtract: "Subtracting"
+  multiply: "Multiplying"
+  divide: "Dividing"
+  operator_message: " the two numbers..."
 
-operator_prompt: "What operation would you like to perform?\n
-                  1) add\n
-                  2) subtract\n
-                  3) multiply\n
-                  4) divide\n"
-valid_operator: "Must choose 1, 2, 3, or 4."
-add: "Adding"
-subtract: "Subtracting"
-multiply: "Multiplying"
-divide: "Dividing"
-operator_message: " the two numbers.."
+  result: "The result is "
 
-result: "The result is "
+  again: "Do you want to perform another calculation? (Y to calculate again)"
+  bye: "Thank you for using the calculator. Goodbye!"
 
-again: "Do you want to perform another calculation? (Y to calculate again)"
-bye: "Thank you for using the calculator. Goodbye!"
+# Improve translations later
+cn:
+  welcome: "欢迎来到计算器! 请输入您的名字: "
+  valid_name: "请使用有效的名称。"
 
+  first_num: "第一个数字是什么？"
+  second_num: "第二个数字是什么？"
+  valid_num: "嗯...这看起来不像是个有效的数字"
+
+  operator_prompt: "你想使用什么算术？\n
+                    1) 加法\n
+                    2) 减法\n
+                    3) 乘法\n
+                    4) 除法\n"
+  valid_operator: "必须选择1、2、3 或 4。"
+  add: "加..."
+  subtract: "减..."
+  multiply: "乘..."
+  divide: "除..."
+  operator_message: "将两个数字相"
+
+  result: "答案是 "
+
+  again: "你想再进行另一种计算方法吗？ (Y 表示再次计算)"
+  bye: "谢谢您使用计算器。再见!"
