@@ -54,6 +54,22 @@ def number?(number)
   integer?(number) || float?(number)
 end
 
+# Obtain an input and save if it's a valid number
+def valid_number(input)
+  number = ''
+  loop do
+    prompt(MESSAGES[input])
+    number = gets.chomp
+
+    if number?(number)
+      break
+    else
+      prompt(MESSAGES['valid_num'])
+    end
+  end
+  number = number.to_f
+end
+
 # Retrieve the appropriate message based on the chosen operator
 def operation_to_message(operator)
   message = case operator
@@ -85,33 +101,8 @@ name = valid_name
 prompt("Hi #{name}!")
 
 loop do
-  # Check if the first number given is valid
-  number1 = ''
-  loop do
-    prompt(MESSAGES['first_num'])
-    number1 = gets.chomp
-
-    if number?(number1)
-      number1 = number1.to_f
-      break
-    else
-      prompt(MESSAGES['valid_num'])
-    end
-  end
-
-  # Check if the second number given is valid
-  number2 = ''
-  loop do
-    prompt(MESSAGES['second_num'])
-    number2 = gets.chomp
-
-    if number?(number2)
-      number2 = number2.to_f
-      break
-    else
-      prompt(MESSAGES['valid_num'])
-    end
-  end
+  number1 = valid_number('first_num')
+  number2 = valid_number('second_num')
 
   prompt(MESSAGES['operator_prompt'])
 
