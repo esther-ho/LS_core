@@ -27,17 +27,17 @@ def prompt(message)
 end
 
 # Ask user for a valid name
-def valid_name(MESSAGES)
+def valid_name
   name = ''
   loop do
-    name = gets.chomp
-    if name =~ /\d/
+    name = gets.chomp.strip
+    if name =~ /\d|^$/
       prompt(MESSAGES['valid_name'])
     else
       break
     end
   end
-  name.strip
+  name.capitalize
 end
 
 # Check if input is a valid number
@@ -80,8 +80,7 @@ end
 
 prompt(MESSAGES['welcome'])
 
-# Check if the user provides a valid name
-name = valid_name(MESSAGES)
+name = valid_name
 
 prompt("Hi #{name}!")
 
