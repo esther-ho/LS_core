@@ -16,18 +16,22 @@
 - Ask the user if they want to repeat the operation again
 =end
 
+# Load appropriate prompts from `YAML` file
 require 'psych'
 
 config = Psych.load_file('config.yml')
 
+# Add '=>' to all prompts
 def prompt(message)
   puts("=> #{message}")
 end
 
+# Check if input is a valid number
 def number?(number)
   number == number.to_i.to_s || number == number.to_f.to_s
 end
 
+# Retrieve the appropriate message based on the chosen operator
 def operation_to_message(operator, config)
   message = case operator
             when '1'
@@ -42,9 +46,10 @@ def operation_to_message(operator, config)
   message
 end
 
+# Convert a float to an integer if the float ends with '.0'
 def simplify_result(number)
   if number.to_s.end_with?('.0')
-    number.to_s.sub('.0','')
+    number.to_s.sub('.0', '')
   else
     number.to_s
   end
@@ -52,6 +57,7 @@ end
 
 prompt(config['welcome'])
 
+# Check if the user provides a valid name
 name = ''
 loop do
   name = gets.chomp
@@ -66,6 +72,7 @@ end
 prompt("Hi #{name}!")
 
 loop do
+  # Check if the first number given is valid
   number1 = ''
   loop do
     prompt(config['first_num'])
@@ -79,6 +86,7 @@ loop do
     end
   end
 
+  # Check if the second number given is valid
   number2 = ''
   loop do
     prompt(config['second_num'])
@@ -94,6 +102,7 @@ loop do
 
   prompt(config['operator_prompt'])
 
+  # Check if the given operator choice is valid
   operator = ''
   loop do
     operator = gets.chomp
@@ -107,6 +116,7 @@ loop do
 
   prompt(operation_to_message(operator, config).to_s + config['operator_message'])
 
+  # Perform the appropriate operation
   result =  case operator
             when '1'
               number1 + number2
@@ -120,6 +130,7 @@ loop do
 
   prompt(config['result'] + simplify_result(result))
 
+  # Ask user if they want to perform another operation
   prompt(config['again'])
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
