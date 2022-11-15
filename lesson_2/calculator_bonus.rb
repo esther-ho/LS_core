@@ -32,7 +32,7 @@ def valid_name(MESSAGES)
   loop do
     name = gets.chomp
     if name =~ /\d/
-      promp(MESSAGES['valid_name'])
+      prompt(MESSAGES['valid_name'])
     else
       break
     end
@@ -78,7 +78,7 @@ def simplify_result(number)
   end
 end
 
-promp(MESSAGES['welcome'])
+prompt(MESSAGES['welcome'])
 
 # Check if the user provides a valid name
 name = valid_name(MESSAGES)
@@ -89,32 +89,32 @@ loop do
   # Check if the first number given is valid
   number1 = ''
   loop do
-    promp(MESSAGES['first_num'])
+    prompt(MESSAGES['first_num'])
     number1 = gets.chomp
 
     if number?(number1)
       number1 = number1.to_f
       break
     else
-      promp(MESSAGES['valid_num'])
+      prompt(MESSAGES['valid_num'])
     end
   end
 
   # Check if the second number given is valid
   number2 = ''
   loop do
-    promp(MESSAGES['second_num'])
+    prompt(MESSAGES['second_num'])
     number2 = gets.chomp
 
     if number?(number2)
       number2 = number2.to_f
       break
     else
-      promp(MESSAGES['valid_num'])
+      prompt(MESSAGES['valid_num'])
     end
   end
 
-  promp(MESSAGES['operator_prompt'])
+  prompt(MESSAGES['operator_prompt'])
 
   # Check if the given operator choice is valid
   operator = ''
@@ -124,7 +124,7 @@ loop do
     if %w(1 2 3 4).include?(operator)
       break
     else
-      promp(MESSAGES['valid_operator'])
+      prompt(MESSAGES['valid_operator'])
     end
   end
 
@@ -142,12 +142,12 @@ loop do
               number1 / number2
             end
 
-  promp(MESSAGES['result'] + simplify_result(result))
+  prompt(MESSAGES['result'] + simplify_result(result))
 
   # Ask user if they want to perform another operation
-  promp(MESSAGES['again'])
+  prompt(MESSAGES['again'])
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
 end
 
-promp(MESSAGES['bye'])
+prompt(MESSAGES['bye'])
