@@ -26,6 +26,20 @@ def prompt(message)
   puts("=> #{message}")
 end
 
+# Ask user for a valid name
+def valid_name?(config)
+  name = ''
+  loop do
+    name = gets.chomp
+    if name =~ /\d/
+      prompt(config['valid_name'])
+    else
+      break
+    end
+  end
+  name.strip
+end
+
 # Check if input is a valid number
 # Will return false for edge cases e.g. '00', '4.'
 def integer?(number)
@@ -67,16 +81,7 @@ end
 prompt(config['welcome'])
 
 # Check if the user provides a valid name
-name = ''
-loop do
-  name = gets.chomp
-
-  if name.empty?
-    prompt(config['valid_name'])
-  else
-    break
-  end
-end
+name = valid_name?(config)
 
 prompt("Hi #{name}!")
 
