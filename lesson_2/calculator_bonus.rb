@@ -19,7 +19,7 @@
 # Load appropriate prompts from `YAML` file
 require 'psych'
 
-config = Psych.load_file('config.yml')
+MESSAGES = Psych.load_file('config.yml')
 
 # Add '=>' to all prompts
 def prompt(message)
@@ -27,12 +27,12 @@ def prompt(message)
 end
 
 # Ask user for a valid name
-def valid_name?(config)
+def valid_name(MESSAGES)
   name = ''
   loop do
     name = gets.chomp
     if name =~ /\d/
-      prompt(config['valid_name'])
+      promp(MESSAGES['valid_name'])
     else
       break
     end
@@ -55,16 +55,16 @@ def number?(number)
 end
 
 # Retrieve the appropriate message based on the chosen operator
-def operation_to_message(operator, config)
+def operation_to_message(operator)
   message = case operator
             when '1'
-              config['add']
+              MESSAGES['add']
             when '2'
-              config['subtract']
+              MESSAGES['subtract']
             when '3'
-              config['multiply']
+              MESSAGES['multiply']
             when '4'
-              config['divide']
+              MESSAGES['divide']
             end
   message
 end
@@ -78,10 +78,10 @@ def simplify_result(number)
   end
 end
 
-prompt(config['welcome'])
+promp(MESSAGES['welcome'])
 
 # Check if the user provides a valid name
-name = valid_name?(config)
+name = valid_name(MESSAGES)
 
 prompt("Hi #{name}!")
 
@@ -89,32 +89,32 @@ loop do
   # Check if the first number given is valid
   number1 = ''
   loop do
-    prompt(config['first_num'])
+    promp(MESSAGES['first_num'])
     number1 = gets.chomp
 
     if number?(number1)
       number1 = number1.to_f
       break
     else
-      prompt(config['valid_num'])
+      promp(MESSAGES['valid_num'])
     end
   end
 
   # Check if the second number given is valid
   number2 = ''
   loop do
-    prompt(config['second_num'])
+    promp(MESSAGES['second_num'])
     number2 = gets.chomp
 
     if number?(number2)
       number2 = number2.to_f
       break
     else
-      prompt(config['valid_num'])
+      promp(MESSAGES['valid_num'])
     end
   end
 
-  prompt(config['operator_prompt'])
+  promp(MESSAGES['operator_prompt'])
 
   # Check if the given operator choice is valid
   operator = ''
@@ -124,11 +124,11 @@ loop do
     if %w(1 2 3 4).include?(operator)
       break
     else
-      prompt(config['valid_operator'])
+      promp(MESSAGES['valid_operator'])
     end
   end
 
-  prompt(operation_to_message(operator, config).to_s + config['operator_message'])
+  prompt(operation_to_message(operator).to_s + MESSAGES['operator_message'])
 
   # Perform the appropriate operation
   result =  case operator
@@ -142,12 +142,12 @@ loop do
               number1 / number2
             end
 
-  prompt(config['result'] + simplify_result(result))
+  promp(MESSAGES['result'] + simplify_result(result))
 
   # Ask user if they want to perform another operation
-  prompt(config['again'])
+  promp(MESSAGES['again'])
   answer = gets.chomp
   break unless answer.downcase.start_with?('y')
 end
 
-prompt(config['bye'])
+promp(MESSAGES['bye'])
