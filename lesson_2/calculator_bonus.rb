@@ -27,8 +27,17 @@ def prompt(message)
 end
 
 # Check if input is a valid number
+# Will return false for edge cases e.g. '00', '4.'
+def integer?(number)
+  number == number.to_i.to_s
+end
+
+def float?(number)
+  number == number.to_f.to_s
+end
+
 def number?(number)
-  number == number.to_i.to_s || number == number.to_f.to_s
+  integer?(number) || float?(number)
 end
 
 # Retrieve the appropriate message based on the chosen operator
