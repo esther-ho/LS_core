@@ -19,5 +19,6 @@ operator_message: " the two numbers..."
 
 result: "The result is "
 
-again: "Do you want to perform another calculation? (Y to calculate again)"
+again: "Do you want to perform another calculation? (Y to calculate again, N to exit)"
+valid_again: 'Please enter Y to calculate again, or N to exit.'
 bye: "Thank you for using the calculator. Goodbye!"
