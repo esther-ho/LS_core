@@ -57,12 +57,8 @@ def valid_number(input)
   loop do
     prompt(MESSAGES[input])
     number = gets.chomp
-
-    if number?(number)
-      break
-    else
-      prompt(MESSAGES['valid_num'])
-    end
+    break if number?(number)
+    prompt(MESSAGES['valid_num'])
   end
   number = number.to_f
 end
