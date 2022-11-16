@@ -3,8 +3,6 @@
   - Check if the name is valid
 - Ask the user for one number
   - Check if the first number is valid
-  - Improve integer validation (allow '0' to be an input)
-  - Improve number validation - both integers or floats are valid
 - Ask the user for another number
   - Check if the second number is valid
 - Ask the user for an operation to perform
@@ -12,8 +10,9 @@
   - Display the operation that is being performed
   - Perform the operation on the two numbers
   - Simplify the result
-  - Display / Output the result
+  - Display the result
 - Ask the user if they want to repeat the operation again
+  - Check if the user input is valid
 =end
 
 # Load appropriate prompts from `YAML` file
@@ -40,7 +39,7 @@ def valid_name
 end
 
 # Check if input is a valid number
-# Will return false for edge cases e.g. '00', '4.'
+# Will return false for edge cases e.g. '00', '4.', '.5'
 def integer?(number)
   number == number.to_i.to_s
 end
