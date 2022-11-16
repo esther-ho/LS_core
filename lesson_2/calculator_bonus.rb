@@ -59,11 +59,11 @@ def number?(number)
 end
 
 # Obtain an input and save if it's a valid number
-def valid_number(input)
+def valid_number(key)
   number = ''
 
   loop do
-    prompt(message(input))
+    prompt(message(key))
     number = gets.chomp
     break if number?(number)
     prompt(message('valid_num'))
