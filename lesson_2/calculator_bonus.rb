@@ -63,6 +63,17 @@ def valid_number(input)
   number = number.to_f
 end
 
+# Obtain a valid operator
+def valid_operator
+  operator = ''
+  loop do
+    operator = gets.chomp
+    break if %w(1 2 3 4).include?(operator)
+    prompt(MESSAGES['valid_operator'])
+  end
+  operator
+end
+
 # Retrieve the appropriate message based on the chosen operator
 def operation_to_message(operator)
   message = case operator
@@ -87,6 +98,7 @@ def simplify_result(number)
   end
 end
 
+# Calculator program
 prompt(MESSAGES['welcome'])
 
 name = valid_name
@@ -99,17 +111,7 @@ loop do
 
   prompt(MESSAGES['operator_prompt'])
 
-  # Check if the given operator choice is valid
-  operator = ''
-  loop do
-    operator = gets.chomp
-
-    if %w(1 2 3 4).include?(operator)
-      break
-    else
-      prompt(MESSAGES['valid_operator'])
-    end
-  end
+  operator = valid_operator
 
   prompt(operation_to_message(operator).to_s + MESSAGES['operator_message'])
 
