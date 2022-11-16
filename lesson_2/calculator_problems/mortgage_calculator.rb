@@ -63,7 +63,7 @@ def valid_name
 
   loop do
     name = gets.chomp.strip
-    break if name !~ /\d|^$/
+    break if /\d|^$/ !~ name
     prompt(message('valid_name'))
   end
 
