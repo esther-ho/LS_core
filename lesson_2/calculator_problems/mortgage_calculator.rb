@@ -70,6 +70,19 @@ def valid_name
   name.capitalize
 end
 
+# Check if the input is a valid number
+def integer?(number)
+  number == number.to_i.to_s
+end
+
+def float?(number)
+  number == number.to_f.to_s
+end
+
+def number?(number)
+  integer?(number) || float?(number)
+end
+
 # Main mortgage calculator program
 system 'clear'
 
