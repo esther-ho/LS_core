@@ -98,6 +98,17 @@ def simplify_result(number)
   end
 end
 
+# Ensure user enters 'Y' or 'N'
+def again
+  answer = ''
+  loop do
+    answer = gets.chomp.downcase
+    break if %w(y n).include?(answer)
+    prompt(MESSAGES['valid_again'])
+  end
+  answer
+end
+
 # Calculator program
 prompt(MESSAGES['welcome'])
 
@@ -129,10 +140,10 @@ loop do
 
   prompt(MESSAGES['result'] + simplify_result(result))
 
-  # Ask user if they want to perform another operation
   prompt(MESSAGES['again'])
-  answer = gets.chomp
-  break unless answer.downcase.start_with?('y')
+  answer = again
+  break if answer.eql?('n')
+
 end
 
 prompt(MESSAGES['bye'])
