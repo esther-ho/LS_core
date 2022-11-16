@@ -22,8 +22,8 @@ MESSAGES = Psych.load_file('config.yml')
 LANGUAGE = 'en'
 
 # Retrieve the appropriate prompt based on the language
-def messages(message, lang='en')
-  MESSAGES[lang][message]
+def message(key, lang=LANGUAGE)
+  MESSAGES[lang][key]
 end
 
 # Add '=>' to all prompts
@@ -38,7 +38,7 @@ def valid_name
   loop do
     name = gets.chomp.strip
     break if name !~ /\d|^$/
-    prompt(MESSAGES['valid_name'])
+    prompt(message('valid_name'))
   end
 
   name.capitalize
@@ -63,10 +63,10 @@ def valid_number(input)
   number = ''
 
   loop do
-    prompt(MESSAGES[input])
+    prompt(message(input))
     number = gets.chomp
     break if number?(number)
-    prompt(MESSAGES['valid_num'])
+    prompt(message('valid_num'))
   end
 
   number = number.to_f
@@ -79,7 +79,7 @@ def valid_operator
   loop do
     operator = gets.chomp
     break if %w(1 2 3 4).include?(operator)
-    prompt(MESSAGES['valid_operator'])
+    prompt(message('valid_operator'))
   end
 
   operator
@@ -89,13 +89,13 @@ end
 def operation_to_message(operator)
   message = case operator
             when '1'
-              MESSAGES['add']
+              message('add')
             when '2'
-              MESSAGES['subtract']
+              message('subtract')
             when '3'
-              MESSAGES['multiply']
+              message('multiply')
             when '4'
-              MESSAGES['divide']
+              message('divide')
             end
   message
 end
@@ -116,14 +116,14 @@ def again
   loop do
     answer = gets.chomp.downcase
     break if %w(y n).include?(answer)
-    prompt(MESSAGES['valid_again'])
+    prompt(message('valid_again'))
   end
 
   answer
 end
 
 # Calculator program
-prompt(MESSAGES['welcome'])
+prompt(message('welcome'))
 name = valid_name
 prompt("Hi #{name}!")
 
@@ -134,9 +134,9 @@ loop do
   number1 = valid_number('first_num')
   number2 = valid_number('second_num')
 
-  prompt(MESSAGES['operator_prompt'])
+  prompt(message('operator_prompt'))
   operator = valid_operator
-  prompt(operation_to_message(operator).to_s + MESSAGES['operator_message'])
+  prompt(operation_to_message(operator).to_s + message('operator_message'))
 
   result =  case operator
             when '1'
@@ -150,13 +150,13 @@ loop do
             end
 
   sleep(2)
-  prompt(MESSAGES['result'] + simplify_result(result))
+  prompt(message('result') + simplify_result(result))
 
   sleep(2)
-  prompt(MESSAGES['again'])
+  prompt(message('again'))
   answer = again
   break if answer.eql?('n')
   system "clear"
 end
 
-prompt(MESSAGES['bye'])
+prompt(message('bye'))
