@@ -28,7 +28,7 @@ end
 
 # Add '=>' to all prompts
 def prompt(message)
-  puts("=> #{message}")
+  puts "=> #{message}"
 end
 
 # Ask user for a valid name
