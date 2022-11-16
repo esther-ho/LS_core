@@ -136,7 +136,7 @@ loop do
 
   prompt(message('operator_prompt'))
   operator = valid_operator
-  prompt(operation_to_message(operator).to_s + message('operator_message'))
+  prompt(operation_to_message(operator))
 
   result =  case operator
             when '1'
