@@ -70,6 +70,9 @@ def valid_name
   name.capitalize
 end
 
+# Main mortgage calculator program
+system 'clear'
+
 prompt(message('welcome'))
 name = valid_name
 prompt(message('greeting') + name + '!')
