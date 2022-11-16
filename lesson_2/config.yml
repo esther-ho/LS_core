@@ -23,3 +23,30 @@ en:
   again: "Do you want to perform another calculation? (Y to calculate again, N to exit)"
   valid_again: 'Please enter Y to calculate again, or N to exit.'
   bye: "Thank you for using the calculator. Goodbye!"
+
+# Translations can be improved
+cn:
+  welcome: "欢迎来到计算器! 请输入您的名字: "
+  valid_name: "请使用有效的名称。"
+
+  first_num: "第一个数字是什么？"
+  second_num: "第二个数字是什么？"
+  valid_num: "嗯...这看起来不像是个有效的数字"
+
+  operator_prompt: "您想使用什么算术？\n
+                    1) 加法\n
+                    2) 减法\n
+                    3) 乘法\n
+                    4) 除法\n"
+  valid_operator: "必须选择1、2、3 或 4。"
+  add: "加..."
+  subtract: "减..."
+  multiply: "乘..."
+  divide: "除..."
+  operator_message: "将两个数字相"
+
+  result: "答案是 "
+
+  again: "您想再进行另一种计算方法吗？ (Y 表示再次计算, N 表示退出)"
+  valid_again: '请输入 Y 以再次计算 或 输入 N 以退出。'
+  bye: "谢谢您使用计算器。再见!"
