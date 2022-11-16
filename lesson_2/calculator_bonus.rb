@@ -127,8 +127,7 @@ prompt(message('welcome'))
 name = valid_name
 prompt(message('greeting') + name + '!')
 
-sleep(2)
-system "clear"
+sleep(1)
 
 loop do
   number1 = valid_number('first_num')
@@ -152,7 +151,7 @@ loop do
   sleep(2)
   prompt(message('result') + simplify_result(result))
 
-  sleep(2)
+  sleep(1)
   prompt(message('again'))
   answer = again
   break if answer.eql?('n')
