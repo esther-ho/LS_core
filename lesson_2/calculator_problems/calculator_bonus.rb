@@ -105,13 +105,13 @@ def simplify_result(number)
   end
 end
 
-# Ensure user enters 'Y' or 'N'
+# Ensure user enters 'Y'/'Yes' or 'N'/'No'
 def again
   answer = ''
 
   loop do
     answer = gets.chomp.downcase
-    break if %w(y n).include?(answer)
+    break if %w(y yes n no).include?(answer)
     prompt(message('valid_again'))
   end
 
@@ -141,7 +141,7 @@ loop do
   sleep(1)
   prompt(message('again'))
   answer = again
-  break if answer.eql?('n')
+  break if %w(n no).include?(answer)
   system "clear"
 end
 
