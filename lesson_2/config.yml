@@ -12,11 +12,10 @@ en:
                     3) multiply\n
                     4) divide\n"
   valid_operator: "Must choose 1, 2, 3, or 4."
-  add: "Adding"
-  subtract: "Subtracting"
-  multiply: "Multiplying"
-  divide: "Dividing"
-  operator_message: " the two numbers..."
+  add: "Adding the two numbers..."
+  subtract: "Subtracting the two numbers..."
+  multiply: "Multiplying the two numbers..."
+  divide: "Dividing the two numbers..."
 
   result: "The result is "
 
@@ -39,11 +38,10 @@ cn:
                     3) 乘法\n
                     4) 除法\n"
   valid_operator: "必须选择1、2、3 或 4。"
-  add: "加..."
-  subtract: "减..."
-  multiply: "乘..."
-  divide: "除..."
-  operator_message: "将两个数字相"
+  add: "将两个数字相加..."
+  subtract: "将两个数字相减..."
+  multiply: "将两个数字相乘..."
+  divide: "将两个数字相除..."
 
   result: "答案是 "
 
