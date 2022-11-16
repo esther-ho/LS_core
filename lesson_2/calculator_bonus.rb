@@ -31,11 +31,8 @@ def valid_name
   name = ''
   loop do
     name = gets.chomp.strip
-    if name =~ /\d|^$/
-      prompt(MESSAGES['valid_name'])
-    else
-      break
-    end
+    break if name !~ /\d|^$/
+    prompt(MESSAGES['valid_name'])
   end
   name.capitalize
 end
