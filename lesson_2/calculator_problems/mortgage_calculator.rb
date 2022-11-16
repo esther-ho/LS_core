@@ -56,3 +56,20 @@ end
 def prompt(message)
   puts "=> #{message}"
 end
+
+# Ask user for a valid name
+def valid_name
+  name = ''
+
+  loop do
+    name = gets.chomp.strip
+    break if name !~ /\d|^$/
+    prompt(message('valid_name'))
+  end
+
+  name.capitalize
+end
+
+prompt(message('welcome'))
+name = valid_name
+prompt(message('greeting') + name + '!')
