@@ -29,11 +29,13 @@ end
 # Ask user for a valid name
 def valid_name
   name = ''
+
   loop do
     name = gets.chomp.strip
     break if name !~ /\d|^$/
     prompt(MESSAGES['valid_name'])
   end
+
   name.capitalize
 end
 
@@ -54,23 +56,27 @@ end
 # Obtain an input and save if it's a valid number
 def valid_number(input)
   number = ''
+
   loop do
     prompt(MESSAGES[input])
     number = gets.chomp
     break if number?(number)
     prompt(MESSAGES['valid_num'])
   end
+
   number = number.to_f
 end
 
 # Obtain a valid operator
 def valid_operator
   operator = ''
+
   loop do
     operator = gets.chomp
     break if %w(1 2 3 4).include?(operator)
     prompt(MESSAGES['valid_operator'])
   end
+
   operator
 end
 
@@ -101,32 +107,32 @@ end
 # Ensure user enters 'Y' or 'N'
 def again
   answer = ''
+
   loop do
     answer = gets.chomp.downcase
     break if %w(y n).include?(answer)
     prompt(MESSAGES['valid_again'])
   end
+
   answer
 end
 
 # Calculator program
 prompt(MESSAGES['welcome'])
-
 name = valid_name
-
 prompt("Hi #{name}!")
+
+sleep(2)
+system "clear"
 
 loop do
   number1 = valid_number('first_num')
   number2 = valid_number('second_num')
 
   prompt(MESSAGES['operator_prompt'])
-
   operator = valid_operator
-
   prompt(operation_to_message(operator).to_s + MESSAGES['operator_message'])
 
-  # Perform the appropriate operation
   result =  case operator
             when '1'
               number1 + number2
@@ -138,12 +144,14 @@ loop do
               number1 / number2
             end
 
+  sleep(2)
   prompt(MESSAGES['result'] + simplify_result(result))
 
+  sleep(2)
   prompt(MESSAGES['again'])
   answer = again
   break if answer.eql?('n')
-
+  system "clear"
 end
 
 prompt(MESSAGES['bye'])
