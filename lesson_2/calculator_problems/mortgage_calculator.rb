@@ -75,9 +75,26 @@ def number?(number)
   /\d/.match(number) && /^-?\d*\.?\d*$/.match(number)
 end
 
+# Ask user for a valid total loan amount
+def valid_loan
+  total_loan = ''
+
+  loop do
+    total_loan = gets.chomp.strip
+    total_loan = total_loan.chars.delete_if { |char| ['$', ',', ' '].include?(char) }.join
+    break if number?(total_loan) && total_loan.to_f > 1
+    prompt(message('valid_loan'))
+  end
+
+  total_loan
+end
+
 # Main mortgage calculator program
 system 'clear'
 
 prompt(message('welcome'))
 name = valid_name
 prompt(message('greeting') + name + '!')
+
+prompt(message('total_loan'))
+total_loan = valid_loan
