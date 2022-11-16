@@ -72,7 +72,7 @@ end
 
 # Check if the input is a valid number
 def number?(number)
-  /\d/.match(number) && /^-?\d*\.?\d*$/.match(number)
+  /\d/.match(number) && /^\d*\.?\d*$/.match(number)
 end
 
 # Ask user for a valid total loan amount
