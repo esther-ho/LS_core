@@ -71,16 +71,8 @@ def valid_name
 end
 
 # Check if the input is a valid number
-def integer?(number)
-  number == number.to_i.to_s
-end
-
-def float?(number)
-  number == number.to_f.to_s
-end
-
 def number?(number)
-  integer?(number) || float?(number)
+  /\d/.match(number) && /^-?\d*\.?\d*$/.match(number)
 end
 
 # Main mortgage calculator program
