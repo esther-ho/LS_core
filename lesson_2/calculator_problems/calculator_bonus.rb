@@ -151,7 +151,7 @@ loop do
   operator = valid_operator
   prompt(operation_to_message(operator))
 
-  result =  operation_result(operator, num1, num2)
+  result = operation_result(operator, num1, num2)
 
   sleep(2)
   prompt(message('result') + simplify_result(result))
