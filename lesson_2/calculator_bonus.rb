@@ -125,7 +125,7 @@ end
 # Calculator program
 prompt(message('welcome'))
 name = valid_name
-prompt("Hi #{name}!")
+prompt(message('greeting') + name + '!')
 
 sleep(2)
 system "clear"
