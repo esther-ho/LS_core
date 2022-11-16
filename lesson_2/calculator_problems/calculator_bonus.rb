@@ -1,21 +1,3 @@
-=begin
-- Ask the user for their name
-  - Check if the name is valid
-- Ask the user for one number
-  - Check if the first number is valid
-- Ask the user for another number
-  - Check if the second number is valid
-- Ask the user for an operation to perform
-  - Check if the operation is valid
-  - Display the operation that is being performed
-  - Perform the operation on the two numbers
-  - Simplify the result
-  - Display the result
-- Ask the user if they want to repeat the operation again
-  - Check if the user input is valid
-=end
-
-# Load appropriate prompts from `YAML` file
 require 'psych'
 
 MESSAGES = Psych.load_file('config.yml')
