@@ -100,6 +100,20 @@ def operation_to_message(operator)
   message
 end
 
+# Perform the appropriate operation
+def operation_result(operator, num1, num2)
+  case operator
+  when '1'
+    num1 + num2
+  when '2'
+    num1 - num2
+  when '3'
+    num1 * num2
+  when '4'
+    num1 / num2
+  end
+end
+
 # Convert a float to an integer if the float ends with '.0'
 def simplify_result(number)
   if number.to_s.end_with?('.0')
@@ -130,23 +144,14 @@ prompt(message('greeting') + name + '!')
 sleep(1)
 
 loop do
-  number1 = valid_number('first_num')
-  number2 = valid_number('second_num')
+  num1 = valid_number('first_num')
+  num2 = valid_number('second_num')
 
   prompt(message('operator_prompt'))
   operator = valid_operator
   prompt(operation_to_message(operator))
 
-  result =  case operator
-            when '1'
-              number1 + number2
-            when '2'
-              number1 - number2
-            when '3'
-              number1 * number2
-            when '4'
-              number1 / number2
-            end
+  result =  operation_result(operator, num1, num2)
 
   sleep(2)
   prompt(message('result') + simplify_result(result))
