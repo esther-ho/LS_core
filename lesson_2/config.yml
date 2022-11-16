@@ -26,7 +26,7 @@ en:
 
 # Translations can be improved
 cn:
-  welcome: "欢迎来到计算器! 请输入您的名字: "
+  welcome: "欢迎来到计算器! 请输入你的名字: "
   greeting: "嗨, "
   valid_name: "请使用有效的名称。"
 
@@ -34,7 +34,7 @@ cn:
   second_num: "第二个数字是什么？"
   valid_num: "嗯...这看起来不像是个有效的数字"
 
-  operator_prompt: "您想使用什么算术？\n
+  operator_prompt: "你想使用什么算术？\n
                     1) 加法\n
                     2) 减法\n
                     3) 乘法\n
@@ -47,6 +47,6 @@ cn:
 
   result: "答案是 "
 
-  again: "您想再进行另一种计算方法吗？ (Y 表示再次计算, N 表示退出)"
+  again: "你想再进行另一种计算方法吗？ (Y 表示再次计算, N 表示退出)"
   valid_again: '请输入 Y 以再次计算 或 输入 N 以退出。'
-  bye: "谢谢您使用计算器。再见!"
+  bye: "谢谢你使用计算器。再见!"
