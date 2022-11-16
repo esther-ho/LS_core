@@ -24,7 +24,7 @@ en:
   valid_again: 'Please enter Y to calculate again, or N to exit.'
   bye: "Thank you for using the calculator. Goodbye!"
 
-# Translations can be improved
+# Prompts were translated using DeepL and can be improved
 cn:
   welcome: "欢迎来到计算器! 请输入你的名字: "
   greeting: "嗨, "
@@ -73,6 +73,6 @@ ja:
 
   result: "結果は "
 
-  again: "もう1度計算を行いますか? (Yで再計算、Nで終了)"
-  valid_again: '再度計算する場合はYを、終了する場合はNを入力してください。'
+  again: "もう1度計算を行いますか? (Y で再計算、N で終了)"
+  valid_again: '再度計算する場合は Y を、終了する場合は N を入力してください。'
   bye: "電卓をご利用いただきありがとうございました。さようならー"
