@@ -1,0 +1,4 @@
+en: 
+  welcome: "Welcome to Mortgage Calculator! Enter your name: "
+  greeting: "Hi, "
+  valid_name: "Make sure to use a valid name."
