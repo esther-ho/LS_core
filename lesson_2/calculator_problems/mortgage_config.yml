@@ -2,3 +2,6 @@ en:
   welcome: "Welcome to Mortgage Calculator! Enter your name: "
   greeting: "Hi, "
   valid_name: "Make sure to use a valid name."
+
+  total_loan: "What is your total loan amount? Example: $10,000"
+  valid_loan: "Hmm... that doesn't look like a valid number."
