@@ -1,5 +1,6 @@
 en: 
   welcome: "Welcome to Calculator! Enter your name: "
+  greeting: "Hi, "
   valid_name: "Make sure to use a valid name."
 
   first_num: "What's the first number?"
@@ -26,6 +27,7 @@ en:
 # Translations can be improved
 cn:
   welcome: "欢迎来到计算器! 请输入您的名字: "
+  greeting: "嗨, "
   valid_name: "请使用有效的名称。"
 
   first_num: "第一个数字是什么？"
