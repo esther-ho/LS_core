@@ -19,6 +19,12 @@
 require 'psych'
 
 MESSAGES = Psych.load_file('config.yml')
+LANGUAGE = 'en'
+
+# Retrieve the appropriate prompt based on the language
+def messages(message, lang='en')
+  MESSAGES[lang][message]
+end
 
 # Add '=>' to all prompts
 def prompt(message)
