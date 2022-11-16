@@ -52,5 +52,7 @@ def message(key, lang=LANGUAGE)
   MESSAGES[lang][key]
 end
 
-
-
+# Add '=>' to all prompts
+def prompt(message)
+  puts "=> #{message}"
+end
