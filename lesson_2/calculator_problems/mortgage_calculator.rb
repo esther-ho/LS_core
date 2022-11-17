@@ -81,13 +81,14 @@ def valid_loan
   total_loan = ''
 
   loop do
+    prompt(message('total_loan'))
     total_loan = gets.chomp.strip
     total_loan = total_loan.chars.delete_if { |char| ['$', ',', ' '].include?(char) }.join
     break if number?(total_loan) && total_loan.to_f > 1
     prompt(message('valid_loan'))
   end
 
-  total_loan
+  total_loan.to_f
 end
 
 # Ask user for a valid APR
@@ -95,7 +96,9 @@ def valid_apr
   apr = ''
 
   loop do
+    prompt(message('apr'))
     apr = gets.chomp.strip
+    apr = apr.delete('%')
     break if number?(apr) && apr.to_f.between?(0,100)
     prompt(message('valid_apr'))
   end
@@ -110,8 +113,5 @@ prompt(message('welcome'))
 name = valid_name
 prompt(message('greeting') + name + '!')
 
-prompt(message('total_loan'))
 total_loan = valid_loan
-
-prompt(message('apr'))
 apr = valid_apr
