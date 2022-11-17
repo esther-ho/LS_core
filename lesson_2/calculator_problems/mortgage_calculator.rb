@@ -106,6 +106,19 @@ def valid_apr
   apr.to_f
 end
 
+# Ask if duration is in months or years
+def month_or_year
+  duration_type = ''
+  loop do
+    prompt(message('month_or_year'))
+    duration_type = gets.chomp.strip
+    break if %w(m month months y year years).include?(duration_type)
+    prompt(message('valid_duration'))
+  end
+  
+  %w(m month months).include?(duration_type) ? 'month' : 'year'
+end
+
 # Main mortgage calculator program
 system 'clear'
 

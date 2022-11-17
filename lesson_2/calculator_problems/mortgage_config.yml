@@ -8,3 +8,6 @@ en:
 
   apr: "What is your estimated Annual Percentage Rate (APR)? Example: 5%"
   valid_apr: "Hmm... that doesn't look like a valid APR."
+
+  month_or_year: "Would you like to enter your loan duration in months or years?"
+  valid_duration: "Hmm... that doesn't look like a valid duration."
