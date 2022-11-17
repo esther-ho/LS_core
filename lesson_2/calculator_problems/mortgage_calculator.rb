@@ -143,6 +143,12 @@ def valid_duration
   duration_type == 'month' ? duration.to_f : duration.to_f * 12
 end
 
+# Calculate monthly payment
+def calculate_payment(total_loan, monthly_interest, months)
+  denominator = 1 - (1 + monthly_interest)**(-months)
+  total_loan * (monthly_interest / denominator)
+end
+
 # Main mortgage calculator program
 system 'clear'
 
@@ -153,3 +159,10 @@ prompt(message('greeting') + name + '!')
 total_loan = valid_loan
 apr = valid_apr
 duration_in_months = valid_duration
+
+prompt(message('calculate'))
+prompt(message('results'))
+
+monthly_interest = apr / 12
+monthly_payment =
+  calculate_payment(total_loan, monthly_interest, duration_in_months)

@@ -13,3 +13,7 @@ en:
   valid_duration: "Hmm... that doesn't look like a valid duration."
   duration_year: "What is the duration of your loan in years? Only enter a number."
   duration_month: "What is the duration of your loan in months? Only enter a number."
+
+  calculate: "Calculating..."
+  results: "Here are your results:\n
+            \r-------------------------------------------"
