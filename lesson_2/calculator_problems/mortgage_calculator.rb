@@ -67,6 +67,7 @@ def valid_loan
 
   loop do
     prompt(message('total_loan'))
+    prompt(message('loan_example'))
     total_loan = gets.chomp.strip
     total_loan =
       total_loan.chars.delete_if do |char|
@@ -85,6 +86,7 @@ def valid_apr
 
   loop do
     prompt(message('apr'))
+    prompt(message('apr_example'))
     apr = gets.chomp.strip
     apr = apr.delete('%')
     break if number?(apr) && apr.to_f.between?(0, 100)
