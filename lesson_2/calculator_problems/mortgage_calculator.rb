@@ -16,6 +16,7 @@ Implicit rules:
 - Calculator is for a fixed rate mortgage
 - No upfront payments
 - Tax is not included in the payments
+- Decimal points are denoted by '.' instead of ','
 
 --- E
 
@@ -89,6 +90,19 @@ def valid_loan
   total_loan
 end
 
+# Ask user for a valid APR
+def valid_apr
+  apr = ''
+
+  loop do
+    apr = gets.chomp.strip
+    break if number?(apr) && apr.to_f.between?(0,100)
+    prompt(message('valid_apr'))
+  end
+
+  apr.to_f
+end
+
 # Main mortgage calculator program
 system 'clear'
 
@@ -98,3 +112,6 @@ prompt(message('greeting') + name + '!')
 
 prompt(message('total_loan'))
 total_loan = valid_loan
+
+prompt(message('apr'))
+apr = valid_apr
