@@ -10,12 +10,14 @@ en:
   apr_example: "For example, enter 5 or 5%"
   valid_apr: "Hmm... that doesn't look like a valid APR."
 
-  month_or_year: "How would you like to enter your loan duration?\n
+  month_or_year: "Would you like to enter your loan duration in months or years?\n
                   \ \ 1. Months\n
                   \ \ 2. Years"
   valid_duration: "Hmm... that doesn't look like a valid duration."
-  duration_year: "What is the duration of your loan in years? Only enter a number."
-  duration_month: "What is the duration of your loan in months? Only enter a number."
+  duration_year: "What is the duration of your loan in years?"
+  year_example: "For example, enter '10' for '10 years'."
+  duration_month: "What is the duration of your loan in months?"
+  month_example: "For example, enter '10' for '10 months'."
 
   calculate: "Calculating..."
   results: "Here are your results:\n

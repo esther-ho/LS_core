@@ -120,8 +120,10 @@ def valid_duration
     case duration_type
     when 'month'
       prompt(message('duration_month'))
+      prompt(message('month_example'))
     else
       prompt(message('duration_year'))
+      prompt(message('year_example'))
     end
 
     duration = gets.chomp.strip
