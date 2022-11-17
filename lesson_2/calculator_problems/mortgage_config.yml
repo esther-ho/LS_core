@@ -21,5 +21,12 @@ en:
 
 
   calculate: "Calculating..."
-  results: "\r-------------------------------------------\n
-            \rResults:"
+  results: "-------------------------------------------\n
+            \rResults:\n
+            "
+  monthly_payment: "Your estimated monthly payment: "  
+  monthly_interest: "Your monthly interest rate: "
+  duration: "Duration of your loan: "
+
+  total_payment: "Total loan payment: "
+  total_interest: "Total interest: "

@@ -164,5 +164,20 @@ prompt(message('calculate'))
 monthly_interest = apr / 12
 monthly_payment =
   calculate_payment(total_loan, monthly_interest, duration_in_months)
+total_payment = monthly_payment * duration_in_months
 
-prompt(message('results'))
+puts message('results')
+
+puts message('monthly_payment') +
+     '$' + simplify_result(monthly_payment)
+puts message('monthly_interest') +
+     simplify_result(monthly_interest) + ' %'
+puts message('duration') +
+     simplify_result(duration_in_months) + ' months'
+
+puts
+
+puts message('total_payment') +
+     '$' + simplify_result(total_payment)
+puts message('total_interest') +
+     '$' + simplify_result(total_payment - total_loan)
