@@ -23,8 +23,6 @@ Implicit rules:
 --- D
 
 --- A
-- Ask user for their name
-  - Check if name is valid
 - Ask user for their total loan amount
   - Check if loan amount is valid
 - Ask user for their APY in % (e.g. 5%)
@@ -56,19 +54,6 @@ end
 # Add '=>' to all prompts
 def prompt(message)
   puts "=> #{message}"
-end
-
-# Ask user for a valid name
-def valid_name
-  name = ''
-
-  loop do
-    name = gets.chomp.strip
-    break if /\d|^$/ !~ name
-    prompt(message('valid_name'))
-  end
-
-  name.capitalize
 end
 
 # Check if the input is a valid number
@@ -153,8 +138,6 @@ end
 system 'clear'
 
 prompt(message('welcome'))
-name = valid_name
-prompt(message('greeting') + name + '!')
 
 total_loan = valid_loan
 apr = valid_apr
