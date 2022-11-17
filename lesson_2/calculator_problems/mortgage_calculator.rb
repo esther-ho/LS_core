@@ -119,6 +119,27 @@ def month_or_year
   %w(m month months).include?(duration_type) ? 'month' : 'year'
 end
 
+# Ask user for valid duration
+def valid_duration
+  duration = ''
+  duration_type = month_or_year
+
+  loop do
+    case duration_type
+    when 'month'
+      prompt(message('duration_month'))
+    else
+      prompt(message('duration_year'))
+    end
+
+    duration = gets.chomp.strip
+    break if number?(duration) && duration.to_f.between?(1, 600)
+    prompt(message('valid_duration'))
+  end
+
+  duration_type == 'month' ? duration.to_f : duration.to_f * 12
+end
+
 # Main mortgage calculator program
 system 'clear'
 
@@ -128,3 +149,4 @@ prompt(message('greeting') + name + '!')
 
 total_loan = valid_loan
 apr = valid_apr
+duration_in_months = valid_duration

@@ -11,3 +11,5 @@ en:
 
   month_or_year: "Would you like to enter your loan duration in months or years?"
   valid_duration: "Hmm... that doesn't look like a valid duration."
+  duration_year: "What is the duration of your loan in years? Only enter a number."
+  duration_month: "What is the duration of your loan in months? Only enter a number."
