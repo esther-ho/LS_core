@@ -80,7 +80,7 @@ def valid_loan
   total_loan.to_f
 end
 
-# Ask user for a valid APR
+# Ask user for a valid APR in percentage
 def valid_apr
   apr = ''
 
@@ -93,7 +93,7 @@ def valid_apr
     prompt(message('valid_apr'))
   end
 
-  apr.to_f / 100
+  apr.to_f
 end
 
 # Ask if duration is in months or years
@@ -136,6 +136,7 @@ end
 
 # Calculate monthly payment
 def calculate_payment(total_loan, monthly_interest, months)
+  monthly_interest /= 100
   denominator = 1 - (1 + monthly_interest)**(-months)
   total_loan * (monthly_interest / denominator)
 end

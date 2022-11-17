@@ -6,7 +6,7 @@ en:
   loan_example: "For example, enter 10000, 10 000 or $10,000."
   valid_loan: "Hmm... that doesn't look like a valid loan amount."
 
-  apr: "What is your estimated Annual Percentage Rate (APR)?"
+  apr: "What is your estimated Annual Percentage Rate (APR) in %?"
   apr_example: "For example, enter 5 or 5%."
   valid_apr: "Hmm... that doesn't look like a valid APR."
 
