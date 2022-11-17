@@ -14,11 +14,12 @@ en:
                   \ \ 1. Months\n
                   \ \ 2. Years"
   valid_duration: "Hmm... that doesn't look like a valid duration."
-  duration_year: "What is the duration of your loan in years?"
-  year_example: "For example, enter '10' for 10 years."
-  duration_month: "What is the duration of your loan in months?"
+  month: "What is the duration of your loan in months?"
   month_example: "For example, enter '10' for 10 months."
+  year: "What is the duration of your loan in years?"
+  year_example: "For example, enter '10' for 10 years."
+
 
   calculate: "Calculating..."
-  results: "Here are your results:\n
-            \r-------------------------------------------"
+  results: "\r-------------------------------------------\n
+            \rResults:"

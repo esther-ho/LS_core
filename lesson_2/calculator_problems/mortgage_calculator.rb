@@ -119,10 +119,10 @@ def valid_duration
   loop do
     case duration_type
     when 'month'
-      prompt(message('duration_month'))
+      prompt(message('month'))
       prompt(message('month_example'))
     else
-      prompt(message('duration_year'))
+      prompt(message('year'))
       prompt(message('year_example'))
     end
 
@@ -160,8 +160,9 @@ apr = valid_apr
 duration_in_months = valid_duration
 
 prompt(message('calculate'))
-prompt(message('results'))
 
 monthly_interest = apr / 12
 monthly_payment =
   calculate_payment(total_loan, monthly_interest, duration_in_months)
+
+prompt(message('results'))
