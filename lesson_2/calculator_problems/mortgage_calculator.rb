@@ -106,7 +106,7 @@ def valid_apr
     prompt(message('valid_apr'))
   end
 
-  apr.to_f
+  apr.to_f / 100
 end
 
 # Ask if duration is in months or years
