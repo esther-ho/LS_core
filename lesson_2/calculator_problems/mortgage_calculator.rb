@@ -2,7 +2,7 @@
 --- P
 Inputs:
 - Loan amount e.g. how much is being borrowed
-- Annual percentage rate, the percent of interest paid yearly based on the loan amount
+- Annual percentage rate, percent of interest paid yearly based on total loan
 - Duration of loan
   - Allow user to choose to enter duration in years or months
 
@@ -83,7 +83,10 @@ def valid_loan
   loop do
     prompt(message('total_loan'))
     total_loan = gets.chomp.strip
-    total_loan = total_loan.chars.delete_if { |char| ['$', ',', ' '].include?(char) }.join
+    total_loan =
+      total_loan.chars.delete_if do |char|
+        ['$', ',', ' ', '_'].include?(char)
+      end.join
     break if number?(total_loan) && total_loan.to_f > 1
     prompt(message('valid_loan'))
   end
@@ -99,7 +102,7 @@ def valid_apr
     prompt(message('apr'))
     apr = gets.chomp.strip
     apr = apr.delete('%')
-    break if number?(apr) && apr.to_f.between?(0,100)
+    break if number?(apr) && apr.to_f.between?(0, 100)
     prompt(message('valid_apr'))
   end
 
@@ -115,7 +118,7 @@ def month_or_year
     break if %w(m month months y year years).include?(duration_type)
     prompt(message('valid_duration'))
   end
-  
+
   %w(m month months).include?(duration_type) ? 'month' : 'year'
 end
 
