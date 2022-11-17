@@ -30,3 +30,7 @@ en:
 
   total_payment: "Total loan payment: "
   total_interest: "Total interest: "
+
+  again: "Do you want to perform another calculation? (Y to calculate again, N to exit)"
+  valid_again: 'Please enter Y to calculate again, or N to exit.'
+  bye: "Thank you for using Mortgage Calculator. Goodbye!"

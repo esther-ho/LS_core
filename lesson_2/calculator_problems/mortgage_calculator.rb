@@ -150,34 +150,57 @@ def simplify_result(number)
   end
 end
 
+# Ensure user enters 'Y'/'Yes' or 'N'/'No'
+def again
+  answer = ''
+
+  loop do
+    answer = gets.chomp.downcase
+    break if %w(y yes n no).include?(answer)
+    prompt(message('valid_again'))
+  end
+
+  answer
+end
+
 # Main mortgage calculator program
 system 'clear'
 
 prompt(message('welcome'))
 
-total_loan = valid_loan
-apr = valid_apr
-duration_in_months = valid_duration
+loop do
+  total_loan = valid_loan
+  apr = valid_apr
+  duration_in_months = valid_duration
 
-prompt(message('calculate'))
+  prompt(message('calculate'))
 
-monthly_interest = apr / 12
-monthly_payment =
-  calculate_payment(total_loan, monthly_interest, duration_in_months)
-total_payment = monthly_payment * duration_in_months
+  monthly_interest = apr / 12
+  monthly_payment =
+    calculate_payment(total_loan, monthly_interest, duration_in_months)
+  total_payment = monthly_payment * duration_in_months
 
-puts message('results')
+  puts message('results')
 
-puts message('monthly_payment') +
-     '$' + simplify_result(monthly_payment)
-puts message('monthly_interest') +
-     simplify_result(monthly_interest) + ' %'
-puts message('duration') +
-     simplify_result(duration_in_months) + ' months'
+  puts message('monthly_payment') +
+      '$' + simplify_result(monthly_payment)
+  puts message('monthly_interest') +
+      simplify_result(monthly_interest) + ' %'
+  puts message('duration') +
+      simplify_result(duration_in_months) + ' months'
 
-puts
+  puts
 
-puts message('total_payment') +
-     '$' + simplify_result(total_payment)
-puts message('total_interest') +
-     '$' + simplify_result(total_payment - total_loan)
+  puts message('total_payment') +
+      '$' + simplify_result(total_payment)
+  puts message('total_interest') +
+      '$' + simplify_result(total_payment - total_loan)
+
+  puts '-------------------------------------------'
+
+  prompt(message('again'))
+  answer = again
+  break if %w(n no).include?(answer)
+end
+
+prompt(message('bye'))
