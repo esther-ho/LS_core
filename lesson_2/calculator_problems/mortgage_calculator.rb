@@ -140,6 +140,15 @@ def calculate_payment(total_loan, monthly_interest, months)
   total_loan * (monthly_interest / denominator)
 end
 
+# Simplify results
+def simplify_result(number)
+  if number.to_s.end_with?('.0')
+    number.to_s.sub('.0', '')
+  else
+    number.ceil(2).to_s
+  end
+end
+
 # Main mortgage calculator program
 system 'clear'
 
