@@ -99,14 +99,16 @@ end
 # Ask if duration is in months or years
 def month_or_year
   duration_type = ''
+  month = %w(1 m month months)
+  year = %w(2 y year years)
   loop do
     prompt(message('month_or_year'))
     duration_type = gets.chomp.strip
-    break if %w(m month months y year years).include?(duration_type)
+    break if (month + year).include?(duration_type)
     prompt(message('valid_duration'))
   end
 
-  %w(m month months).include?(duration_type) ? 'month' : 'year'
+  month.include?(duration_type) ? 'month' : 'year'
 end
 
 # Ask user for valid duration
