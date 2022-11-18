@@ -9,18 +9,23 @@ en:
 
   apr: "What is your estimated Annual Percentage Rate (APR) in % ?"
   apr_example: "For example, enter '5' or '5%'."
-  valid_apr: "Please enter a value between '0' and '100'.\n
+  valid_apr: "Please enter a number between '0' and '100'.\n
               "
 
   month_or_year: "Would you like to enter your loan duration in months or years?\n
                   \ \ 1. Months\n
                   \ \ 2. Years"
-  valid_duration: "Hmm... that doesn't look like a valid duration.\n
+  valid_duration: "Please enter '1' for 'months' or '2' for 'years'.\n
                   "
   month: "What is the duration of your loan in months?"
   month_example: "For example, enter '10' for 10 months."
+  valid_month: "Please enter a number between '1' and '600'.\n
+                "
+
   year: "What is the duration of your loan in years?"
   year_example: "For example, enter '10' for 10 years."
+  valid_year: "Please enter a number between '1' and '50'.\n
+              "
 
   input_summary: "Based on your input:\n
                   "

@@ -135,8 +135,15 @@ def valid_duration(duration_type)
   loop do
     duration_prompt(duration_type)
     duration = gets.chomp.strip
-    break if number?(duration) && duration.to_f.between?(1, 600)
-    prompt('valid_duration')
+
+    case duration_type
+    when 'month'
+      break if number?(duration) && duration.to_f.between?(1, 600)
+      prompt('valid_month')
+    else
+      break if number?(duration) && duration.to_f.between?(1, 50)
+      prompt('valid_year')
+    end
   end
 
   duration_type == 'month' ? duration.to_f : duration.to_f * 12
@@ -190,10 +197,10 @@ result('break')
 loop do
   total_loan = valid_loan
   system 'clear'
-  
+
   apr = valid_apr
   system 'clear'
-  
+
   duration_type = month_or_year
   system 'clear'
 
