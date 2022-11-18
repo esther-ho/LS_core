@@ -146,8 +146,8 @@ def calculate_payment(total_loan, monthly_interest, months)
   total_loan * (monthly_interest / denominator)
 end
 
-# Simplify results
-def simplify_result(number)
+# Simplify float to an integer if ending with '.0'
+def simplify_number(number)
   if number.to_s.end_with?('.0')
     number.to_s.sub('.0', '')
   else
@@ -157,7 +157,7 @@ end
 
 # Format numbers to include commas for every 3 digits
 def format_number(number)
-  number_string = simplify_result(number)
+  number_string = simplify_number(number)
   integer, decimal = number_string.split('.')
   integer_groups = integer.chars.reverse.each_slice(3).map(&:join)
   integer_with_commas = integer_groups.join(',').reverse
