@@ -151,7 +151,8 @@ def simplify_result(number)
 end
 
 # Format numbers to include commas for every 3 digits
-def format_number(number_string)
+def format_number(number)
+  number_string = simplify_result(number)
   integer, decimal = number_string.split('.')
   integer_groups = integer.chars.reverse.each_slice(3).map(&:join)
   integer_with_commas = integer_groups.join(',').reverse
@@ -191,18 +192,18 @@ loop do
   puts message('results')
 
   puts message('monthly_payment') +
-      '$ ' + format_number(simplify_result(monthly_payment))
+      '$ ' + format_number(monthly_payment)
   puts message('monthly_interest') +
-      simplify_result(monthly_interest) + ' %'
+      format_number(monthly_interest) + ' %'
   puts message('duration') +
-      simplify_result(duration_in_months) + ' months'
+      format_number(duration_in_months) + ' months'
 
   puts
 
   puts message('total_payment') +
-      '$ ' + format_number(simplify_result(total_payment))
+      '$ ' + format_number(total_payment)
   puts message('total_interest') +
-      '$ ' + format_number(simplify_result(total_payment - total_loan))
+      '$ ' + format_number(total_payment - total_loan)
 
   puts '-------------------------------------------'
 
