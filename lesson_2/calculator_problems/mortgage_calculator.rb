@@ -56,6 +56,11 @@ def prompt(key)
   puts "=> #{message(key)}"
 end
 
+# Combine prompt and result
+def result(key, optional_string='')
+  puts message(key) + optional_string
+end
+
 # Check if the input is a valid number
 def number?(number)
   /\d/.match(number) && /^\d*\.?\d*$/.match(number)
@@ -193,19 +198,14 @@ loop do
   puts message('break')
   puts message('results')
 
-  puts message('monthly_payment') +
-      '$ ' + format_number(monthly_payment)
-  puts message('monthly_interest') +
-      format_number(monthly_interest) + ' %'
-  puts message('duration') +
-      format_number(duration_in_months) + ' months'
+  result('monthly_payment', '$ ' + format_number(monthly_payment))
+  result('monthly_interest', format_number(monthly_interest) + ' %')
+  result('duration', format_number(duration_in_months) + ' months')
 
   puts
 
-  puts message('total_payment') +
-      '$ ' + format_number(total_payment)
-  puts message('total_interest') +
-      '$ ' + format_number(total_payment - total_loan)
+  result('total_payment', '$ ' + format_number(total_payment))
+  result('total_interest', '$ ' + format_number(total_payment - total_loan))
 
   puts message('break')
 
