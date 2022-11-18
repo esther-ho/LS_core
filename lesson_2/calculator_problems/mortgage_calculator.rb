@@ -210,6 +210,7 @@ loop do
   puts message('break')
 
   prompt(message('again'))
+  prompt(message('again_example'))
   answer = again
   break if %w(n no).include?(answer)
 end

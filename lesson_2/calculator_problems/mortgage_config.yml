@@ -1,6 +1,6 @@
 en: 
   welcome: "Welcome to Mortgage Calculator!"
-  break: "\r---------------------------------------------------"
+  break: "\r--------------------------------------------------------------------------"
 
   total_loan: "What is your total loan amount?"
   loan_example: "For example, enter '10000', '10 000' or '$10,000'."
@@ -20,15 +20,16 @@ en:
   year_example: "For example, enter '10' for 10 years."
 
   calculate: "Calculating..."
-  results: "Results\n:
+  results: "Results:\n
             "
-  monthly_payment: "Your estimated monthly payment: "  
-  monthly_interest: "Your monthly interest rate: "
-  duration: "Duration of your loan: "
+  monthly_payment: "Your Estimated Monthly Payment: "  
+  monthly_interest: "Your Monthly Interest Rate: "
+  duration: "Duration of your Loan: "
 
-  total_payment: "Total loan payment: "
-  total_interest: "Total interest: "
+  total_payment: "Total Loan Payment: "
+  total_interest: "Total Interest: "
 
-  again: "Do you want to perform another calculation? (Y to calculate again, N to exit)"
+  again: "Do you want to perform another calculation?"
+  again_example: "Enter 'Y' to calculate again, or N to exit."
   valid_again: 'Please enter Y to calculate again, or N to exit.'
   bye: "Thank you for using Mortgage Calculator. Goodbye!"
