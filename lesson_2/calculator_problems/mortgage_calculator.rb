@@ -116,21 +116,25 @@ def month_or_year
   month.include?(duration_type) ? 'month' : 'year'
 end
 
+# Print appropriate duration prompt
+def duration_prompt(duration_type)
+  case duration_type
+  when 'month'
+    prompt('month')
+    prompt('month_example')
+  else
+    prompt('year')
+    prompt('year_example')
+  end
+end
+
 # Ask user for valid duration
 def valid_duration
   duration = ''
   duration_type = month_or_year
 
   loop do
-    case duration_type
-    when 'month'
-      prompt('month')
-      prompt('month_example')
-    else
-      prompt('year')
-      prompt('year_example')
-    end
-
+    duration_prompt(duration_type)
     duration = gets.chomp.strip
     break if number?(duration) && duration.to_f.between?(1, 600)
     prompt('valid_duration')
