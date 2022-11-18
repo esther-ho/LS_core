@@ -52,8 +52,8 @@ def message(key, lang=LANGUAGE)
 end
 
 # Add '=>' to all prompts
-def prompt(message)
-  puts "=> #{message}"
+def prompt(key)
+  puts "=> #{message(key)}"
 end
 
 # Check if the input is a valid number
@@ -66,15 +66,15 @@ def valid_loan
   total_loan = ''
 
   loop do
-    prompt(message('total_loan'))
-    prompt(message('loan_example'))
+    prompt('total_loan')
+    prompt('loan_example')
     total_loan = gets.chomp.strip
     total_loan =
       total_loan.chars.delete_if do |char|
         ['$', ',', ' ', '_'].include?(char)
       end.join
     break if number?(total_loan) && total_loan.to_f > 1
-    prompt(message('valid_loan'))
+    prompt('valid_loan')
   end
 
   total_loan.to_f
@@ -85,12 +85,12 @@ def valid_apr
   apr = ''
 
   loop do
-    prompt(message('apr'))
-    prompt(message('apr_example'))
+    prompt('apr')
+    prompt('apr_example')
     apr = gets.chomp.strip
     apr = apr.delete('%')
     break if number?(apr) && apr.to_f.between?(0, 100)
-    prompt(message('valid_apr'))
+    prompt('valid_apr')
   end
 
   apr.to_f
@@ -102,10 +102,10 @@ def month_or_year
   month = %w(1 m month months)
   year = %w(2 y year years)
   loop do
-    prompt(message('month_or_year'))
+    prompt('month_or_year')
     duration_type = gets.chomp.strip
     break if (month + year).include?(duration_type)
-    prompt(message('valid_duration'))
+    prompt('valid_duration')
   end
 
   month.include?(duration_type) ? 'month' : 'year'
@@ -119,16 +119,16 @@ def valid_duration
   loop do
     case duration_type
     when 'month'
-      prompt(message('month'))
-      prompt(message('month_example'))
+      prompt('month')
+      prompt('month_example')
     else
-      prompt(message('year'))
-      prompt(message('year_example'))
+      prompt('year')
+      prompt('year_example')
     end
 
     duration = gets.chomp.strip
     break if number?(duration) && duration.to_f.between?(1, 600)
-    prompt(message('valid_duration'))
+    prompt('valid_duration')
   end
 
   duration_type == 'month' ? duration.to_f : duration.to_f * 12
@@ -166,7 +166,7 @@ def again
   loop do
     answer = gets.chomp.downcase
     break if %w(y yes n no).include?(answer)
-    prompt(message('valid_again'))
+    prompt('valid_again')
   end
 
   answer
@@ -175,7 +175,7 @@ end
 # Main mortgage calculator program
 system 'clear'
 
-prompt(message('welcome'))
+prompt('welcome')
 puts message('break')
 
 loop do
@@ -183,7 +183,7 @@ loop do
   apr = valid_apr
   duration_in_months = valid_duration
 
-  prompt(message('calculate'))
+  prompt('calculate')
 
   monthly_interest = apr / 12
   monthly_payment =
@@ -209,10 +209,10 @@ loop do
 
   puts message('break')
 
-  prompt(message('again'))
-  prompt(message('again_example'))
+  prompt('again')
+  prompt('again_example')
   answer = again
   break if %w(n no).include?(answer)
 end
 
-prompt(message('bye'))
+prompt('bye')
