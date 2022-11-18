@@ -43,7 +43,7 @@ Implicit rules:
 
 require 'psych'
 
-MESSAGES = Psych.load_file('mortgage_config.yml')
+MESSAGES = Psych.load_file('config_mortgage.yml')
 LANGUAGE = 'en'
 
 # Retrieve the appropriate prompt based on the language
