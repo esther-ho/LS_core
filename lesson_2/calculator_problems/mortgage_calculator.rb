@@ -61,9 +61,14 @@ def result(key, optional_string='')
   puts message(key) + optional_string
 end
 
-# Check if the input is a valid number
-def number?(number)
-  /\d/.match(number) && /^\d*\.?\d*$/.match(number)
+# Check if the input is a valid whole number
+def whole_number?(number)
+  /^\d+$/.match(number)
+end
+
+# Check if the input is a valid float (up to 2 decimal places)
+def decimal_number?(number)
+  /\d/.match(number) && /^\d*\.?\d{,2}$/.match(number)
 end
 
 # Ask user for a valid total loan amount
@@ -78,7 +83,7 @@ def valid_loan
       total_loan.chars.delete_if do |char|
         ['$', ',', ' ', '_'].include?(char)
       end.join
-    break if number?(total_loan) && total_loan.to_f > 1
+    break if decimal_number?(total_loan) && total_loan.to_f > 1
     prompt('valid_loan')
   end
 
@@ -94,7 +99,7 @@ def valid_apr
     prompt('apr_example')
     apr = gets.chomp.strip
     apr = apr.delete('%')
-    break if number?(apr) && apr.to_f.between?(0, 100)
+    break if decimal_number?(apr) && apr.to_f.between?(0, 100)
     prompt('valid_apr')
   end
 
@@ -138,10 +143,10 @@ def valid_duration(duration_type)
 
     case duration_type
     when 'month'
-      break if number?(duration) && duration.to_f.between?(1, 600)
+      break if whole_number?(duration) && duration.to_f.between?(1, 600)
       prompt('valid_month')
     else
-      break if number?(duration) && duration.to_f.between?(1, 50)
+      break if decimal_number?(duration) && duration.to_f.between?(1, 50)
       prompt('valid_year')
     end
   end
