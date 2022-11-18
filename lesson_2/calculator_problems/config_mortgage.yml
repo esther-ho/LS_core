@@ -29,19 +29,19 @@ en:
 
   input_summary: "Based on your input:\n
                   "
-  loan_input: "Your Total Loan Amount: "
+  loan_input: "Total Loan Amount: "
   apr_input: "APR: "
   duration_input: "Loan Duration: "
 
   calculate: "Calculating your results..."
   results: "Results:\n
             "
-  monthly_payment: "Your Estimated Monthly Payment: "  
-  monthly_interest: "Your Monthly Interest Rate: "
+  monthly_payment: "Estimated Monthly Payment: "
+  monthly_interest: "Monthly Interest Rate: "
   duration: "Duration of your Loan: "
 
-  total_payment: "Total Loan Payment: "
   total_interest: "Total Interest: "
+  total_payment: "Total Payment: "
 
   again: "Do you want to perform another calculation?"
   again_example: "Enter 'Y' to calculate again, or 'N' to exit."

@@ -237,8 +237,11 @@ loop do
   result('monthly_payment', monthly_payment_in_months)
   result('monthly_interest', format_number(monthly_interest) + ' %')
 
-  result('total_payment', '$ ' + format_number(total_payment))
+  puts
+
+  result('loan_input', '$ ' + format_number(total_loan))
   result('total_interest', '$ ' + format_number(total_interest))
+  result('total_payment', '$ ' + format_number(total_payment))
 
   result('break')
 
