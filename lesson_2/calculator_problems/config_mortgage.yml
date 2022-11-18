@@ -4,26 +4,29 @@ en:
 
   total_loan: "What is your total loan amount?"
   loan_example: "For example, enter '10000', '10 000' or '$10,000'."
-  valid_loan: "Hmm... that doesn't look like a valid loan amount."
+  valid_loan: "Please enter a positive number.\n
+              "
 
-  apr: "What is your estimated Annual Percentage Rate (APR) in %?"
+  apr: "What is your estimated Annual Percentage Rate (APR) in % ?"
   apr_example: "For example, enter '5' or '5%'."
-  valid_apr: "Hmm... that doesn't look like a valid APR."
+  valid_apr: "Please enter a value between '0' and '100'.\n
+              "
 
   month_or_year: "Would you like to enter your loan duration in months or years?\n
                   \ \ 1. Months\n
                   \ \ 2. Years"
-  valid_duration: "Hmm... that doesn't look like a valid duration."
+  valid_duration: "Hmm... that doesn't look like a valid duration.\n
+                  "
   month: "What is the duration of your loan in months?"
   month_example: "For example, enter '10' for 10 months."
   year: "What is the duration of your loan in years?"
   year_example: "For example, enter '10' for 10 years."
 
-  input_summary: "You entered:\n
+  input_summary: "Based on your input:\n
                   "
-  loan_input: "Total Loan Amount: "
+  loan_input: "Your Total Loan Amount: "
   apr_input: "APR: "
-  duration_input: "Loan Duration (in months): "
+  duration_input: "Loan Duration: "
 
   calculate: "Calculating your results..."
   results: "Results:\n
@@ -36,6 +39,6 @@ en:
   total_interest: "Total Interest: "
 
   again: "Do you want to perform another calculation?"
-  again_example: "Enter 'Y' to calculate again, or N to exit."
-  valid_again: 'Please enter Y to calculate again, or N to exit.'
+  again_example: "Enter 'Y' to calculate again, or 'N' to exit."
+  valid_again: "Please enter 'Y' to calculate again, or 'N' to exit."
   bye: "Thank you for using Mortgage Calculator. Goodbye!"

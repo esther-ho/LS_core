@@ -129,9 +129,8 @@ def duration_prompt(duration_type)
 end
 
 # Ask user for valid duration
-def valid_duration
+def valid_duration(duration_type)
   duration = ''
-  duration_type = month_or_year
 
   loop do
     duration_prompt(duration_type)
@@ -190,27 +189,49 @@ result('break')
 
 loop do
   total_loan = valid_loan
+  system 'clear'
+  
   apr = valid_apr
-  duration_in_months = valid_duration
+  system 'clear'
+  
+  duration_type = month_or_year
+  system 'clear'
+
+  duration_in_months = valid_duration(duration_type)
+  system 'clear'
 
   prompt('calculate')
+  result('break')
+
+  result('input_summary')
+  result('loan_input', '$ ' + format_number(total_loan))
+  result('apr_input', format_number(apr) + ' %')
+  result('duration_input', format_number(duration_in_months) + ' months')
+
+  result('break')
+
+  sleep(4)
+  system 'clear'
 
   monthly_interest = apr / 12
   monthly_payment =
     calculate_payment(total_loan, monthly_interest, duration_in_months)
   total_payment = monthly_payment * duration_in_months
+  total_interest = total_payment - total_loan
 
   result('break')
   result('results')
 
-  result('monthly_payment', '$ ' + format_number(monthly_payment))
+  monthly_payment_in_months = '$' +
+                              format_number(monthly_payment) +
+                              ' over ' +
+                              format_number(duration_in_months) +
+                              ' months'
+  result('monthly_payment', monthly_payment_in_months)
   result('monthly_interest', format_number(monthly_interest) + ' %')
-  result('duration', format_number(duration_in_months) + ' months')
-
-  puts
 
   result('total_payment', '$ ' + format_number(total_payment))
-  result('total_interest', '$ ' + format_number(total_payment - total_loan))
+  result('total_interest', '$ ' + format_number(total_interest))
 
   result('break')
 
@@ -218,6 +239,8 @@ loop do
   prompt('again_example')
   answer = again
   break if %w(n no).include?(answer)
+
+  system 'clear'
 end
 
 prompt('bye')
