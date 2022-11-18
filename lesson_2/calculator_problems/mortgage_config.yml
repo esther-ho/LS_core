@@ -19,7 +19,13 @@ en:
   year: "What is the duration of your loan in years?"
   year_example: "For example, enter '10' for 10 years."
 
-  calculate: "Calculating..."
+  input_summary: "You entered:\n
+                  "
+  loan_input: "Total Loan Amount: "
+  apr_input: "APR: "
+  duration_input: "Loan Duration (in months): "
+
+  calculate: "Calculating your results..."
   results: "Results:\n
             "
   monthly_payment: "Your Estimated Monthly Payment: "  
