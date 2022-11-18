@@ -152,10 +152,11 @@ end
 
 # Simplify float to an integer if ending with '.0'
 def simplify_number(number)
-  if number.to_s.end_with?('.0')
-    number.to_s.sub('.0', '')
+  number_string = number.ceil(2).to_s
+  if number_string.end_with?('.0')
+    number_string.sub('.0', '')
   else
-    number.ceil(2).to_s
+    number_string
   end
 end
 
