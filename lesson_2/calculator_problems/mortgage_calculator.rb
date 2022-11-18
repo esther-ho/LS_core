@@ -176,6 +176,7 @@ end
 system 'clear'
 
 prompt(message('welcome'))
+puts message('break')
 
 loop do
   total_loan = valid_loan
@@ -189,6 +190,7 @@ loop do
     calculate_payment(total_loan, monthly_interest, duration_in_months)
   total_payment = monthly_payment * duration_in_months
 
+  puts message('break')
   puts message('results')
 
   puts message('monthly_payment') +
@@ -205,7 +207,7 @@ loop do
   puts message('total_interest') +
       '$ ' + format_number(total_payment - total_loan)
 
-  puts '-------------------------------------------'
+  puts message('break')
 
   prompt(message('again'))
   answer = again
