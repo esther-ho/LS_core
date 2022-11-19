@@ -1,5 +1,6 @@
 en: 
-  welcome: "Welcome to Mortgage Calculator!"
+  welcome: "Welcome to Mortgage Calculator!\n
+           "
   break: "\r--------------------------------------------------------------------------"
 
   total_loan: "What is your total loan amount?"
@@ -10,7 +11,7 @@ en:
   apr: "What is your estimated Annual Percentage Rate (APR) in % ?"
   apr_example: "For example, enter '5' or '5%'."
   valid_apr: "Please enter a number between '0.00' and '100.00'.\n
-              "
+             "
 
   month_or_year: "Would you like to enter your loan duration in months or years?\n
                   \ \ 1. Months\n
@@ -20,7 +21,7 @@ en:
   month: "What is the duration of your loan in months?"
   month_example: "For example, enter '10' for 10 months."
   valid_month: "Please enter a number between '1' and '600'.\n
-                "
+               "
 
   year: "What is the duration of your loan in years?"
   year_example: "For example, enter '10' for 10 years."
@@ -28,14 +29,14 @@ en:
               "
 
   input_summary: "Based on your input:\n
-                  "
+                 "
   loan_input: "Total Loan Amount: "
   apr_input: "APR: "
   duration_input: "Loan Duration: "
 
   calculate: "Calculating your results..."
   results: "Results:\n
-            "
+           "
   monthly_payment: "Estimated Monthly Payment: "
   monthly_interest: "Monthly Interest Rate: "
   duration: "Duration of your Loan: "

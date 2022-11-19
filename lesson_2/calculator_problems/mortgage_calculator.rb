@@ -78,6 +78,7 @@ def valid_loan
   loop do
     prompt('total_loan')
     prompt('loan_example')
+
     total_loan = gets.chomp.strip
     total_loan =
       total_loan.chars.delete_if do |char|
@@ -97,6 +98,7 @@ def valid_apr
   loop do
     prompt('apr')
     prompt('apr_example')
+
     apr = gets.chomp
     apr = apr.delete('%').strip
     break if decimal_number?(apr) && apr.to_f.between?(0, 100)
@@ -111,6 +113,7 @@ def month_or_year
   duration_type = ''
   month = %w(1 m month months)
   year = %w(2 y year years)
+
   loop do
     prompt('month_or_year')
     duration_type = gets.chomp.strip
@@ -197,7 +200,6 @@ end
 system 'clear'
 
 prompt('welcome')
-result('break')
 
 loop do
   total_loan = valid_loan
@@ -212,7 +214,6 @@ loop do
   duration_in_months = valid_duration(duration_type)
   system 'clear'
 
-  prompt('calculate')
   result('break')
 
   result('input_summary')
@@ -221,9 +222,9 @@ loop do
   result('duration_input', format_number(duration_in_months) + ' months')
 
   result('break')
+  prompt('calculate')
 
-  sleep(4)
-  system 'clear'
+  sleep(3)
 
   monthly_interest = apr / 12
   monthly_payment =
