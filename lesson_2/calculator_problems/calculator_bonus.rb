@@ -23,7 +23,7 @@ def valid_name
     prompt(message('valid_name'))
   end
 
-  name.capitalize
+  name.split.map(&:capitalize).join(' ')
 end
 
 # Check if input is a valid number
