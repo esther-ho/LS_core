@@ -67,8 +67,9 @@ def whole_number?(number)
 end
 
 # Check if the input is a valid float (up to 2 decimal places)
+# Input can include consistent commas (e.g. 0,000 format)
 def decimal_number?(number)
-  /\d/.match(number) && /^\d*\.?\d{,2}$/.match(number)
+  /^(\d+|\d{1,3}(,\d{3})*)(\.\d{,2})?$/.match(number)
 end
 
 # Ask user for a valid total loan amount
@@ -80,15 +81,12 @@ def valid_loan
     prompt('loan_example')
 
     total_loan = gets.chomp.strip
-    total_loan =
-      total_loan.chars.delete_if do |char|
-        ['$', ',', ' ', '_'].include?(char)
-      end.join
+    total_loan.sub!('$', '').strip! if total_loan.start_with?('$')
     break if decimal_number?(total_loan) && total_loan.to_f > 1
     prompt('valid_loan')
   end
 
-  total_loan.to_f
+  total_loan.gsub(',', '').to_f
 end
 
 # Ask user for a valid APR in percentage
