@@ -57,8 +57,8 @@ def prompt(key)
 end
 
 # Combine prompt and result
-def result(key, optional_string='')
-  puts message(key) + optional_string
+def combine(key, result_string)
+  puts message(key) + result_string
 end
 
 # Check if the input is a valid whole number
@@ -214,15 +214,15 @@ loop do
   duration_in_months = valid_duration(duration_type)
   system 'clear'
 
-  result('break')
+  puts message('break')
 
-  result('input_summary')
-  result('loan_input', '$ ' + format_number(total_loan))
-  result('apr_input', format_number(apr) + ' %')
-  result('duration_years', format_number(duration_in_months / 12))
-  result('duration_months', format_number(duration_in_months))
+  puts message('input_summary')
+  combine('loan_input', '$ ' + format_number(total_loan))
+  combine('apr_input', format_number(apr) + ' %')
+  combine('duration_years', format_number(duration_in_months / 12))
+  combine('duration_months', format_number(duration_in_months))
 
-  result('break')
+  puts message('break')
   prompt('calculate')
 
   sleep(1.5)
@@ -233,19 +233,19 @@ loop do
   total_payment = monthly_payment * duration_in_months
   total_interest = total_payment - total_loan
 
-  result('break')
-  result('results')
+  puts message('break')
+  puts message('results')
 
-  result('monthly_payment', '$ ' + format_number(monthly_payment))
-  result('monthly_interest', format_number(monthly_interest) + ' %')
+  combine('monthly_payment', '$ ' + format_number(monthly_payment))
+  combine('monthly_interest', format_number(monthly_interest) + ' %')
 
   puts
 
-  result('loan_input', '$ ' + format_number(total_loan))
-  result('total_interest', '$ ' + format_number(total_interest))
-  result('total_payment', '$ ' + format_number(total_payment))
+  combine('loan_input', '$ ' + format_number(total_loan))
+  combine('total_interest', '$ ' + format_number(total_interest))
+  combine('total_payment', '$ ' + format_number(total_payment))
 
-  result('break')
+  puts message('break')
 
   prompt('again')
   prompt('again_example')
