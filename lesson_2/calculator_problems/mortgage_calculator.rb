@@ -213,8 +213,8 @@ loop do
   system 'clear'
 
   puts message('break')
-
   puts message('input_summary')
+
   combine('loan_input', '$ ' + format_number(total_loan))
   combine('apr_input', format_number(apr) + ' %')
   combine('duration_years', format_number(duration_in_months / 12))
@@ -244,6 +244,7 @@ loop do
   combine('total_payment', '$ ' + format_number(total_payment))
 
   puts message('break')
+  sleep(2)
 
   prompt('again')
   prompt('again_example')
