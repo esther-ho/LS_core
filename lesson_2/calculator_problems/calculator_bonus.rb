@@ -69,17 +69,16 @@ end
 
 # Retrieve the appropriate message based on the chosen operator
 def operation_to_message(operator)
-  message = case operator
-            when '1'
-              message('add')
-            when '2'
-              message('subtract')
-            when '3'
-              message('multiply')
-            when '4'
-              message('divide')
-            end
-  message
+  case operator
+  when '1'
+    message('add')
+  when '2'
+    message('subtract')
+  when '3'
+    message('multiply')
+  when '4'
+    message('divide')
+  end
 end
 
 # Perform the appropriate operation
