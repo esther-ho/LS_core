@@ -118,6 +118,8 @@ def again
 end
 
 # Calculator program
+system "clear"
+
 prompt(message('welcome'))
 name = valid_name
 prompt(message('greeting') + name + '!')
