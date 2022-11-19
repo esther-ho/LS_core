@@ -97,8 +97,8 @@ def valid_apr
   loop do
     prompt('apr')
     prompt('apr_example')
-    apr = gets.chomp.strip
-    apr = apr.delete('%')
+    apr = gets.chomp
+    apr = apr.delete('%').strip
     break if decimal_number?(apr) && apr.to_f.between?(0, 100)
     prompt('valid_apr')
   end
