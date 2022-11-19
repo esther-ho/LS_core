@@ -219,12 +219,13 @@ loop do
   result('input_summary')
   result('loan_input', '$ ' + format_number(total_loan))
   result('apr_input', format_number(apr) + ' %')
-  result('duration_input', format_number(duration_in_months) + ' months')
+  result('duration_years', format_number(duration_in_months / 12))
+  result('duration_months', format_number(duration_in_months))
 
   result('break')
   prompt('calculate')
 
-  sleep(3)
+  sleep(1.5)
 
   monthly_interest = apr / 12
   monthly_payment =
@@ -235,12 +236,7 @@ loop do
   result('break')
   result('results')
 
-  monthly_payment_in_months = '$' +
-                              format_number(monthly_payment) +
-                              ' over ' +
-                              format_number(duration_in_months) +
-                              ' months'
-  result('monthly_payment', monthly_payment_in_months)
+  result('monthly_payment', '$ ' + format_number(monthly_payment))
   result('monthly_interest', format_number(monthly_interest) + ' %')
 
   puts
