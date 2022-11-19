@@ -30,21 +30,75 @@ en:
 
   input_summary: "Based on your input:\n
                  "
-  loan_input: "Total Loan Amount: "
-  apr_input: "APR: "
-  duration_input: "Loan Duration: "
+  loan_input:       "Total Loan Amount:            "
+  apr_input:        "Annual Percentage Rate (APR): "
+  duration_years:   "Loan Duration (in years):     "
+  duration_months:  "Loan Duration (in months):    "
 
   calculate: "Calculating your results..."
   results: "Results:\n
            "
-  monthly_payment: "Estimated Monthly Payment: "
-  monthly_interest: "Monthly Interest Rate: "
-  duration: "Duration of your Loan: "
+  monthly_payment:  "Estimated Monthly Payment:    "
+  monthly_interest: "Monthly Interest Rate:        "
+  duration:         "Duration of your Loan:        "
 
-  total_interest: "Total Interest: "
-  total_payment: "Total Payment: "
+  total_interest:   "Total Interest:               "
+  total_payment:    "Total Payment:                "
 
   again: "Do you want to perform another calculation?"
   again_example: "Enter 'Y' to calculate again, or 'N' to exit."
   valid_again: "Please enter 'Y' to calculate again, or 'N' to exit."
   bye: "Thank you for using Mortgage Calculator. Goodbye!"
+
+# Prompts were translated using DeepL and can be improved
+cn:
+  welcome: "欢迎来到车贷计算器!\n
+           "
+  break: "\r--------------------------------------------------------------------------"
+
+  total_loan: "您的贷款总额是多少？"
+  loan_example: "例如: '10000', '10 000' 或 '$10,000'。"
+  valid_loan: "请输入小数点后2位以内的正数。\n
+              "
+
+  apr: "您的年利率(APR)是多少?"
+  apr_example: "例如: '5' 或 '5%'。"
+  valid_apr: "请输入 '0.00' 和 '100.00' 之间的数字。\n
+             "
+
+  month_or_year: "您想按月计或年计输入您的贷款期限？\n
+                  \ \ 1. 月\n
+                  \ \ 2. 年"
+  valid_duration: "请输入 '1' 以月 或 '2' 以年。\n
+                  "
+  month: "您的贷款期限(按月计)是多长？"
+  month_example: "例如: '10' 代表10个月。"
+  valid_month: "请输入 '1' 和 '600' 之间的数字。\n
+               "
+
+  year: "您的贷款期限(按年计)是多长？"
+  year_example: "例如: '10' 代表10年。"
+  valid_year: "请输入 '1' 和 '50' 之间的数字.\n
+              "
+
+  input_summary: "根据你的输入:\n
+                 "
+  loan_input:       "贷款额:               "
+  apr_input:        "年利率:               "
+  duration_months:  "贷款时间长度(按月计): "
+  duration_years:   "贷款时间长度(按年计): "
+
+  calculate: "正在加载结果..."
+  results: "结果:\n
+           "
+  monthly_payment:  "每月贷款支付:         "
+  monthly_interest: "月利率:               "
+  duration:         "贷款期限:           "
+
+  total_interest:   "支付的利息总额:       "
+  total_payment:    "所有付款总和:         "
+
+  again: "您想进行另一次计算吗？"
+  again_example: "'Y' 以重新计算 或 输入 'N' 以退出。"
+  valid_again: "请输入 'Y' 以重新计算 或 输入 'N' 以退出。"
+  bye: "非常感谢您使用车贷计算器。再见!"
