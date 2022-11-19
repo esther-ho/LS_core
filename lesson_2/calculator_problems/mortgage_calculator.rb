@@ -55,7 +55,7 @@ def valid_apr
     prompt('apr_example')
 
     apr = gets.chomp.strip
-    apr.sub!('%', '').strip! if apr.include?('%')
+    apr.sub!('%', '').strip! if apr.end_with?('%')
     break if decimal_number?(apr) && apr.to_f.between?(0, 100)
     prompt('valid_apr')
   end
