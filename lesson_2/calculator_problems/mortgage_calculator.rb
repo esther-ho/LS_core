@@ -20,13 +20,13 @@ end
 
 # Check if the input is a valid whole number
 def whole_number?(number)
-  /^\d+$/.match(number)
+  /^\d+\.?$/.match(number)
 end
 
 # Check if the input is a valid integer or float (up to 2 decimal places)
 # Input can include consistent commas (e.g. 0,000 format)
 def decimal_number?(number)
-  /^(\d+|\d{1,3}(,\d{3})*)(\.\d{,2})?$/.match(number)
+  /^(\d*|\d{1,3}(,\d{3})*)(\.\d{,2})?$/.match(number)
 end
 
 # Ask user for a valid total loan amount
