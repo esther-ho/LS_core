@@ -23,7 +23,7 @@ def whole_number?(number)
   /^\d+$/.match(number)
 end
 
-# Check if the input is a valid float (up to 2 decimal places)
+# Check if the input is a valid integer or float (up to 2 decimal places)
 # Input can include consistent commas (e.g. 0,000 format)
 def decimal_number?(number)
   /^(\d+|\d{1,3}(,\d{3})*)(\.\d{,2})?$/.match(number)
