@@ -39,7 +39,7 @@ def valid_loan
 
     total_loan = gets.chomp.strip
     total_loan.sub!('$', '').strip! if total_loan.start_with?('$')
-    break if decimal_number?(total_loan) && total_loan.to_f > 1
+    break if decimal_number?(total_loan) && total_loan.gsub(',', '').to_f > 1
     prompt('valid_loan')
   end
 
