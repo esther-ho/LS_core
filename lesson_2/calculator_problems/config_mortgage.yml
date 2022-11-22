@@ -10,7 +10,7 @@ en:
 
   apr: "What is your estimated Annual Percentage Rate (APR) in % ?"
   apr_example: "For example, enter '5' or '5%'."
-  valid_apr: "Please enter a number between '0.00' and '100.00'.\n
+  valid_apr: "Please enter a positive number up to 2 decimal places.\n
              "
 
   month_or_year: "Would you like to enter your loan duration in months or years?\n
@@ -63,7 +63,7 @@ cn:
 
   apr: "您的年利率(APR)是多少?"
   apr_example: "例如: '5' 或 '5%'。"
-  valid_apr: "请输入 '0.00' 和 '100.00' 之间的数字。\n
+  valid_apr: "请输入小数点后2位以内的正数。\n
              "
 
   month_or_year: "您想按月计或年计输入您的贷款期限？\n

@@ -47,6 +47,7 @@ def valid_loan
 end
 
 # Ask user for a valid APR in percentage
+# APR values < 0.06 result in 0.0 for monthly interest rate
 def valid_apr
   apr = ''
 
@@ -56,7 +57,7 @@ def valid_apr
 
     apr = gets.chomp.strip
     apr.sub!('%', '').strip! if apr.end_with?('%')
-    break if decimal_number?(apr) && apr.to_f.between?(0, 100)
+    break if decimal_number?(apr) && apr.to_f > 0
     prompt('valid_apr')
   end
 
