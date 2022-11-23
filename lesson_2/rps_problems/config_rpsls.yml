@@ -1,1 +1,20 @@
-welcome: "Welcome to Rock, Paper, Scissors, Lizard Spock! Good luck!"
+prompts:
+  welcome: "Welcome to Rock, Paper, Scissors, Lizard, Spock! Good luck!\n
+            "
+  choice: "Choose your weapon:\n
+            \r1. Rock     (r)\n
+            \r2. Paper    (p)\n
+            \r3. Scissors (ss)\n
+            \r4. Lizard   (l)\n
+            \r5. Spock    (sp)\n"
+  choice_example: "For example: Enter '1', 'r' or 'rock' to select 'Rock'."
+  valid_choice: "Hmm...that doesn't look like a valid choice.\n
+                "
+
+hashes:
+  valid_inputs:
+    rock: ['1', '1.', 'r', 'rock']
+    paper: ['2', '2.', 'p', 'paper']
+    scissors: ['3', '3.', 'ss', 'scissors']
+    lizard: ['4', '4.', 'l', 'lizard']
+    spock: ['5', '5.', 'sp', 'spock']
