@@ -54,11 +54,26 @@ def valid_choice
   choice
 end
 
+def win?(first, second)
+  search_hash('win')[first].include?(second)
+end
+
+def who_wins(player, computer)
+  if win?(player, computer)
+    search_hash('win_message').sample
+  elsif win?(computer, player)
+    search_hash('lose_message').sample
+  else
+    puts search_hash('tie_message').sample
+  end
+end
+
 system 'clear'
 prompt('welcome')
 
 loop do
   player = valid_choice
   computer = VALID_CHOICES.sample
+  puts who_wins(player, computer)
   break
 end
