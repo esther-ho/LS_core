@@ -10,23 +10,25 @@ prompts:
   choice_example: "For example: Enter '1', 'r' or 'rock' to select 'Rock'."
   valid_choice: "Hmm...that doesn't look like a valid choice.\n
                 "
-
-hashes:
-  inputs:
-    rock: ['1', '1.', 'r', 'rock']
-    paper: ['2', '2.', 'p', 'paper']
-    scissors: ['3', '3.', 'ss', 'scissors']
-    lizard: ['4', '4.', 'l', 'lizard']
-    spock: ['5', '5.', 'sp', 'spock']
-  win:
-    rock: ['lizard', 'scissors']
-    paper: ['rock', 'spock']
-    scissors: ['paper', 'lizard']
-    lizard: ['spock', 'paper']
-    spock: ['scissors', 'rock']
   win_message:
   - "You won!"
   lose_message:
   - "Computer won!"
   tie_message:
   - "It's a tie!"
+choices:
+  rock:
+    inputs: ['1', '1.', 'r', 'rock']
+    beat: ['lizard', 'scissors']
+  paper:
+    inputs: ['2', '2.', 'p', 'paper']
+    beat: ['rock', 'spock']
+  scissors:
+    inputs: ['3', '3.', 'ss', 'scissors']
+    beat: ['paper', 'lizard']
+  lizard:
+    inputs: ['4', '4.', 'l', 'lizard']
+    beat: ['spock', 'paper']
+  spock:
+    inputs: ['5', '5.', 'sp', 'spock']
+    beat: ['scissors', 'rock']

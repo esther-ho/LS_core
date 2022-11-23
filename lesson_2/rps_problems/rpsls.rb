@@ -18,15 +18,11 @@
 
 require 'psych'
 
-MESSAGES = Psych.load_file('config_rpsls.yml')
-VALID_CHOICES = MESSAGES['hashes']['inputs'].keys
+CONFIG = Psych.load_file('config_rpsls.yml')
+CHOICES = CONFIG['choices']
 
 def message(key)
-  MESSAGES['prompts'][key]
-end
-
-def search_hash(key)
-  MESSAGES['hashes'][key]
+  CONFIG['prompts'][key]
 end
 
 def prompt(key)
@@ -34,8 +30,8 @@ def prompt(key)
 end
 
 def find_choice(input)
-  search_hash('inputs').select do |_, v|
-    v.include?(input)
+  CHOICES.select do |_, v|
+    v['inputs'].include?(input)
   end.keys.first
 end
 
@@ -55,16 +51,16 @@ def valid_choice
 end
 
 def win?(first, second)
-  search_hash('win')[first].include?(second)
+  CHOICES[first]['beat'].include?(second)
 end
 
 def who_wins(player, computer)
   if win?(player, computer)
-    search_hash('win_message').sample
+    message('win_message').sample
   elsif win?(computer, player)
-    search_hash('lose_message').sample
+    message('lose_message').sample
   else
-    puts search_hash('tie_message').sample
+    message('tie_message').sample
   end
 end
 
@@ -73,7 +69,7 @@ prompt('welcome')
 
 loop do
   player = valid_choice
-  computer = VALID_CHOICES.sample
+  computer = CHOICES.keys.sample
   puts who_wins(player, computer)
   break
 end
