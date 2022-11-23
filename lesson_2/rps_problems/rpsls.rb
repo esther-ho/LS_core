@@ -19,6 +19,7 @@
 require 'psych'
 
 MESSAGES = Psych.load_file('config_rpsls.yml')
+VALID_CHOICES = MESSAGES['hashes']['inputs'].keys
 
 def message(key)
   MESSAGES['prompts'][key]
@@ -32,8 +33,8 @@ def prompt(key)
   puts "=> #{message(key)}"
 end
 
-def find_choice(input, key)
-  search_hash(key).select do |_, v|
+def find_choice(input)
+  search_hash('inputs').select do |_, v|
     v.include?(input)
   end.keys.first
 end
@@ -45,7 +46,7 @@ def valid_choice
     prompt('choice')
     prompt('choice_example')
     input = gets.chomp.strip.downcase
-    choice = find_choice(input, 'valid_inputs')
+    choice = find_choice(input)
     break if choice
     prompt('valid_choice')
   end
@@ -57,6 +58,7 @@ system 'clear'
 prompt('welcome')
 
 loop do
-  valid_choice
+  player = valid_choice
+  computer = VALID_CHOICES.sample
   break
 end
