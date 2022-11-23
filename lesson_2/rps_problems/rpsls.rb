@@ -18,6 +18,7 @@
 =end
 
 require 'psych'
+require 'io/console'
 
 CONFIG = Psych.load_file('config_rpsls.yml')
 CHOICES = CONFIG['choices']
@@ -30,6 +31,7 @@ def prompt(key)
   puts "=> #{message(key)}"
 end
 
+# Accepts only names with alphabets, with at most one space
 def valid_name
   name = ''
 
@@ -41,6 +43,27 @@ def valid_name
   end
 
   name.split.map(&:capitalize).join(' ')
+end
+
+def rules?
+  answer = ''
+  prompt('view_rules')
+  prompt('view_rules_example')
+
+  loop do
+    answer = gets.chomp.strip.downcase
+    break if %w(y yes n no).include?(answer)
+    prompt('valid_view_rules')
+  end
+
+  answer
+end
+
+# Rules are displayed and cleared when user presses a key
+def display_rules
+  puts message('rules')
+  STDIN.getch
+  system 'clear'
 end
 
 def find_choice(input)
@@ -84,6 +107,9 @@ name = valid_name
 
 system 'clear'
 puts message('greeting') + name + '!'
+view_rules = rules?
+system 'clear'
+display_rules if %w(y yes).include?(view_rules)
 
 loop do
   player = valid_choice
