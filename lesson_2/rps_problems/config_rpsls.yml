@@ -1,6 +1,10 @@
 prompts:
-  welcome: "Welcome to Rock, Paper, Scissors, Lizard, Spock! Good luck!\n
-            "
+  welcome: "Welcome to Rock, Paper, Scissors, Lizard, Spock!"
+  name: "Enter your name:"
+  greeting: "Hi, "
+  valid_name: "Make sure to use a valid name.\n
+              "
+
   choice: "Choose your weapon:\n
             \r1. Rock     (r)\n
             \r2. Paper    (p)\n
@@ -10,12 +14,14 @@ prompts:
   choice_example: "For example: Enter '1', 'r' or 'rock' to select 'Rock'."
   valid_choice: "Hmm...that doesn't look like a valid choice.\n
                 "
+
   win_message:
   - "You won!"
   lose_message:
   - "Computer won!"
   tie_message:
   - "It's a tie!"
+
 choices:
   rock:
     inputs: ['1', '1.', 'r', 'rock']

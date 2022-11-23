@@ -1,16 +1,17 @@
 =begin
-1. Get input from the user
+- Ask user if they would like to view instructions
+- Get input from the user
   - Multiple ways to indicate a valid input (e.g. '1', 'rock', 'r')
   - Convert user input into a valid input
-2. Sample a input from possible choices for the computer
+- Sample a input from possible choices for the computer
   - Provide a list of possible choices
-3. Determine if player or computer won
+- Determine if player or computer won
   - Possible combinations of winning depending on input
   - Print the appropriate message if player win/loses/ties
-4. Repeat RPSLS program until there are 3 wins
+- Repeat RPSLS program until there are 3 wins
   - Keep track of number of wins for player and computer
   - Print out number of wins, loses, ties after each round
-5. Repeat game if player answers 'y'
+- Repeat game if player answers 'y'
   - Keep track of number of rounds player has played
   - Number of rounds won or lost
 
@@ -27,6 +28,19 @@ end
 
 def prompt(key)
   puts "=> #{message(key)}"
+end
+
+def valid_name
+  name = ''
+
+  loop do
+    prompt('name')
+    name = gets.chomp.strip
+    break if /^[[:alpha:]]+\ ?[[:alpha:]]*$/.match(name)
+    prompt('valid_name')
+  end
+
+  name.split.map(&:capitalize).join(' ')
 end
 
 def find_choice(input)
@@ -66,6 +80,10 @@ end
 
 system 'clear'
 prompt('welcome')
+name = valid_name
+
+system 'clear'
+puts message('greeting') + name + '!'
 
 loop do
   player = valid_choice
