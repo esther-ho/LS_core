@@ -93,11 +93,25 @@ end
 
 def who_wins(player, computer)
   if win?(player, computer)
-    message('win_message').sample
+    'player'
   elsif win?(computer, player)
-    message('lose_message').sample
+    'computer'
   else
-    message('tie_message').sample
+    'tie'
+  end
+end
+
+def count_wins(winner, score)
+  case winner
+  when 'player'
+    score['player_win'] += 1
+    p message('win_message').sample
+  when 'computer'
+    score['computer_win'] += 1
+    p message('lose_message').sample
+  when 'tie'
+    score['tie'] += 1
+    p message('tie_message').sample
   end
 end
 
@@ -111,9 +125,15 @@ view_rules = rules?
 system 'clear'
 display_rules if %w(y yes).include?(view_rules)
 
-loop do
+score = {
+  'player_win' => 0,
+  'computer_win' => 0,
+  'tie' => 0
+}
+
+until score.values.take(2).include?(3)
   player = valid_choice
   computer = CHOICES.keys.sample
-  puts who_wins(player, computer)
-  break
+  winner = who_wins(player, computer)
+  count_wins(winner, score)
 end
