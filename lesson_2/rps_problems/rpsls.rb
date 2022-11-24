@@ -176,3 +176,5 @@ loop do
   break if %w(n no).include?(again?)
   system 'clear'
 end
+
+prompt('bye')

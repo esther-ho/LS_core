@@ -1,5 +1,5 @@
 prompts:
-  welcome: "Welcome to Rock, Paper, Scissors, Lizard, Spock!"
+  welcome: "Welcome to 'Rock, Paper, Scissors, Lizard, Spock'!"
   name: "Enter your name:"
   valid_name: "Make sure to use a valid name.\n
               "
@@ -8,11 +8,13 @@ prompts:
   view_rules_example: "Enter 'Y' to view the rules, or 'N' to proceed to the game."
   valid_view_rules: "Please enter 'Y' to view the rules, or 'N' to proceed to the game."
   rules: |
-    -------------------------------RULES-------------------------------
+    -------------------------------------------------------------------
+                                   RULES
     -------------------------------------------------------------------
     Objectives:
     - Select a play (R, P, SC, L, SP) that defeats the computer's play
     - First player to 3 wins is the winner of the round
+
     Win Conditions:
     - [Scissors] cuts [Paper]
     - [Paper] covers [Rock]
@@ -25,10 +27,12 @@ prompts:
     - [Spock] vaporizes [Rock]
     - [Rock] crushes [Scissors]
     -------------------------------------------------------------------
-    ------------------Press any key to start the game------------------
+                      Press any key to start the game
+    -------------------------------------------------------------------
   again: "Want to have a rematch?"
   again_example: "Enter 'Y' to continue, or 'N' to end the game."
   valid_again: "Please enter 'Y' to continue, or 'N' to end the game."
+  bye: "Thank you for playing 'Rock, Paper, Scissors, Lizard, Spock'! Goodbye!"
 
   choice: |
     Choose your weapon:
