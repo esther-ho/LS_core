@@ -27,7 +27,9 @@ prompts:
     - [Rock] crushes [Scissors]
     -------------------------------------------------------------------
     ------------------Press any key to start the game------------------
-
+  again: "Would you like to play again?"
+  again_example: "Enter 'Y' to continue, or 'N' to end the game."
+  valid_again: "Please enter 'Y' to continue, or 'N' to end the game."
 
   choice: |
     Choose your weapon:

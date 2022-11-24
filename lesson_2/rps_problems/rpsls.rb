@@ -115,6 +115,20 @@ def count_wins(winner, score)
   end
 end
 
+def again?
+  answer = ''
+  prompt('again')
+  prompt('again_example')
+
+  loop do
+    answer = gets.chomp.strip.downcase
+    break if %w(y yes n no).include?(answer)
+    prompt('valid_again')
+  end
+
+  answer
+end
+
 system 'clear'
 prompt('welcome')
 name = valid_name
@@ -125,15 +139,24 @@ view_rules = rules?
 system 'clear'
 display_rules if %w(y yes).include?(view_rules)
 
-score = {
-  'player_win' => 0,
-  'computer_win' => 0,
-  'tie' => 0
-}
+match = 1
 
-until score.values.take(2).include?(3)
-  player = valid_choice
-  computer = CHOICES.keys.sample
-  winner = who_wins(player, computer)
-  count_wins(winner, score)
+loop do
+  round = 1
+  score = {
+    'player_win' => 0,
+    'computer_win' => 0,
+    'tie' => 0
+  }
+
+  until score.values.take(2).include?(3)
+    system 'clear'
+    player = valid_choice
+    computer = CHOICES.keys.sample
+    winner = who_wins(player, computer)
+    count_wins(winner, score)
+    sleep(2)
+  end
+
+  break if %w(n no).include?(again?)
 end
