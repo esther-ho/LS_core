@@ -1,7 +1,6 @@
 prompts:
   welcome: "Welcome to Rock, Paper, Scissors, Lizard, Spock!"
   name: "Enter your name:"
-  greeting: "Hi, "
   valid_name: "Make sure to use a valid name.\n
               "
 
@@ -27,7 +26,7 @@ prompts:
     - [Rock] crushes [Scissors]
     -------------------------------------------------------------------
     ------------------Press any key to start the game------------------
-  again: "Would you like to play again?"
+  again: "Want to have a rematch?"
   again_example: "Enter 'Y' to continue, or 'N' to end the game."
   valid_again: "Please enter 'Y' to continue, or 'N' to end the game."
 
@@ -41,6 +40,8 @@ prompts:
   choice_example: "For example: Enter '1', 'r' or 'rock' to select 'Rock'."
   valid_choice: "Hmm...that doesn't look like a valid choice.\n
                 "
+  break: "-------------------------------------------------------------------"
+  current_score: "                          Current Score"
 
   win_message:
   - "You won!"

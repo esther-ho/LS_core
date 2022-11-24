@@ -66,6 +66,15 @@ def display_rules
   system 'clear'
 end
 
+def display_score(name, score)
+  puts message('break')
+  puts message('current_score'), ''
+  puts "#{name}'s win: #{score['player_win']}"
+  puts "Computer's win: #{score['computer_win']}"
+  puts "Ties: #{score['tie']}"
+  puts message('break')
+end
+
 def find_choice(input)
   CHOICES.select do |_, v|
     v['inputs'].include?(input)
@@ -134,7 +143,7 @@ prompt('welcome')
 name = valid_name
 
 system 'clear'
-puts message('greeting') + name + '!'
+puts "Hi #{name}!", ''
 view_rules = rules?
 system 'clear'
 display_rules if %w(y yes).include?(view_rules)
@@ -149,14 +158,21 @@ loop do
     'tie' => 0
   }
 
-  until score.values.take(2).include?(3)
-    system 'clear'
+  loop do
+    display_score(name, score)
+    break if score.values.take(2).include?(3)
+
+    puts "Round #{round}", ''
     player = valid_choice
     computer = CHOICES.keys.sample
     winner = who_wins(player, computer)
     count_wins(winner, score)
-    sleep(2)
+
+    round += 1
+    sleep(1)
+    system 'clear'
   end
 
   break if %w(n no).include?(again?)
+  system 'clear'
 end
