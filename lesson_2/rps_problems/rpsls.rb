@@ -166,8 +166,9 @@ def again?
   answer
 end
 
+# Main RPSLS program
 system 'clear'
-prompt('welcome')
+puts message('welcome'), ''
 name = valid_name
 
 system 'clear'
