@@ -109,17 +109,33 @@ def who_wins(player, computer)
   end
 end
 
+def win_message(winner)
+  case winner
+  when 'player'
+    message('win_message').sample
+  when 'computer'
+    message('lose_message').sample
+  when 'tie'
+    message('tie_message').sample
+  end
+end
+
+def display_results(round, player, computer, winner)
+  puts "Round #{round} - Results", ''
+  puts "You chose: #{player.capitalize}"
+  puts "Computer chose: #{computer.capitalize}", ''
+  puts win_message(winner), ''
+  prompt('continue')
+end
+
 def count_wins(winner, score)
   case winner
   when 'player'
     score['player_win'] += 1
-    p message('win_message').sample
   when 'computer'
     score['computer_win'] += 1
-    p message('lose_message').sample
   when 'tie'
     score['tie'] += 1
-    p message('tie_message').sample
   end
 end
 
@@ -147,8 +163,6 @@ view_rules = rules?
 system 'clear'
 display_rules if %w(y yes).include?(view_rules)
 
-match = 1
-
 loop do
   round = 1
   score = {
@@ -157,9 +171,9 @@ loop do
     'tie' => 0
   }
 
-  loop do
+  until score.values.take(2).include?(3)
+    system 'clear'
     display_score(name, score)
-    break if score.values.take(2).include?(3)
 
     puts "Round #{round}", ''
     player = valid_choice
@@ -167,11 +181,15 @@ loop do
     winner = who_wins(player, computer)
     count_wins(winner, score)
 
-    round += 1
-    sleep(1)
     system 'clear'
+    display_score(name, score)
+    display_results(round, player, computer, winner)
+    STDIN.getch
+
+    round += 1
   end
 
+  puts message('break')
   break if %w(n no).include?(again?)
   system 'clear'
 end

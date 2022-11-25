@@ -37,11 +37,13 @@ prompts:
   choice: |
     Choose your weapon:
     (e.g. Enter '1', 'r' or 'rock' to select 'Rock'.)
+
     1. Rock     (r)
     2. Paper    (p)
     3. Scissors (sc)
     4. Lizard   (l)
     5. Spock    (sp)
+     
   valid_choice: |
     Hmm...that doesn't look like a valid choice.
 
@@ -55,6 +57,7 @@ prompts:
   - "Computer won!"
   tie_message:
   - "It's a tie!"
+  continue: "Press any key to continue."
 
 choices:
   rock:
