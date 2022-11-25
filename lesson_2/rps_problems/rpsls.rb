@@ -83,10 +83,9 @@ end
 
 def valid_choice
   choice = ''
+  prompt('choice')
 
   loop do
-    prompt('choice')
-    prompt('choice_example')
     input = gets.chomp.strip.downcase
     choice = find_choice(input)
     break if choice
