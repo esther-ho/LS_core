@@ -64,12 +64,53 @@ prompts:
   break: "-------------------------------------------------------------------"
   current_score: "                          Current Score"
 
+  winner:
+    win: |
+      You won!
+
+      Computer:
+    lose: |
+      Computer won!
+
+      Computer:
+    tie: |
+      It's a tie!
+
+      Computer:
   win_message:
-  - "You won!"
+  - "Yowch!"
+  - "You'll be sorry!"
+  - "What rotten luck."
+  - "What the-Oof!"
+  - "Oh, deary me."
+  - "Just you wait..."
+  - "I'm just being lazy."
+  - "You'll regret that!"
+  - "Quit picking on me!"
+  - "At times, I really hate this game..."
   lose_message:
-  - "Computer won!"
+  - "Take that!"
+  - "Victory is mine!"
+  - "You don't stand a chance!"
+  - "That was easy!"
+  - "Whoo! Success!"
+  - "Gotcha!"
+  - "You had it coming!"
+  - "Revenge! ...is sweet."
+  - "Nehehehehaha."
+  - "Now that's what I call a perfect move!"
   tie_message:
-  - "It's a tie!"
+  - "Bummer..."
+  - "Yawns..."
+  - "Boring..."
+  - "Guess that's it."
+  - "That's a coincidence!"
+  - "C'mon...We got places to go..."
+  - "Get a move on!"
+  - "Oh c'mon!"
+  - "I survived!"
+  - "This is taking too long!"
+
   continue: "Press any key to continue."
 
 choices:
