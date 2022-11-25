@@ -56,7 +56,7 @@ def rules?
     prompt('valid_view_rules')
   end
 
-  answer
+  %w(y yes).include?(answer)
 end
 
 # Switch between Page 1 and 2 of rules by pressing 'n' and 'b' keys
@@ -71,13 +71,6 @@ def display_rules
     break if STDIN.getch != 'b'
   end
 end
-
-# Rules are displayed and cleared when user presses a key
-# def display_rules
-#   puts message('rules')
-#   STDIN.getch
-#   system 'clear'
-# end
 
 def display_score(name, score)
   puts message('break')
@@ -164,7 +157,7 @@ def again?
     prompt('valid_again')
   end
 
-  answer
+  %w(n no).include?(answer)
 end
 
 # Main RPSLS program
@@ -174,8 +167,7 @@ name = valid_name
 
 system 'clear'
 puts "Hi #{name}!", ''
-view_rules = rules?
-display_rules if %w(y yes).include?(view_rules)
+display_rules if rules?
 
 loop do
   round = 1
@@ -204,7 +196,7 @@ loop do
   end
 
   puts message('break')
-  break if %w(n no).include?(again?)
+  break if again?
   system 'clear'
 end
 
