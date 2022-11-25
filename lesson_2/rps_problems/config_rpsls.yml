@@ -7,7 +7,7 @@ prompts:
   view_rules: "Would you like to learn the rules of the game?"
   view_rules_example: "Enter 'Y' to view the rules, or 'N' to proceed to the game."
   valid_view_rules: "Please enter 'Y' to view the rules, or 'N' to proceed to the game."
-  rules: |
+  rules_1: |
     -------------------------------------------------------------------
                                    RULES
     -------------------------------------------------------------------
@@ -15,6 +15,15 @@ prompts:
     - Select a play (R, P, SC, L, SP) that defeats the computer's play
     - First player to 3 wins is the winner of the round
 
+    [Page 1/2]
+    -------------------------------------------------------------------
+    => Press 'n' to view the next page.
+    => Press any other key to start the game.
+    -------------------------------------------------------------------
+  rules_2: |
+    -------------------------------------------------------------------
+                                   RULES
+    -------------------------------------------------------------------
     Win Conditions:
     - [Scissors] cuts [Paper]
     - [Paper] covers [Rock]
@@ -26,9 +35,13 @@ prompts:
     - [Paper] disproves [Spock]
     - [Spock] vaporizes [Rock]
     - [Rock] crushes [Scissors]
+
+    [Page 2/2]
     -------------------------------------------------------------------
-                      Press any key to start the game
+    => Press 'b' to view the previous page.
+    => Press any other key to start the game.
     -------------------------------------------------------------------
+
   again: "Want to have a rematch?"
   again_example: "Enter 'Y' to continue, or 'N' to end the game."
   valid_again: "Please enter 'Y' to continue, or 'N' to end the game."

@@ -59,12 +59,25 @@ def rules?
   answer
 end
 
-# Rules are displayed and cleared when user presses a key
+# Switch between Page 1 and 2 of rules by pressing 'n' and 'b' keys
+# Exit rules if any key other than 'n' or 'b' respectively is pressed
 def display_rules
-  puts message('rules')
-  STDIN.getch
-  system 'clear'
+  loop do
+    system 'clear'
+    puts message('rules_1')
+    break if STDIN.getch != 'n'
+    system 'clear'
+    puts message('rules_2')
+    break if STDIN.getch != 'b'
+  end
 end
+
+# Rules are displayed and cleared when user presses a key
+# def display_rules
+#   puts message('rules')
+#   STDIN.getch
+#   system 'clear'
+# end
 
 def display_score(name, score)
   puts message('break')
@@ -160,7 +173,6 @@ name = valid_name
 system 'clear'
 puts "Hi #{name}!", ''
 view_rules = rules?
-system 'clear'
 display_rules if %w(y yes).include?(view_rules)
 
 loop do
