@@ -12,7 +12,8 @@ prompts:
                                    RULES
     -------------------------------------------------------------------
     Objectives:
-    - Select a play (R, P, SC, L, SP) that defeats the computer's play
+    - Select a play (Rock, Paper, Scissors, Lizard, or Spock) that 
+      defeats the computer's play
     - First player to 3 wins is the winner of the round
 
     [Page 1/2]
