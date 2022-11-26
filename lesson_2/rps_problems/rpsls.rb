@@ -90,6 +90,7 @@ end
 def valid_choice
   choice = ''
   prompt('choice')
+  puts
 
   loop do
     input = gets.chomp.strip.downcase
@@ -181,7 +182,7 @@ puts message('welcome'), ''
 name = valid_name
 
 system 'clear'
-puts "Hi #{name}!", ''
+puts (message('greeting') + name + '!'), ''
 display_rules if rules?
 
 loop do
@@ -196,7 +197,7 @@ loop do
     system 'clear'
     display_score(name, score)
 
-    puts "Round #{round}", ''
+    puts (message('round_label') + round.to_s), ''
     player = valid_choice
     computer = CHOICES.keys.sample
     winner = who_wins(player, computer)

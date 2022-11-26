@@ -1,5 +1,6 @@
 prompts:
   welcome: "Welcome to 'Rock, Paper, Scissors, Lizard, Spock'!"
+  greeting: "Hi, "
   name: "Enter your name:"
   valid_name: "Make sure to use a valid name.\n
               "
@@ -43,11 +44,6 @@ prompts:
     => Press any other key to start the game.
     -------------------------------------------------------------------
 
-  again: "Want to have a rematch?"
-  again_example: "Enter 'Y' to continue, or 'N' to end the game."
-  valid_again: "Please enter 'Y' to continue, or 'N' to end the game."
-  bye: "Thank you for playing 'Rock, Paper, Scissors, Lizard, Spock'! Goodbye!"
-
   choice: |
     Choose your weapon:
     (e.g. Enter '1', 'r' or 'rock' to select 'Rock'.)
@@ -57,19 +53,17 @@ prompts:
     3. Scissors (sc)
     4. Lizard   (l)
     5. Spock    (sp)
-     
   valid_choice: |
     Hmm...that doesn't look like a valid choice.
 
     For example: Enter '1', 'r' or 'rock' to select 'Rock'.
   break: "-------------------------------------------------------------------"
   current_score: "                          Current Score"
-
+  round_label: "Round "
   winner:
     win: "You won!"
     lose: "Computer won!"
     tie: "It's a tie!"
-
   computer_label: "Computer: "
   win_message:
   - "Yowch!"
@@ -104,8 +98,12 @@ prompts:
   - "Oh c'mon!"
   - "I survived!"
   - "This is taking too long!"
-
   continue: "Press any key to continue."
+
+  again: "Want to have a rematch?"
+  again_example: "Enter 'Y' to continue, or 'N' to end the game."
+  valid_again: "Please enter 'Y' to continue, or 'N' to end the game."
+  bye: "Thank you for playing 'Rock, Paper, Scissors, Lizard, Spock'! Goodbye!"
 
 choices:
   rock:
