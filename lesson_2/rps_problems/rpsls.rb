@@ -118,19 +118,34 @@ end
 def win_message(winner)
   case winner
   when 'player'
-    message('winner')['win'] + '"' + message('win_message').sample + '"'
+    message('winner')['win']
   when 'computer'
-    message('winner')['lose'] + '"' + message('lose_message').sample + '"'
+    message('winner')['lose']
   when 'tie'
-    message('winner')['tie'] + '"' + message('tie_message').sample + '"'
+    message('winner')['tie']
   end
+end
+
+def computer_comment(winner)
+  comment =
+    case winner
+    when 'player'
+      message('win_message').sample
+    when 'computer'
+      message('lose_message').sample
+    when 'tie'
+      message('tie_message').sample
+    end
+
+  "#{message('computer_label')}\"#{comment}\""
 end
 
 def display_results(round, player, computer, winner)
   puts "Round #{round} - Results", ''
   puts "You chose: [#{player.capitalize}]"
   puts "Computer chose: [#{computer.capitalize}]", ''
-  puts win_message(winner)
+  puts win_message(winner), ''
+  puts computer_comment(winner)
   puts message('break')
   prompt('continue')
 end

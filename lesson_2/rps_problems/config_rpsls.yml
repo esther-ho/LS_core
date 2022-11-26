@@ -65,18 +65,11 @@ prompts:
   current_score: "                          Current Score"
 
   winner:
-    win: |
-      You won!
+    win: "You won!"
+    lose: "Computer won!"
+    tie: "It's a tie!"
 
-      Computer:
-    lose: |
-      Computer won!
-
-      Computer:
-    tie: |
-      It's a tie!
-
-      Computer:
+  computer_label: "Computer: "
   win_message:
   - "Yowch!"
   - "You'll be sorry!"
