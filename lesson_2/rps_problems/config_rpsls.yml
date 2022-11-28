@@ -44,6 +44,9 @@ prompts:
     => Press any other key to start the game.
     -------------------------------------------------------------------
 
+  round_label: "Round "
+  break: "-------------------------------------------------------------------"
+
   choice: |
     Choose your weapon:
     (e.g. Enter '1', 'r' or 'rock' to select 'Rock'.)
@@ -57,14 +60,17 @@ prompts:
     Hmm...that doesn't look like a valid choice.
 
     For example: Enter '1', 'r' or 'rock' to select 'Rock'.
-  break: "-------------------------------------------------------------------"
+
   score:
     label: "                          Current Score"
     player: "'s wins: "
     computer: "Computer's wins: "
     tie: "Ties: "
 
-  round_label: "Round "
+  results:
+    label: "Results - Round "
+    player: "You chose: "
+    computer: "Computer chose: "
   winner:
     win: "You won!"
     lose: "Computer won!"
