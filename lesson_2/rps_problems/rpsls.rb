@@ -130,17 +130,19 @@ def win_text(winner)
 end
 
 def computer_comment(winner)
+  computer = message('computer')
+
   comment =
     case winner
     when 'player'
-      message('computer_text')['win'].sample
+      computer['text']['win'].sample
     when 'computer'
-      message('computer_text')['lose'].sample
+      computer['text']['lose'].sample
     when 'tie'
-      message('computer_text')['tie'].sample
+      computer['text']['tie'].sample
     end
 
-  message('computer_label') + '"' + comment + '"'
+    computer['label'] + '"' + comment + '"'
 end
 
 def display_results(round, player, computer, winner)
@@ -167,6 +169,8 @@ def count_wins(winner, score)
 end
 
 def congrats(score)
+  match = message('match')
+
   result =
     case score['player_win']
     when 3
@@ -176,8 +180,8 @@ def congrats(score)
     end
 
   puts message('break')
-  puts message('match')[result]['art'], ''
-  puts message('match')[result]['text']
+  puts match[result]['art'], ''
+  puts match[result]['text']
   puts message('break')
 end
 
