@@ -58,7 +58,12 @@ prompts:
 
     For example: Enter '1', 'r' or 'rock' to select 'Rock'.
   break: "-------------------------------------------------------------------"
-  current_score: "                          Current Score"
+  score:
+    label: "                          Current Score"
+    player: "'s wins: "
+    computer: "Computer's wins: "
+    tie: "Ties: "
+
   round_label: "Round "
   winner:
     win: "You won!"

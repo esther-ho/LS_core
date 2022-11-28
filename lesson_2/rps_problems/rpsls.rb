@@ -73,11 +73,13 @@ def display_rules
 end
 
 def display_score(name, score)
+  score_text = message('score')
+
   puts message('break')
-  puts message('current_score'), ''
-  puts "#{name}'s win: #{score['player_win']}"
-  puts "Computer's win: #{score['computer_win']}"
-  puts "Ties: #{score['tie']}"
+  puts score_text['label'], ''
+  puts name + score_text['player'] + score['player_win'].to_s
+  puts score_text['computer'] + score['computer_win'].to_s
+  puts score_text['tie'] + score['tie'].to_s
   puts message('break')
 end
 
