@@ -69,8 +69,8 @@ prompts:
 
 
   results_label: "Results - Round "
-  results_player: "You chose: "
-  results_computer: "Computer chose: "
+  choice_player: "You chose: "
+  choice_computer: "Computer chose: "
   winner:
     win: "You won!"
     lose: "Computer won!"

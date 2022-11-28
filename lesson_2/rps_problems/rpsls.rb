@@ -73,12 +73,9 @@ def display_rules
 end
 
 def display_score(name, score)
-  puts message('break')
-  puts message('score_label'), ''
   puts name + message('score_player') + score['player_win'].to_s
   puts message('score_computer') + score['computer_win'].to_s
   puts message('score_tie') + score['tie'].to_s
-  puts message('break')
 end
 
 def find_choice(input)
@@ -116,6 +113,11 @@ def who_wins(player, computer)
   end
 end
 
+def display_choices(player, computer)
+  puts message('choice_player') + '[' + player.capitalize + ']'
+  puts message('choice_computer') + '[' + computer.capitalize + ']'
+end
+
 def win_text(winner)
   case winner
   when 'player'
@@ -127,7 +129,7 @@ def win_text(winner)
   end
 end
 
-def computer_comment(winner)
+def display_computer_comment(winner)
   comment =
     case winner
     when 'player'
@@ -138,17 +140,7 @@ def computer_comment(winner)
       message('computer_text')['tie'].sample
     end
 
-  message('computer_label') + '"' + comment + '"'
-end
-
-def display_results(round, player, computer, winner)
-  puts (message('results_label') + round.to_s), ''
-  puts message('results_player') + '[' + player.capitalize + ']'
-  puts (message('results_computer') + '[' + computer.capitalize + ']'), ''
-  puts win_text(winner), ''
-  puts computer_comment(winner)
-  puts message('break')
-  prompt('continue')
+  puts message('computer_label') + '"' + comment + '"'
 end
 
 def count_wins(winner, score)
@@ -171,10 +163,8 @@ def display_congrats(score)
       'match_lose'
     end
 
-  puts message('break')
   puts message(result)['art'], ''
   puts message(result)['text']
-  puts message('break')
 end
 
 def again?
@@ -210,7 +200,10 @@ loop do
 
   until score.values.take(2).include?(3)
     system 'clear'
+    puts message('break')
+    puts message('score_label'), ''
     display_score(name, score)
+    puts message('break')
 
     puts (message('round_label') + round.to_s), ''
     player = valid_choice
@@ -219,15 +212,28 @@ loop do
     count_wins(winner, score)
 
     system 'clear'
+    puts message('break')
+    puts message('score_label'), ''
     display_score(name, score)
-    display_results(round, player, computer, winner)
+    puts message('break')
+
+    puts (message('results_label') + round.to_s), ''
+    display_choices(player, computer)
+    puts
+    puts win_text(winner), ''
+
+    display_computer_comment(winner)
+    puts message('break')
+    prompt('continue')
     STDIN.getch
 
     round += 1
   end
 
   system 'clear'
-  congrats(score)
+  puts message('break')
+  display_congrats(score)
+  puts message('break')
   sleep(1)
 
   break if again?
