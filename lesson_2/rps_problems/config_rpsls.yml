@@ -15,7 +15,7 @@ prompts:
     Objectives:
     - Select a play (Rock, Paper, Scissors, Lizard, or Spock) that 
       defeats the computer's play
-    - First player to 3 wins is the winner of the round
+    - First player to 3 wins is the grand winner!
 
     [Page 1/2]
     -------------------------------------------------------------------
@@ -99,6 +99,39 @@ prompts:
   - "I survived!"
   - "This is taking too long!"
   continue: "Press any key to continue."
+
+  match:
+    win:
+      text: "Hooray! You beat the computer and are the grand winner!"
+      art: |
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀
+        ⠀⣠⣴⣾⣿⣿⡇⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⡿⠀⠀⠀
+        ⣰⣿⣿⣿⠿⣿⡇⠀⠀⠀⣰⣷⣿⣿⠀⠀⠀⠀⣠⣢⣾⣷⠀⠀⣿⠃⣀⠀⠀
+        ⣿⣿⠋⠀⠀⠀⠁⠀⠀⠀⢻⣿⢹⡏⠀⢀⡀⠸⣿⢻⣿⠿⣦⢀⣿⣾⣿⣶⠆
+        ⣿⣯⠀⠀⠀⠀⢀⣶⣿⣶⣼⣿⢸⡇⢰⣿⣿⣼⣿⠈⣁⣤⣿⢻⡏⢹⡟⠀⠀
+        ⢻⣿⣷⣤⣤⣴⣿⣿⠀⢿⣿⡿⢸⣿⣿⡃⣿⣇⣿⢸⠋⣹⣿⣼⡧⣄⣻⣄⠀
+        ⠀⠙⠛⠛⠛⠋⣿⣿⣄⣼⣿⠓⠀⠻⣿⣷⣿⠼⠿⠟⠿⠛⠹⢿⣇⢻⣦⣿⠂
+        ⠀⠀⠀⠀⠀⠀⠘⠿⣿⠿⠃⣠⣦⠀⠈⠉⣿⠀⠀⠀⠀⠀⠀⢸⣿⣦⣉⠁⠀
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣆⠀⢠⡇⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⠃⠀
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠿⠿⠟⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⡿⠀⠀
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠃⠀⠀
+    lose:
+      text: "Oh no, you lost the match! Better luck next time."
+      art: |
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀
+        ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⣶⡆⠀⣰⣿⠇⣾⡿⠛⠉⠁
+        ⠀⣠⣴⠾⠿⠿⠀⢀⣾⣿⣆⣀⣸⣿⣷⣾⣿⡿⢸⣿⠟⢓⠀⠀
+        ⣴⡟⠁⣀⣠⣤⠀⣼⣿⠾⣿⣻⣿⠃⠙⢫⣿⠃⣿⡿⠟⠛⠁⠀
+        ⢿⣝⣻⣿⡿⠋⠾⠟⠁⠀⠹⠟⠛⠀⠀⠈⠉⠀⠉⠀⠀⠀⠀⠀
+        ⠀⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⣀⢀⣠⣤⣴⣤⣄⠀
+        ⠀⠀⠀⠀⣀⣤⣤⢶⣤⠀⠀⢀⣴⢃⣿⠟⠋⢹⣿⣣⣴⡿⠋⠀
+        ⠀⠀⣰⣾⠟⠉⣿⡜⣿⡆⣴⡿⠁⣼⡿⠛⢃⣾⡿⠋⢻⣇⠀⠀
+        ⠀⠐⣿⡁⢀⣠⣿⡇⢹⣿⡿⠁⢠⣿⠷⠟⠻⠟⠀⠀⠈⠛⠀⠀
+        ⠀⠀⠙⠻⠿⠟⠋⠀⠀⠙⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+  # match_win: |
+  #   Hooray! You beat the computer and are the grand winner!
+  # match_lose: |
+  #   You lost the match... Better luck next time.
 
   again: "Want to have a rematch?"
   again_example: "Enter 'Y' to continue, or 'N' to end the game."

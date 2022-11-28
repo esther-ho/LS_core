@@ -162,6 +162,21 @@ def count_wins(winner, score)
   end
 end
 
+def congrats(score)
+  result =
+    case score['player_win']
+    when 3
+      'win'
+    else
+      'lose'
+    end
+
+  puts message('break')
+  puts message('match')[result]['art'], ''
+  puts message('match')[result]['text']
+  puts message('break')
+end
+
 def again?
   answer = ''
   prompt('again')
@@ -211,7 +226,10 @@ loop do
     round += 1
   end
 
-  puts message('break')
+  system 'clear'
+  congrats(score)
+  sleep(1.5)
+
   break if again?
   system 'clear'
 end
