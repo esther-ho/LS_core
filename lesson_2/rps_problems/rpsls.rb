@@ -146,11 +146,11 @@ def computer_comment(winner)
 end
 
 def display_results(round, player, computer, winner)
-  results_text = message('results')
+  results = message('results')
 
-  puts (results_text['label'] + round.to_s), ''
-  puts results_text['player'] + '[' + player.capitalize + ']'
-  puts (results_text['computer'] + '[' + computer.capitalize + ']'), ''
+  puts (results['label'] + round.to_s), ''
+  puts results['player'] + '[' + player.capitalize + ']'
+  puts (results['computer'] + '[' + computer.capitalize + ']'), ''
   puts win_text(winner), ''
   puts computer_comment(winner)
   puts message('break')
