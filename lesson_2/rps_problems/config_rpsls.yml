@@ -61,90 +61,84 @@ prompts:
 
     For example: Enter '1', 'r' or 'rock' to select 'Rock'.
 
-  score:
-    label: "                          Current Score"
-    player: "'s wins: "
-    computer: "Computer's wins: "
-    tie: "Ties: "
 
-  results:
-    label: "Results - Round "
-    player: "You chose: "
-    computer: "Computer chose: "
+  score_label: "                          Current Score"
+  score_player: "'s wins: "
+  score_computer: "Computer's wins: "
+  score_tie: "Ties: "
+
+
+  results_label: "Results - Round "
+  results_player: "You chose: "
+  results_computer: "Computer chose: "
   winner:
     win: "You won!"
     lose: "Computer won!"
     tie: "It's a tie!"
-  computer:
-    label: "Computer: "
-    text:
-      win:
-      - "Yowch!"
-      - "You'll be sorry!"
-      - "What rotten luck."
-      - "What the-Oof!"
-      - "Oh, deary me."
-      - "Just you wait..."
-      - "I'm just being lazy."
-      - "You'll regret that!"
-      - "Quit picking on me!"
-      - "At times, I really hate this game..."
-      lose:
-      - "Take that!"
-      - "Victory is mine!"
-      - "You don't stand a chance!"
-      - "That was easy!"
-      - "Whoo! Success!"
-      - "Gotcha!"
-      - "You had it coming!"
-      - "Revenge! ...is sweet."
-      - "Nehehehehaha."
-      - "Now that's what I call a perfect move!"
-      tie:
-      - "Bummer..."
-      - "Yawns..."
-      - "Boring..."
-      - "Guess that's it."
-      - "That's a coincidence!"
-      - "C'mon...We got places to go..."
-      - "Get a move on!"
-      - "Oh c'mon!"
-      - "I survived!"
-      - "This is taking too long!"
+  computer_label: "Computer: "
+  computer_text:
+    win:
+    - "Yowch!"
+    - "You'll be sorry!"
+    - "What rotten luck."
+    - "What the-Oof!"
+    - "Oh, deary me."
+    - "Just you wait..."
+    - "I'm just being lazy."
+    - "You'll regret that!"
+    - "Quit picking on me!"
+    - "At times, I really hate this game..."
+    lose:
+    - "Take that!"
+    - "Victory is mine!"
+    - "You don't stand a chance!"
+    - "That was easy!"
+    - "Whoo! Success!"
+    - "Gotcha!"
+    - "You had it coming!"
+    - "Revenge! ...is sweet."
+    - "Nehehehehaha."
+    - "Now that's what I call a perfect move!"
+    tie:
+    - "Bummer..."
+    - "Yawns..."
+    - "Boring..."
+    - "Guess that's it."
+    - "That's a coincidence!"
+    - "C'mon...We got places to go..."
+    - "Get a move on!"
+    - "Oh c'mon!"
+    - "I survived!"
+    - "This is taking too long!"
   continue: "Press any key to continue."
 
-  match:
-    win:
-      text: "Hooray! You beat the computer and are the grand winner!"
-      art: |
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀
-        ⠀⣠⣴⣾⣿⣿⡇⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⡿⠀⠀⠀
-        ⣰⣿⣿⣿⠿⣿⡇⠀⠀⠀⣰⣷⣿⣿⠀⠀⠀⠀⣠⣢⣾⣷⠀⠀⣿⠃⣀⠀⠀
-        ⣿⣿⠋⠀⠀⠀⠁⠀⠀⠀⢻⣿⢹⡏⠀⢀⡀⠸⣿⢻⣿⠿⣦⢀⣿⣾⣿⣶⠆
-        ⣿⣯⠀⠀⠀⠀⢀⣶⣿⣶⣼⣿⢸⡇⢰⣿⣿⣼⣿⠈⣁⣤⣿⢻⡏⢹⡟⠀⠀
-        ⢻⣿⣷⣤⣤⣴⣿⣿⠀⢿⣿⡿⢸⣿⣿⡃⣿⣇⣿⢸⠋⣹⣿⣼⡧⣄⣻⣄⠀
-        ⠀⠙⠛⠛⠛⠋⣿⣿⣄⣼⣿⠓⠀⠻⣿⣷⣿⠼⠿⠟⠿⠛⠹⢿⣇⢻⣦⣿⠂
-        ⠀⠀⠀⠀⠀⠀⠘⠿⣿⠿⠃⣠⣦⠀⠈⠉⣿⠀⠀⠀⠀⠀⠀⢸⣿⣦⣉⠁⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣆⠀⢠⡇⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⠃⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠿⠿⠟⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⡿⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠃⠀⠀
-    lose:
-      text: "Oh no, you lost the match! Better luck next time."
-      art: |
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⣶⡆⠀⣰⣿⠇⣾⡿⠛⠉⠁
-        ⠀⣠⣴⠾⠿⠿⠀⢀⣾⣿⣆⣀⣸⣿⣷⣾⣿⡿⢸⣿⠟⢓⠀⠀
-        ⣴⡟⠁⣀⣠⣤⠀⣼⣿⠾⣿⣻⣿⠃⠙⢫⣿⠃⣿⡿⠟⠛⠁⠀
-        ⢿⣝⣻⣿⡿⠋⠾⠟⠁⠀⠹⠟⠛⠀⠀⠈⠉⠀⠉⠀⠀⠀⠀⠀
-        ⠀⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⣀⢀⣠⣤⣴⣤⣄⠀
-        ⠀⠀⠀⠀⣀⣤⣤⢶⣤⠀⠀⢀⣴⢃⣿⠟⠋⢹⣿⣣⣴⡿⠋⠀
-        ⠀⠀⣰⣾⠟⠉⣿⡜⣿⡆⣴⡿⠁⣼⡿⠛⢃⣾⡿⠋⢻⣇⠀⠀
-        ⠀⠐⣿⡁⢀⣠⣿⡇⢹⣿⡿⠁⢠⣿⠷⠟⠻⠟⠀⠀⠈⠛⠀⠀
-        ⠀⠀⠙⠻⠿⠟⠋⠀⠀⠙⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-  # match_win: |
-  #   Hooray! You beat the computer and are the grand winner!
-  # match_lose: |
-  #   You lost the match... Better luck next time.
+  match_win:
+    text: "Hooray! You beat the computer and are the grand winner!"
+    art: |
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀
+      ⠀⣠⣴⣾⣿⣿⡇⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣴⡿⠀⠀⠀
+      ⣰⣿⣿⣿⠿⣿⡇⠀⠀⠀⣰⣷⣿⣿⠀⠀⠀⠀⣠⣢⣾⣷⠀⠀⣿⠃⣀⠀⠀
+      ⣿⣿⠋⠀⠀⠀⠁⠀⠀⠀⢻⣿⢹⡏⠀⢀⡀⠸⣿⢻⣿⠿⣦⢀⣿⣾⣿⣶⠆
+      ⣿⣯⠀⠀⠀⠀⢀⣶⣿⣶⣼⣿⢸⡇⢰⣿⣿⣼⣿⠈⣁⣤⣿⢻⡏⢹⡟⠀⠀
+      ⢻⣿⣷⣤⣤⣴⣿⣿⠀⢿⣿⡿⢸⣿⣿⡃⣿⣇⣿⢸⠋⣹⣿⣼⡧⣄⣻⣄⠀
+      ⠀⠙⠛⠛⠛⠋⣿⣿⣄⣼⣿⠓⠀⠻⣿⣷⣿⠼⠿⠟⠿⠛⠹⢿⣇⢻⣦⣿⠂
+      ⠀⠀⠀⠀⠀⠀⠘⠿⣿⠿⠃⣠⣦⠀⠈⠉⣿⠀⠀⠀⠀⠀⠀⢸⣿⣦⣉⠁⠀
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣆⠀⢠⡇⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⠃⠀
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠿⠿⠟⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⡿⠀⠀
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠃⠀⠀
+  match_lose:
+    text: "Oh no, you lost the match! Better luck next time."
+    art: |
+      ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀
+      ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⠀⠀⠀⣶⡆⠀⣰⣿⠇⣾⡿⠛⠉⠁
+      ⠀⣠⣴⠾⠿⠿⠀⢀⣾⣿⣆⣀⣸⣿⣷⣾⣿⡿⢸⣿⠟⢓⠀⠀
+      ⣴⡟⠁⣀⣠⣤⠀⣼⣿⠾⣿⣻⣿⠃⠙⢫⣿⠃⣿⡿⠟⠛⠁⠀
+      ⢿⣝⣻⣿⡿⠋⠾⠟⠁⠀⠹⠟⠛⠀⠀⠈⠉⠀⠉⠀⠀⠀⠀⠀
+      ⠀⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⣀⢀⣠⣤⣴⣤⣄⠀
+      ⠀⠀⠀⠀⣀⣤⣤⢶⣤⠀⠀⢀⣴⢃⣿⠟⠋⢹⣿⣣⣴⡿⠋⠀
+      ⠀⠀⣰⣾⠟⠉⣿⡜⣿⡆⣴⡿⠁⣼⡿⠛⢃⣾⡿⠋⢻⣇⠀⠀
+      ⠀⠐⣿⡁⢀⣠⣿⡇⢹⣿⡿⠁⢠⣿⠷⠟⠻⠟⠀⠀⠈⠛⠀⠀
+      ⠀⠀⠙⠻⠿⠟⠋⠀⠀⠙⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
   again: "Want to have a rematch?"
   again_example: "Enter 'Y' to continue, or 'N' to end the game."

@@ -73,13 +73,11 @@ def display_rules
 end
 
 def display_score(name, score)
-  score_text = message('score')
-
   puts message('break')
-  puts score_text['label'], ''
-  puts name + score_text['player'] + score['player_win'].to_s
-  puts score_text['computer'] + score['computer_win'].to_s
-  puts score_text['tie'] + score['tie'].to_s
+  puts message('score_label'), ''
+  puts name + message('score_player') + score['player_win'].to_s
+  puts message('score_computer') + score['computer_win'].to_s
+  puts message('score_tie') + score['tie'].to_s
   puts message('break')
 end
 
@@ -130,27 +128,23 @@ def win_text(winner)
 end
 
 def computer_comment(winner)
-  computer = message('computer')
-
   comment =
     case winner
     when 'player'
-      computer['text']['win'].sample
+      message('computer_text')['win'].sample
     when 'computer'
-      computer['text']['lose'].sample
+      message('computer_text')['lose'].sample
     when 'tie'
-      computer['text']['tie'].sample
+      message('computer_text')['tie'].sample
     end
 
-    computer['label'] + '"' + comment + '"'
+  message('computer_label') + '"' + comment + '"'
 end
 
 def display_results(round, player, computer, winner)
-  results = message('results')
-
-  puts (results['label'] + round.to_s), ''
-  puts results['player'] + '[' + player.capitalize + ']'
-  puts (results['computer'] + '[' + computer.capitalize + ']'), ''
+  puts (message('results_label') + round.to_s), ''
+  puts message('results_player') + '[' + player.capitalize + ']'
+  puts (message('results_computer') + '[' + computer.capitalize + ']'), ''
   puts win_text(winner), ''
   puts computer_comment(winner)
   puts message('break')
@@ -168,20 +162,18 @@ def count_wins(winner, score)
   end
 end
 
-def congrats(score)
-  match = message('match')
-
+def display_congrats(score)
   result =
     case score['player_win']
     when 3
-      'win'
+      'match_win'
     else
-      'lose'
+      'match_lose'
     end
 
   puts message('break')
-  puts match[result]['art'], ''
-  puts match[result]['text']
+  puts message(result)['art'], ''
+  puts message(result)['text']
   puts message('break')
 end
 
@@ -236,7 +228,7 @@ loop do
 
   system 'clear'
   congrats(score)
-  sleep(1.5)
+  sleep(1)
 
   break if again?
   system 'clear'
