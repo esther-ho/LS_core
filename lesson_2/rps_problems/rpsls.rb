@@ -1,22 +1,3 @@
-=begin
-- Ask user if they would like to view instructions
-- Get input from the user
-  - Multiple ways to indicate a valid input (e.g. '1', 'rock', 'r')
-  - Convert user input into a valid input
-- Sample a input from possible choices for the computer
-  - Provide a list of possible choices
-- Determine if player or computer won
-  - Possible combinations of winning depending on input
-  - Print the appropriate message if player win/loses/ties
-- Repeat RPSLS program until there are 3 wins
-  - Keep track of number of wins for player and computer
-  - Print out number of wins, loses, ties after each round
-- Repeat game if player answers 'y'
-  - Keep track of number of rounds player has played
-  - Number of rounds won or lost
-
-=end
-
 require 'psych'
 require 'io/console'
 
