@@ -63,8 +63,9 @@ prompts:
 
 
   score_label: "                          Current Score"
-  score_player: "'s wins: "
-  score_computer: "Computer's wins: "
+  previous_winner: "Previous Winner: "
+  score_player: "'s Wins: "
+  score_computer: "Computer's Wins: "
   score_tie: "Ties: "
 
 

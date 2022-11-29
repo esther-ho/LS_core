@@ -135,17 +135,18 @@ def count_wins(winner, score)
   end
 end
 
-def display_congrats(score)
-  result =
-    case score['player_win']
-    when 3
-      'match_win'
-    else
-      'match_lose'
-    end
+def match_winner(score, name)
+  case score['player_win']
+  when 3
+    ['match_win', name]
+  else
+    ['match_lose', 'Computer']
+  end
+end
 
-  puts message(result)['art'], ''
-  puts message(result)['text']
+def display_congrats(match_result)
+  puts message(match_result)['art'], ''
+  puts message(match_result)['text']
 end
 
 def again?
@@ -171,6 +172,8 @@ system 'clear'
 puts (message('greeting') + name + '!'), ''
 display_rules if rules?
 
+previous_winner = '-'
+
 loop do
   round = 1
   score = {
@@ -183,6 +186,7 @@ loop do
     system 'clear'
     puts message('break')
     puts message('score_label'), ''
+    puts message('previous_winner') + previous_winner
     display_score(name, score)
     puts message('break')
 
@@ -195,6 +199,7 @@ loop do
     system 'clear'
     puts message('break')
     puts message('score_label'), ''
+    puts message('previous_winner') + previous_winner
     display_score(name, score)
     puts message('break')
 
@@ -211,9 +216,11 @@ loop do
     round += 1
   end
 
+  match_result, previous_winner = match_winner(score, name)
+
   system 'clear'
   puts message('break')
-  display_congrats(score)
+  display_congrats(match_result)
   puts message('break')
   sleep(1)
 
