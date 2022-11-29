@@ -110,7 +110,7 @@ def win_text(winner)
   end
 end
 
-def display_computer_comment(winner)
+def computer_comment(winner)
   comment =
     case winner
     when 'player'
@@ -121,7 +121,7 @@ def display_computer_comment(winner)
       message('computer_text')['tie'].sample
     end
 
-  puts message('computer_label') + '"' + comment + '"'
+  message('computer_label') + '"' + comment + '"'
 end
 
 def count_wins(winner, score)
@@ -203,7 +203,7 @@ loop do
     puts
     puts win_text(winner), ''
 
-    display_computer_comment(winner)
+    puts computer_comment(winner)
     puts message('break')
     prompt('continue')
     STDIN.getch
