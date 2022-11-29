@@ -84,11 +84,11 @@ def win?(first, second)
   CHOICES[first]['beat'].include?(second)
 end
 
-def who_wins(player, computer)
+def player_win?(player, computer)
   if win?(player, computer)
-    'player'
+    'win'
   elsif win?(computer, player)
-    'computer'
+    'lose'
   else
     'tie'
   end
@@ -99,36 +99,20 @@ def display_choices(player, computer)
   puts message('choice_computer') + '[' + computer.capitalize + ']'
 end
 
-def win_text(winner)
-  case winner
-  when 'player'
-    message('winner')['win']
-  when 'computer'
-    message('winner')['lose']
-  when 'tie'
-    message('winner')['tie']
-  end
+def win_text(result)
+  message('winner')[result]
 end
 
-def computer_comment(winner)
-  comment =
-    case winner
-    when 'player'
-      message('computer_text')['win'].sample
-    when 'computer'
-      message('computer_text')['lose'].sample
-    when 'tie'
-      message('computer_text')['tie'].sample
-    end
-
+def computer_comment(result)
+  comment = message('computer_text')[result].sample
   message('computer_label') + '"' + comment + '"'
 end
 
-def count_wins(winner, score)
-  case winner
-  when 'player'
+def count_wins(result, score)
+  case result
+  when 'win'
     score['player_win'] += 1
-  when 'computer'
+  when 'lose'
     score['computer_win'] += 1
   when 'tie'
     score['tie'] += 1
@@ -193,8 +177,8 @@ loop do
     puts (message('round_label') + round.to_s), ''
     player = valid_choice
     computer = CHOICES.keys.sample
-    winner = who_wins(player, computer)
-    count_wins(winner, score)
+    round_result = player_win?(player, computer)
+    count_wins(round_result, score)
 
     system 'clear'
     puts message('break')
@@ -206,9 +190,8 @@ loop do
     puts (message('results_label') + round.to_s), ''
     display_choices(player, computer)
     puts
-    puts win_text(winner), ''
-
-    puts computer_comment(winner)
+    puts win_text(round_result), ''
+    puts computer_comment(round_result)
     puts message('break')
     prompt('continue')
     STDIN.getch
