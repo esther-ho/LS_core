@@ -160,7 +160,7 @@ def again?
     prompt('valid_again')
   end
 
-  %w(n no).include?(answer)
+  %w(y yes).include?(answer)
 end
 
 # Main RPSLS program
@@ -224,7 +224,7 @@ loop do
   puts message('break')
   sleep(1)
 
-  break if again?
+  break unless again?
   system 'clear'
 end
 
