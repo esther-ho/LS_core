@@ -11,8 +11,11 @@
   - The input can be modified
   - Output is rounded to nearest second decimal place
 --- E
-- calculate_area(10, 7) # => 70 square meters (753.47 square feet)
-- calculate_area(4.5, 5) # => 22.5 square meters (242.19 square feet)
+Enter the length of the room in meters:
+10
+Enter the width of the room in meters:
+7
+The area of the room is 70.0 square meters (753.47 square feet).
 --- D
 
 --- A
@@ -20,9 +23,25 @@
 - Store the length given
 - Ask the user for the width of the room in meters
 - Store the width given
+- Convert the length and width to floats
 - Multiply the length and width to obtain the area in square meters
 - Multiply the square meters by 10.7639 to obtain the area in square feet
 - Round the areas to 2 decimal place
 - Print the areas
 
 =end
+
+def calculate_area
+  puts "Enter the length of the room in meters:"
+  length = gets.chomp.strip
+  puts "Enter the width of the room in meters:"
+  width = gets.chomp.strip
+
+  square_meters = length.to_f * width.to_f
+  square_feet = square_meters * 10.7639
+
+  puts "The area of the room is #{square_meters.round(2)} square meters"\
+      " (#{square_feet.round(2)} square feet)."
+end
+
+calculate_area
