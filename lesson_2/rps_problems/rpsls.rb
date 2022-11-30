@@ -108,7 +108,7 @@ def computer_comment(result)
   message('computer_label') + '"' + comment + '"'
 end
 
-def count_wins(result, score)
+def update_score(result, score)
   case result
   when 'win'
     score['player_win'] += 1
@@ -178,7 +178,7 @@ loop do
     player = valid_choice
     computer = CHOICES.keys.sample
     round_result = player_win?(player, computer)
-    count_wins(round_result, score)
+    update_score(round_result, score)
 
     system 'clear'
     puts message('break')
