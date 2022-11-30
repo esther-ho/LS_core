@@ -11,10 +11,9 @@
 - Array of numbers from 20 to 200
 
 --- A
-- Create an array of numbers ranging from 20 to 200
-- Sample a number randomly from the array
+- Sample a number randomly from a range of numbers between 20 and 200
 - Return the sampled number and print it
 =end
 
-age = (20..200).to_a.sample
+age = rand(20..200)
 puts "Teddy is #{age} years old!"
