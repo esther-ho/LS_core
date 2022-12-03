@@ -166,7 +166,7 @@ loop do
     'tie' => 0
   }
 
-  until score.values.take(2).include?(3)
+  until score.values[0, 2].include?(3)
     system 'clear'
     puts message('break')
     puts message('score_label'), ''
