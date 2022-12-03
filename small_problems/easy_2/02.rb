@@ -31,6 +31,8 @@ The area of the room is 70.0 square meters (753.47 square feet).
 
 =end
 
+SQMETERS_TO_SQFEET = 10.7639
+
 def calculate_area
   puts "Enter the length of the room in meters:"
   length = gets.chomp.strip
@@ -38,7 +40,7 @@ def calculate_area
   width = gets.chomp.strip
 
   square_meters = length.to_f * width.to_f
-  square_feet = square_meters * 10.7639
+  square_feet = square_meters * SQMETERS_TO_SQFEET
 
   puts "The area of the room is #{square_meters.round(2)} square meters"\
       " (#{square_feet.round(2)} square feet)."
