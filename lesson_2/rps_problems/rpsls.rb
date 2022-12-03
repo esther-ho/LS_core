@@ -156,7 +156,7 @@ system 'clear'
 puts (message('greeting') + name + '!'), ''
 display_rules if rules?
 
-previous_winner = '-'
+grand_winner = '-'
 
 loop do
   round = 1
@@ -170,7 +170,7 @@ loop do
     system 'clear'
     puts message('break')
     puts message('score_label'), ''
-    puts message('previous_winner') + previous_winner
+    puts message('grand_winner') + grand_winner
     display_score(name, score)
     puts message('break')
 
@@ -183,7 +183,7 @@ loop do
     system 'clear'
     puts message('break')
     puts message('score_label'), ''
-    puts message('previous_winner') + previous_winner
+    puts message('grand_winner') + grand_winner
     display_score(name, score)
     puts message('break')
 
@@ -199,7 +199,7 @@ loop do
     round += 1
   end
 
-  match_result, previous_winner = match_winner(score, name)
+  match_result, grand_winner = match_winner(score, name)
 
   system 'clear'
   puts message('break')
