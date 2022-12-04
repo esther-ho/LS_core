@@ -26,3 +26,16 @@ The total is $230.0
   Multiplying the new tip % by bill amount
 - Add the total tip to the bill amount for the total bill
 =end
+
+print "What is the bill? "
+bill = gets.chomp.to_f
+
+print "What is the tip percentage? "
+tip_percent = gets.chomp.to_f
+
+total_tip = (bill * (tip_percent / 100)).round(2)
+total_bill = (bill + total_tip).round(2)
+
+puts
+puts "The tip is $#{total_tip}"
+puts "The total is $#{total_bill}"
