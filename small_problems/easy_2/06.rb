@@ -17,3 +17,6 @@ Array of odd numbers present from 1 to 99
 - Filter the array to only contain odd numbers
 - Print the numbers in the array on a separate line each
 =end
+
+odd_numbers = (1..99).to_a.select(&:odd?)
+puts odd_numbers
