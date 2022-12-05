@@ -28,8 +28,8 @@ name = gets.chomp
 greeting = 'Hello '
 scream = ' Why are we screaming?'
 
-if name.end_with?('!')
-  name.chop!
+if name[-1] == '!'
+  name = name.chop
   puts (greeting + name + '.' + scream).upcase
 else
   puts greeting + name.capitalize + '.'
