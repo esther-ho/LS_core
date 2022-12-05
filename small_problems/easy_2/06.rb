@@ -20,3 +20,5 @@ Array of odd numbers present from 1 to 99
 
 odd_numbers = (1..99).to_a.select(&:odd?)
 puts odd_numbers
+
+# alternative: 1.upto(99) { |num| puts num if num.odd? }
