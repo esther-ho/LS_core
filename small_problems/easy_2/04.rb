@@ -25,3 +25,19 @@ You have only 40 years of work to go!
 - Add the result to the current year
 - Print the current year, year of retirement, and years to retirement
 =end
+
+require 'date'
+
+CURRENT_YEAR = Date.today.year
+
+print "What is your age? "
+age = gets.chomp.to_i
+
+print "At what age would you like to retire? "
+retire_age = gets.chomp.to_i
+
+years_to_retirement = retire_age - age
+retire_on = CURRENT_YEAR + years_to_retirement
+
+puts "It's #{CURRENT_YEAR}. You will retire in #{retire_on}."
+puts "You have only #{years_to_retirement} years of work to go!"
