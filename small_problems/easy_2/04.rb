@@ -8,6 +8,7 @@ Outputs:
 - Number of years user has to work before retirement
 Implicit rules:
 - Only whole numbers are given as input
+- Retirement age is larger than current age
 - Input can be modified
 --- E
 What is your age? 30
