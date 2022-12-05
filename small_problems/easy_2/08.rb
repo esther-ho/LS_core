@@ -10,7 +10,7 @@ Output:
 Implicit rules:
 - Given number is a whole number
 - Given number is included in the sum or product
-- User enters 's' or 'p'
+- User can only enter 's' or 'p' as an operation
 --- E
 >> Please enter an integer greater than 0:
 5
@@ -35,7 +35,7 @@ puts ">> Please enter an integer greater than 0:"
 number = gets.chomp.to_i
 
 puts ">> Enter 's' to compute the sum, 'p' to compute the product."
-operation = gets.chomp.downcase
+operation = gets.chomp
 
 case operation
 when 's'
@@ -44,4 +44,6 @@ when 's'
 when 'p'
   result = (1..number).reduce(:*)
   puts "The product of the integers between 1 and #{number} is #{result}."
+else
+  puts "Oops. Unknown operation."
 end
