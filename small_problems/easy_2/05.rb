@@ -25,12 +25,9 @@ HELLO BOB. WHY ARE WE SCREAMING?
 print "What is your name? "
 name = gets.chomp
 
-greeting = 'Hello '
-scream = ' Why are we screaming?'
-
 if name[-1] == '!'
   name = name.chop
-  puts (greeting + name + '.' + scream).upcase
+  puts "HELLO #{name.upcase}. WHY ARE WE SCREAMING?"
 else
-  puts greeting + name.capitalize + '.'
+  puts "Hello #{name}."
 end
