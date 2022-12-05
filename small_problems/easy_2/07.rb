@@ -17,3 +17,5 @@ Implicit rules:
 - Select all even numbers from the range
 - Print the selected numbers
 =end
+
+puts (1..99).select(&:even?)
