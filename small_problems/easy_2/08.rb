@@ -10,6 +10,7 @@ Output:
 Implicit rules:
 - Given number is a whole number
 - Given number is included in the sum or product
+- User enters 's' or 'p'
 --- E
 >> Please enter an integer greater than 0:
 5
@@ -22,9 +23,25 @@ The sum of the integers between 1 and 5 is 15.
 - Ask user for an whole number greater than 0
 - Store input and convert it to an integer
 - Ask user to choose to compute sum or product
-- If user chooses 'sum'
+- Store input
+- If user enters 's'
   - Sum all numbers from 1 to given integer
-- If not,
+- If user enter 'p',
   - Multiply all numbers from 1 to given integer
 - Print the result
 =end
+
+puts ">> Please enter an integer greater than 0:"
+number = gets.chomp.to_i
+
+puts ">> Enter 's' to compute the sum, 'p' to compute the product."
+operation = gets.chomp.downcase
+
+case operation
+when 's'
+  result = (1..number).sum
+  puts "The sum of the integers between 1 and #{number} is #{result}."
+when 'p'
+  result = (1..number).reduce(:*)
+  puts "The product of the integers between 1 and #{number} is #{result}."
+end
