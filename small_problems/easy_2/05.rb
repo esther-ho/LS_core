@@ -17,6 +17,20 @@ HELLO BOB. WHY ARE WE SCREAMING?
 - Ask for the user's name and store input
 - Check if the input ends with '!'
 - If it ends with '!',
+  - Remove '!' from name
   - Print name and greeting screaming in all caps
 - If not, print name and greeting without screaming
 =end
+
+print "What is your name? "
+name = gets.chomp
+
+greeting = 'Hello '
+scream = ' Why are we screaming?'
+
+if name.end_with?('!')
+  name.chomp!('!')
+  puts (greeting + name + '.' + scream).upcase
+else
+  puts greeting + name.capitalize + '.'
+end
