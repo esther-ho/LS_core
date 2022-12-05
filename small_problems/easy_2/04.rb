@@ -31,12 +31,12 @@ require 'date'
 current_year = Date.today.year # Or Time.now.year
 
 print "What is your age? "
-age = gets.chomp.to_i
+current_age = gets.chomp.to_i
 
 print "At what age would you like to retire? "
-retire_age = gets.chomp.to_i
+retirement_age = gets.chomp.to_i
 
-years_to_retirement = retire_age - age
+years_to_retirement = retirement_age - current_age
 retire_on = current_year + years_to_retirement
 
 puts "It's #{current_year}. You will retire in #{retire_on}."
