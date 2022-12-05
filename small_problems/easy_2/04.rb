@@ -28,7 +28,7 @@ You have only 40 years of work to go!
 
 require 'date'
 
-CURRENT_YEAR = Date.today.year
+current_year = Date.today.year # Or Time.now.year
 
 print "What is your age? "
 age = gets.chomp.to_i
@@ -37,7 +37,7 @@ print "At what age would you like to retire? "
 retire_age = gets.chomp.to_i
 
 years_to_retirement = retire_age - age
-retire_on = CURRENT_YEAR + years_to_retirement
+retire_on = current_year + years_to_retirement
 
-puts "It's #{CURRENT_YEAR}. You will retire in #{retire_on}."
+puts "It's #{current_year}. You will retire in #{retire_on}."
 puts "You have only #{years_to_retirement} years of work to go!"
