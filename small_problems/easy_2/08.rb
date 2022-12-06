@@ -42,7 +42,7 @@ when 's'
   result = (1..number).sum
   puts "The sum of the integers between 1 and #{number} is #{result}."
 when 'p'
-  result = (1..number).reduce(:*)
+  result = (1..number).inject(:*) # reduce(:*)
   puts "The product of the integers between 1 and #{number} is #{result}."
 else
   puts "Oops. Unknown operation."
