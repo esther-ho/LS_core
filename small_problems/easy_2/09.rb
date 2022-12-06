@@ -1,7 +1,7 @@
 =begin
 #upcase! is a mutating method.
 Therefore, `name.upcase!` mutates 'Bob' to 'BOB'.
-`save_name` points to the same object as `name`.
+`save_name` references the same object as `name`.
 Therefore, `puts name, save_name` will print 'BOB' twice
 =end
 
