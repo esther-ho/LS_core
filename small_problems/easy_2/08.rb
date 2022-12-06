@@ -24,6 +24,7 @@ The sum of the integers between 1 and 5 is 15.
 - Validate user input
 - Store input and convert it to an integer
 - Ask user to choose to compute sum or product
+- Validate user input
 - Store input
 - If user enters 's'
   - Sum all numbers from 1 to given integer
@@ -45,11 +46,24 @@ def valid_num
   number.to_i
 end
 
+def valid_operation
+  operation = ''
+
+  loop do
+    operation = gets.chomp.downcase
+    break if %w(s p).include?(operation)
+    puts "Oops. Unknown operation. " \
+         "Please enter 's' or 'p'."
+  end
+
+  operation
+end
+
 puts ">> Please enter an integer greater than 0:"
 number = valid_num
 
 puts ">> Enter 's' to compute the sum, 'p' to compute the product."
-operation = gets.chomp
+operation = valid_operation
 
 case operation
 when 's'
@@ -58,6 +72,4 @@ when 's'
 when 'p'
   result = (1..number).inject(:*) # reduce(:*)
   puts "The product of the integers between 1 and #{number} is #{result}."
-else
-  puts "Oops. Unknown operation."
 end
