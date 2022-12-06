@@ -21,6 +21,7 @@ The sum of the integers between 1 and 5 is 15.
 
 --- A
 - Ask user for an whole number greater than 0
+- Validate user input
 - Store input and convert it to an integer
 - Ask user to choose to compute sum or product
 - Store input
@@ -31,8 +32,21 @@ The sum of the integers between 1 and 5 is 15.
 - Print the result
 =end
 
+def valid_num
+  number = ''
+
+  loop do
+    number = gets.chomp
+    break if /^[[:digit:]]+$/.match(number) && number.to_i > 0
+    puts "That doesn't look like a valid number. " \
+         "Please try again."
+  end
+
+  number.to_i
+end
+
 puts ">> Please enter an integer greater than 0:"
-number = gets.chomp.to_i
+number = valid_num
 
 puts ">> Enter 's' to compute the sum, 'p' to compute the product."
 operation = gets.chomp
