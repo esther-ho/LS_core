@@ -3,6 +3,7 @@ require 'io/console'
 
 CONFIG = Psych.load_file('config_rpsls.yml')
 CHOICES = CONFIG['choices']
+ROUNDS_TO_WIN = 3
 
 def message(key)
   CONFIG['prompts'][key]
@@ -121,7 +122,7 @@ end
 
 def match_winner(score, name)
   case score['player_win']
-  when 3
+  when ROUNDS_TO_WIN
     ['match_win', name]
   else
     ['match_lose', 'Computer']
@@ -166,7 +167,7 @@ loop do
     'tie' => 0
   }
 
-  until score.values[0, 2].include?(3)
+  until score.values[0, 2].include?(ROUNDS_TO_WIN)
     system 'clear'
     puts message('break')
     puts message('score_label'), ''
