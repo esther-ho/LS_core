@@ -54,10 +54,27 @@ def display_rules
   end
 end
 
-def display_score(name, score)
-  puts name + message('score_player') + score['player_win'].to_s
-  puts message('score_computer') + score['computer_win'].to_s
-  puts message('score_tie') + score['tie'].to_s
+def join(text, values)
+  text.zip(values).map!(&:join)
+end
+
+def scores(grand_winner, name, score)
+  text = [
+    message('grand_winner'),
+    name + message('score_player'),
+    message('score_computer'),
+    message('score_tie')
+  ]
+
+  values = [grand_winner, score.values].flatten
+  join(text, values)
+end
+
+def display_scoreboard(grand_winner, name, score)
+  puts message('break')
+  puts message('score_label'), ''
+  puts scores(grand_winner, name, score)
+  puts message('break')
 end
 
 def find_choice(input)
@@ -169,11 +186,7 @@ loop do
 
   until score.values[0, 2].include?(ROUNDS_TO_WIN)
     system 'clear'
-    puts message('break')
-    puts message('score_label'), ''
-    puts message('grand_winner') + grand_winner
-    display_score(name, score)
-    puts message('break')
+    display_scoreboard(grand_winner, name, score)
 
     puts (message('round_label') + round.to_s), ''
     player = valid_choice
@@ -182,11 +195,7 @@ loop do
     update_score(round_result, score)
 
     system 'clear'
-    puts message('break')
-    puts message('score_label'), ''
-    puts message('grand_winner') + grand_winner
-    display_score(name, score)
-    puts message('break')
+    display_scoreboard(grand_winner, name, score)
 
     puts (message('results_label') + round.to_s), ''
     display_choices(player, computer)
