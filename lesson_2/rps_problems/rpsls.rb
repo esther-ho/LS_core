@@ -164,8 +164,10 @@ def match_winner(score, name)
 end
 
 def display_congrats(match_result)
+  puts message('break')
   puts message(match_result)['art'], ''
   puts message(match_result)['text']
+  puts message('break')
 end
 
 def again?
@@ -223,9 +225,7 @@ loop do
   match_result, grand_winner = match_winner(score, name)
 
   system 'clear'
-  puts message('break')
   display_congrats(match_result)
-  puts message('break')
   sleep(1)
 
   break unless again?
