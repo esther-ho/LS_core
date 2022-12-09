@@ -112,9 +112,18 @@ def player_win?(player, computer)
   end
 end
 
-def display_choices(player, computer)
-  puts message('choice_player') + '[' + player.capitalize + ']'
-  puts message('choice_computer') + '[' + computer.capitalize + ']'
+def choices(player, computer)
+  text = [
+    message('choice_player'),
+    message('choice_computer')
+  ]
+
+  values = [
+    "[#{player.capitalize}]",
+    "[#{computer.capitalize}]"
+  ]
+
+  join(text, values)
 end
 
 def win_text(result)
@@ -124,6 +133,14 @@ end
 def computer_comment(result)
   comment = message('computer_text')[result].sample
   message('computer_label') + '"' + comment + '"'
+end
+
+def display_results(round, player, computer, result)
+  puts (message('results_label') + round.to_s), ''
+  puts choices(player, computer), ''
+  puts win_text(result), ''
+  puts computer_comment(result)
+  puts message('break')
 end
 
 def update_score(result, score)
@@ -196,13 +213,7 @@ loop do
 
     system 'clear'
     display_scoreboard(grand_winner, name, score)
-
-    puts (message('results_label') + round.to_s), ''
-    display_choices(player, computer)
-    puts
-    puts win_text(round_result), ''
-    puts computer_comment(round_result)
-    puts message('break')
+    display_results(round, player, computer, round_result)
     prompt('continue')
     STDIN.getch
 
