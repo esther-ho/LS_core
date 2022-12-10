@@ -8,4 +8,5 @@ flintstones = {
 }
 
 # Obtain an array with only Barney's name and number
-p flintstones.select { |name, _| name.eql?("Barney") }.flatten
+# `Array#assoc` return the k-v pair if argument == key
+p flintstones.assoc('Barney')
