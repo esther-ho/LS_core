@@ -1,5 +1,6 @@
 =begin
 Both methods are destructive.
+Note: They do not have the usual `!` at the end of the method name.
 
 `Array#delete_at` deletes the element at the index indicated by the argument.
 Therefore, `numbers.delete_at(1)` will return `2`.
