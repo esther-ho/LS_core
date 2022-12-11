@@ -7,5 +7,9 @@ ages = {
 
 # Check if 'Spot' is present
 ages.key?('Spot')
-ages.has_key?('Spot')
-ages.member?('Spot')
+=begin
+Alternatives
+- ages.has_key?('Spot')
+- ages.member?('Spot')
+- ages.include?('Spot')
+=end
