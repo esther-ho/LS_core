@@ -7,5 +7,5 @@ def bar(param = "no")
 end
 
 bar(foo)
-# `foo` returns "yes"
-# `bar("yes")` returns "no" since `param != "no"`
+# `foo` returns "yes".
+# `bar("yes")` returns "no" since `"yes" == "no"` is false.
