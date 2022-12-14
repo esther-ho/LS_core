@@ -5,6 +5,10 @@ Using `+` to concatenate does not modify the original array
   - `input_array` points to the same object in memory that is unmodified
   - `buffer` points to a different concatenated array
 The first method mutates the original array while the second method doesn't.
+The first method returns a copy of the reference.
+The second method returns a new object.
+The first method has a return value and a side effect - mutation of the array.
+Therefore, the second solution is more ideal.
 =end
 
 def rolling_buffer1(buffer, max_buffer_size, new_element)
