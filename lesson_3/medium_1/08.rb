@@ -4,4 +4,4 @@ puts rps(rps(rps("rock", "paper"), rps("rock", "scissors")), "rock")
 # rps("rock", "scissors") #=> "rock"
 # rps("paper", "rock") #=> "paper"
 # rps("paper", "rock") #=> "paper"
-# The final results is "paper".
+# The final result is "paper".
