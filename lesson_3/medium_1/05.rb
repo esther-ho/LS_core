@@ -1,4 +1,5 @@
 # The `limit` variable was not passed to the method, so it is not in scope
+# Methods do not have access to any local variables outside of its scope
 
 # Fixed
 limit = 15
