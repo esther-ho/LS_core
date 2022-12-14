@@ -10,9 +10,14 @@ def factors(number)
   factors
 end
 
+puts factors(0)
+
 =begin
+- If the input is `0` or negative, `factors` will return an empty array.
 1. `number % divisor == 0` ensures that `number` is divisible by `divisor`
   - It is divisible if the modulus is `0`
 2. The last line ensures that the value of `factors` is returned by the method
-  - Otherwise, the return value will be based on the loop if it's the final line
+  - There is no explicit `return` statement
+  - Therefore, the return value is based on the last statement executed
+  - In this case, the return value of the `while` loop is `nil`
 =end
