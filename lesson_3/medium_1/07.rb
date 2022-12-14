@@ -4,7 +4,8 @@ The data in the hash was edited.
 Each element in the array is a separate hash.
 The value of each key in the hash is reassigned using `Hash#[]=`.
 `Hash#[]=` is an indexed assignment, which is mutating.
-Ruby passes copies of the reference information to the method.
+Ruby passes copies of the reference information (object_id) to the method.
+`demo_hash` is pointing to the `munsters` hash.
 Therefore, it mutates the original `munsters` hash.
 =end
 munsters = {
