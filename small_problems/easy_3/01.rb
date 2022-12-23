@@ -39,16 +39,6 @@ def valid_number?(number)
   /^[[:digit:]]+$/.match(number)
 end
 
-def count_message(number)
-  case number
-  when 1 then "1st"
-  when 2 then "2nd"
-  when 3 then "3rd"
-  when 4 then "4th"
-  when 5 then "5th"
-  end
-end
-
 def get_number
   number = ''
 
@@ -62,18 +52,15 @@ def get_number
 end
 
 numbers = []
-until numbers.size == 5
-  puts "==> Enter the #{count_message(numbers.size + 1)} number:"
+nth_input = %w(1st 2nd 3rd 4th 5th last)
 
+nth_input.each do |nth|
+  puts "==> Enter the #{nth} number:"
   number = get_number
   numbers << number.to_i
 end
 
-puts "==> Enter the last number:"
-last_number = get_number
+last_number = numbers.pop
+appear = numbers.include?(last_number) ? "appears" : "does not appear"
 
-if numbers.include?(last_number.to_i)
-  puts "The number #{last_number} appears in #{numbers}."
-else
-  puts "The number #{last_number} does not appear in #{numbers}."
-end
+puts "The number #{last_number} #{appear} in #{numbers}"
