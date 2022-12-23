@@ -13,6 +13,7 @@ end
 # Refactored
 def color_valid(color)
   %w(blue green).include?(color)
+  # alternative: color == "blue" || color == "green"
 end
 
 p color_valid("blue")
