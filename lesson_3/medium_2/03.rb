@@ -11,8 +11,8 @@ The local variable `an_array_param` is an alias for `my_array`.
 - They reference the same Array object.
 In the method, `an_array_param` gets mutated using `#<<`.
 - `#<<` appends a new element to the array
-The original Array is modified
-- `my_array` references `["pumpkins", "rutabaga"]`
+The original Array is modified.
+- `my_array` references `["pumpkins", "rutabaga"]`.
 =end
 
 def tricky_method(a_string_param, an_array_param)
