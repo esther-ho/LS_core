@@ -2,6 +2,7 @@ def tricky_method(a_string_param, an_array_param)
   a_string_param += "rutabaga"
   an_array_param += ["rutabaga"]
   [a_string_param, an_array_param]
+  # alternative: `return a_string_param, an_array_param`
 end
 
 my_string = "pumpkins"
