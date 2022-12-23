@@ -14,7 +14,7 @@ end
 =end
 
 def is_an_ip_number?(word)
-  /[[:digit:]]{1,3}/.match(word) && (0..255).include?(word.to_i)
+  /^[[:digit:]]{1,3}$/.match(word) && (0..255).include?(word.to_i)
 end
 
 def dot_separated_ip_address?(input_string)
