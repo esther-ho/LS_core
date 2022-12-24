@@ -25,12 +25,9 @@ Implicit rules
 - Store results in an array
 
 --- A
-- Ask user for the first input
-- Store the input
-- Ask user for the second input
-- Store the input
-- Perform operations and store results in an array
-- Print results
+- Ask user for the first and second inputs
+- Store them in an array
+- Print results based on the operation
 
 =end
 
@@ -39,16 +36,11 @@ nth_input = %w(first second)
 
 nth_input.each do |nth|
   puts "==> Enter the #{nth} number:"
-  number = gets.chomp
-  numbers << number.to_i
+  numbers << gets.chomp.to_i
 end
 
-operators = %w(+ - * / % **)
-results = []
+operators = %i(+ - * / % **)
 operators.each do |operator|
-  results << numbers.inject(operator)
-end
-
-operators.each_with_index do |operator, index|
-  puts "==> #{numbers[0]} #{operator} #{numbers[1]} = #{results[index]}"
+  result = numbers.inject(operator)
+  puts "==> #{numbers[0]} #{operator} #{numbers[1]} = #{result}"
 end
