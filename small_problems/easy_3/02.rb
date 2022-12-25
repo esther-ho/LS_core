@@ -37,10 +37,12 @@ nth_input = %w(first second)
 nth_input.each do |nth|
   puts "==> Enter the #{nth} number:"
   numbers << gets.chomp.to_i
+  # use `String#to_f for floats`
 end
 
 operators = %i(+ - * / % **)
 operators.each do |operator|
   result = numbers.inject(operator)
+  # Use `Float#round`` if rounding to nearest nth place
   puts "==> #{numbers[0]} #{operator} #{numbers[1]} = #{result}"
 end
