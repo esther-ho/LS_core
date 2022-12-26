@@ -20,7 +20,11 @@ multiply(7, 0) == 0
 def multiply(num1, num2)
   num1 * num2
 end
+# Using `*` operator can cause unexpected behaviors depending on left operand
+# e.g. multiply('hi', 2) == 'hihi'
+# e.g. multiply([1, 2], 2) == [1, 2, 1, 2]
+# `Array#*` creates x copies of array and concatenates copies to the original
 
-p multiply(5, 3) == 15
-p multiply(0, 4) == 0
-p multiply(7, 0) == 0
+puts multiply(5, 3) == 15
+puts multiply(0, 4) == 0
+puts multiply(7, 0) == 0
