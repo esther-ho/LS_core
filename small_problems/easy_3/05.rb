@@ -30,3 +30,16 @@ puts square(-8) == 64
 
 # square('hi') => raises TypeError
 # square([1, 2]) => raises TypeError
+
+# Only works if exponent is an integer
+def power_to_n(base, exponent)
+  return 1 if exponent == 0
+  result = multiply([base], exponent.abs).inject(:*)
+  exponent > 0 ? result : (1.0 / result)
+end
+
+puts power_to_n(5, 2) == 25
+puts power_to_n(10, 3) == 1000
+puts power_to_n(10, -2) == 0.01
+puts power_to_n(2.5, 2) == 6.25
+puts power_to_n(0, 5) == 0
