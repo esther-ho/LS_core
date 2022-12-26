@@ -16,3 +16,17 @@ square(-8) == 64
 --- A
 - Multiply the number by itself
 =end
+
+def multiply(num1, num2)
+  num1 * num2
+end
+
+def square(num)
+  multiply(num, num)
+end
+
+puts square(5) == 25
+puts square(-8) == 64
+
+# square('hi') => raises TypeError
+# square([1, 2]) => raises TypeError
