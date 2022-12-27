@@ -43,3 +43,17 @@ puts power_to_n(10, 3) == 1000
 puts power_to_n(10, -2) == 0.01
 puts power_to_n(2.5, 2) == 6.25
 puts power_to_n(0, 5) == 0
+
+# Using recursion
+def power_recurse(base, exponent)
+  return 1 if exponent == 0
+  return base if exponent == 1
+  result = multiply(base, power_recurse(base, exponent.abs - 1))
+  exponent > 0 ? result : (1.0 / result)
+end
+
+puts power_recurse(5, 2) == 25
+puts power_recurse(10, 3) == 1000
+puts power_recurse(10, -2) == 0.01
+puts power_recurse(2.5, 2) == 6.25
+puts power_recurse(0, 5) == 0
