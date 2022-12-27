@@ -30,3 +30,9 @@ puts xor?(5.odd?, 4.odd?) == true
 puts xor?(5.odd?, 4.even?) == false
 puts xor?(5.even?, 4.odd?) == false
 puts xor?('a', false) == true
+
+# Another example using XOR could be in single-choice questions.
+# If one choice is selected, the other choice is automatically deselected.
+
+# `xor` doesn't perform short-circuit evaluation on its operands.
+# It evaluates both to confirm that one is true while the other is false.
