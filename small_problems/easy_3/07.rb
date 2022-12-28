@@ -26,7 +26,6 @@ oddities([1, 2, 3, 4, 1]) == [1, 3, 1]
 =end
 
 def oddities(array)
-  return [] if array.empty?
   array.select.with_index { |_, index| index.even? }
 end
 
