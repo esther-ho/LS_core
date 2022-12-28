@@ -41,9 +41,9 @@ def evens(array)
 end
 
 def evens_2(array)
-  evens = []
-  array.each_with_index { |element, index| evens << element if index.odd? }
-  evens
+  array.each_with_object([]) do |element, evens|
+    evens << element if array.index(element).odd?
+  end
 end
 
 p evens([2, 3, 4, 5, 6]) == [3, 5]
