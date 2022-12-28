@@ -35,3 +35,27 @@ p oddities(['abc', 'def']) == ['abc']
 p oddities([123]) == [123]
 p oddities([]) == []
 p oddities([1, 2, 3, 4, 1]) == [1, 3, 1]
+
+def evens(array)
+  array.delete_if { |element| array.index(element).even? }
+end
+
+def evens_2(array)
+  evens = []
+  array.each_with_index { |element, index| evens << element if index.odd? }
+  evens
+end
+
+p evens([2, 3, 4, 5, 6]) == [3, 5]
+p evens([1, 2, 3, 4, 5, 6]) == [2, 4, 6]
+p evens(['abc', 'def']) == ['def']
+p evens([123]) == []
+p evens([]) == []
+p evens([1, 2, 3, 4, 1]) == [2, 4]
+
+p evens_2([2, 3, 4, 5, 6]) == [3, 5]
+p evens_2([1, 2, 3, 4, 5, 6]) == [2, 4, 6]
+p evens_2(['abc', 'def']) == ['def']
+p evens_2([123]) == []
+p evens_2([]) == []
+p evens_2([1, 2, 3, 4, 1]) == [2, 4]
