@@ -44,8 +44,7 @@ print_in_box('')
 require 'colorize'
 
 def print_in_box(string)
-  dash = '-' * string.size
-  space = ' ' * string.size
+  box_top = ["+-#{'-' * string.size}-+", "| #{' ' * string.size} |"]
 
   if string.size > 0
     words = string.split
@@ -53,9 +52,7 @@ def print_in_box(string)
     string = words.unshift(first_word).join(' ')
   end
 
-  box_top = ["+-#{dash}-+", "| #{space} |"]
-  box_middle = ["| #{string} |"]
-  puts box_top + box_middle + box_top.reverse
+  puts box_top + ["| #{string} |"] + box_top.reverse
 end
 
 print_in_box('To boldly go where no one has gone before.')
