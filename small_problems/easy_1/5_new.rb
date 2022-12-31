@@ -25,16 +25,38 @@ print_in_box('')
 |  |
 +--+
 --- D
-
+- Create the box as an array of strings
+- Convert the string into an array of words
 --- A
-- Save the string into a variable
-- Find the length of the string
-- Create a box using a multiline string
-- Assign the box to a variable
-- Initialize a variable `space` to indicate the space needed in the box
-- Set `space` as 0
-- If the string is not empty,
-  - Add the additional '-' or ' ' in the box
-  - Add the string to the box
-- Print the empty box
+- Find the length of the string if string is not empty
+- Set `dash` to '-' multiplied by length of the string
+- Set `space` to ' ' multiplied by length of the string
+- If the string length is greater than 0,
+  - Split the string into an array of individual words
+  - Remove the first word from the array and color red
+  - Prepend the first word to the array and convert to string
+- Create the top of the box using an array of interpolated string
+- Create the middle of the box as a interpolated string
+- Reverse the values in the box top
+- Join the box top, middle and reversed top and print to screen
 =end
+
+require 'colorize'
+
+def print_in_box(string)
+  dash = '-' * string.size
+  space = ' ' * string.size
+
+  if string.size > 0
+    words = string.split
+    first_word = words.shift.red
+    string = words.unshift(first_word).join(' ')
+  end
+
+  box_top = ["+-#{dash}-+", "| #{space} |"]
+  box_middle = ["| #{string} |"]
+  puts box_top + box_middle + box_top.reverse
+end
+
+print_in_box('To boldly go where no one has gone before.')
+print_in_box('')
