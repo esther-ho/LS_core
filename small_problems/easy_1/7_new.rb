@@ -41,3 +41,28 @@ Do you walk your blue dog quickly? That's hilarious!
 - Create a template story
 - Print template story
 =end
+
+prompts = %w(noun verb adjective adverb)
+answers = {}
+
+prompts.each do |prompt|
+  input = ''
+
+  loop do
+    if %w(a e i o u).include?(prompt[0])
+      print "Enter an #{prompt}: "
+    else
+      print "Enter a #{prompt}: "
+    end
+
+    input = gets.chomp.strip
+    break if (/^[[:alpha:]]+$/).match(input)
+    puts "Invalid answer. Please try again."
+  end
+
+  answers[prompt.to_sym] = input
+end
+
+# `String#%` replaces %{sym} in string with matching values from hash
+sentence = "Do you %{verb} your %{adjective} %{noun} %{adverb}?"
+puts "#{sentence % answers} That's hilarious!"
