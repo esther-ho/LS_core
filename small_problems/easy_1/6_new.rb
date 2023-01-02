@@ -24,9 +24,9 @@ triangle(5)
   - Print (n - iteration) of spaces and iteration *
 =end
 
-def triangle(number)
-  (1..number).each do |iteration|
-    puts (" " * (number - iteration)) + ('*' * iteration)
+def triangle(side)
+  (1..side).each do |iteration|
+    puts (" " * (side - iteration)) + ('*' * iteration)
   end
 end
 
