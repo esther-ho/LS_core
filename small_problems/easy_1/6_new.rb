@@ -30,5 +30,32 @@ def triangle(side)
   end
 end
 
+def upsidedown_triangle(side)
+  (0..(side - 1)).each do |iteration|
+    puts ('*' * (side - iteration)) + (' ' * iteration)
+  end
+end
+
+def triangle_2(side)
+  (1..side).each do |iteration|
+    puts ('*' * iteration) + (" " * (side - iteration)) 
+  end
+end
+
+def upsidedown_triangle_2(side)
+  (0..(side - 1)).each do |iteration|
+    puts (' ' * iteration) + ('*' * (side - iteration))
+  end
+end
+
 triangle(5)
 triangle(9)
+
+upsidedown_triangle(5)
+upsidedown_triangle(9)
+
+triangle_2(5)
+triangle_2(9)
+
+upsidedown_triangle_2(5)
+upsidedown_triangle_2(9)
