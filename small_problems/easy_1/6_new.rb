@@ -23,3 +23,12 @@ triangle(5)
 - For each iteration,
   - Print (n - iteration) of spaces and iteration *
 =end
+
+def triangle(number)
+  (1..number).each do |iteration|
+    puts (" " * (number - iteration)) + ('*' * iteration)
+  end
+end
+
+triangle(5)
+triangle(9)
