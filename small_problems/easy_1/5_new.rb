@@ -57,3 +57,56 @@ end
 
 print_in_box('To boldly go where no one has gone before.')
 print_in_box('')
+
+# Truncate message if larger that (80 - 4) columns
+def print_truncated_box(string)
+  if string.size > (80 - 4)
+    string.slice!((80 - 8)..(string.size - 1))
+    string << '...'
+  end
+
+  length = string.size
+  horizontal_rule = "+#{'-' * (length + 2)}+"
+  empty_line = "|#{' ' * (length + 2)}|"
+
+  puts horizontal_rule
+  puts empty_line
+  puts "| #{string} |"
+  puts empty_line
+  puts horizontal_rule
+end
+
+print_truncated_box("It is a period of civil war. \
+Rebel spaceships, striking from a hidden base, \
+have won their first victory against the evil Galactic Empire. \
+During the battle, Rebel spies managed to steal secret plans to the \
+Empire's ultimate weapon, the DEATH STAR, and space station \
+with enough power to destroy an entire planet.")
+print_truncated_box("It is a period of civil war.")
+print_truncated_box("")
+
+def print_wrap_box(string)
+  line_width = 80 - 4
+  lines = [""]
+  unless string.empty?
+    lines = string.scan(/.{1,#{line_width}}\b\W?/).map(&:strip)
+  end
+
+  length = lines.map(&:size).max
+  box_top = ["+-#{'-' * length}-+", "| #{' ' * length} |"]
+
+  puts box_top
+  lines.each do |line|
+    puts "| #{line}#{' ' * (length - line.size)} |"
+  end
+  puts box_top.reverse
+end
+
+print_wrap_box("It is a period of civil war. \
+Rebel spaceships, striking from a hidden base, \
+have won their first victory against the evil Galactic Empire. \
+During the battle, Rebel spies managed to steal secret plans to the \
+Empire's ultimate weapon, the DEATH STAR, and space station \
+with enough power to destroy an entire planet.")
+print_wrap_box("It is a period of civil war.")
+print_wrap_box("")
