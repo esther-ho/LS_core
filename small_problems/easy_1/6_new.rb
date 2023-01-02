@@ -49,6 +49,8 @@ def upsidedown_triangle_2(side)
 end
 
 def triangle_with_position(side, right_angle = 'bottom left')
+  # Exit method is second argument is not one of the following:
+  # top left, top right, bottom left, bottom right
   unless (right_angle.split - %w(top bottom left right)).empty?
     puts "Invalid argument given"
     return
