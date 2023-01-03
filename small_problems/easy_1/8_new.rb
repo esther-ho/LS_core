@@ -25,6 +25,8 @@ reversed_number(1) == 1
 
 def reversed_number(number)
   number.to_s.reverse.to_i
+  # alternative: `number.digits.join.to_i`
+  # `Integer#digits` returns an array starting with the smallest place value
 end
 
 p reversed_number(12345) == 54321
