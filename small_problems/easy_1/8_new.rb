@@ -16,17 +16,15 @@ reversed_number(12000) == 21 # No leading zeros in return value!
 reversed_number(12003) == 30021
 reversed_number(1) == 1
 --- D
-- Use an array to store individual digits
+
 --- A
 - Convert the integer to a string
-- Split the string into an array of digits
-- Reverse the array
-- Join the digits in the array into a string of numbers
+- Reverse the string
 - Convert the string to an integer
 =end
 
 def reversed_number(number)
-  number.to_s.split('').reverse.join.to_i
+  number.to_s.reverse.to_i
 end
 
 p reversed_number(12345) == 54321
