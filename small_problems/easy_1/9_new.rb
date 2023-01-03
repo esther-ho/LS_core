@@ -22,5 +22,20 @@ center_of('x') == 'x'
 - If the string length is odd,
   - Return the character at place (middle)
 - Else, if string length is even,
-  - Return the characters at place (middle) and (middle + 1)
+  - Return the characters at place (middle - 1) and (middle)
 =end
+
+def center_of(string)
+  middle = (string.size / 2).floor
+  if string.size.odd?
+    string[middle]
+  else
+    string[middle - 1] + string[middle]
+  end
+end
+
+p center_of('I love ruby') == 'e'
+p center_of('Launch School') == ' '
+p center_of('Launch') == 'un'
+p center_of('Launchschool') == 'hs'
+p center_of('x') == 'x'
