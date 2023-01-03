@@ -39,3 +39,25 @@ p center_of('Launch School') == ' '
 p center_of('Launch') == 'un'
 p center_of('Launchschool') == 'hs'
 p center_of('x') == 'x'
+
+=begin
+# Alternatives
+def center_of(string)
+  string[((string.size - 1) / 2)..(string.size /2)]
+end
+
+def center_of(string)
+  mid, remainder = (string.size - 1).divmod(2)
+  string[mid, remainder + 1]
+end
+
+Explanation:
+- String of length 4 has middle characters at index 1 and 2
+  - (string length - 1) / 2 => 1 (index 1)
+  - string length / 2 => 2 (index 2)
+  - (string length - 1).divmod(2) => 1 with remainder 1
+- String of length 3 has a middle character at index 1
+  - (string length - 1) / 2 => 1 (index 1)
+  - string length / 2 => 1.5 (still index 1 when using `String#[]`)
+  - (string length - 1).divmod(2) => 1 with remainder 0
+=end
