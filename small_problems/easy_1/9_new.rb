@@ -22,7 +22,7 @@ center_of('x') == 'x'
 - If the string length is odd,
   - Return the character at place (middle)
 - Else, if string length is even,
-  - Return the characters at place (middle - 1) and (middle)
+  - Return two characters from place (middle - 1)
 =end
 
 def center_of(string)
@@ -30,7 +30,7 @@ def center_of(string)
   if string.size.odd?
     string[middle]
   else
-    string[middle - 1] + string[middle]
+    string[middle - 1, 2]
   end
 end
 
