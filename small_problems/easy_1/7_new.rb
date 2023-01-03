@@ -64,5 +64,13 @@ prompts.each do |prompt|
 end
 
 # `String#%` replaces %{sym} in string with matching values from hash
-sentence = "Do you %{verb} your %{adjective} %{noun} %{adverb}?"
-puts "#{sentence % answers} That's hilarious!"
+sentence1 = "Do you %{verb} your %{adjective} %{noun} %{adverb}?" \
+            " That's hilarious!"
+sentence2 = "The %{adjective} %{noun} %{verb}s %{adverb} over the lazy dog."
+sentence3 = "The %{noun} %{adverb} %{verb}s up %{adjective} Joe's turtle."
+
+sentence = [sentence1, sentence2, sentence3].sample
+text = File.open("7_sentences.txt").read
+
+puts sentence % answers
+puts text % answers
