@@ -28,3 +28,13 @@ end
 p negative(5) == -5
 p negative(-3) == -3
 p negative(0) == 0 # There's no such thing as -0 in ruby
+
+=begin
+Alternative:
+
+def negative(number)
+  -number.abs
+end
+
+Since numbers are nonmutable, the method will not return a new object even when `Numeric#abs` is called on it.
+=end
