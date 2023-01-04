@@ -27,7 +27,8 @@ real_palindrome?('123ab321') == false
 =end
 
 def real_palindrome?(string)
-  modified_string = string.gsub(/\W/, '').downcase
+  modified_string = string.downcase.gsub(/[^[:alnum:]]/, '')
+  # Alternative: string = string.downcase.delete('^a-z0-9')
   modified_string.reverse == modified_string
 end
 
