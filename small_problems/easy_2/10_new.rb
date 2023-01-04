@@ -11,7 +11,7 @@ Implicit rules:
 --- E
 negative(5) == -5
 negative(-3) == -3
-negative(0) == 0  # There's no such thing as -0 in ruby
+negative(0) == 0 # There's no such thing as -0 in ruby
 --- D
 
 --- A
@@ -20,3 +20,11 @@ negative(0) == 0  # There's no such thing as -0 in ruby
 - Else, if the number is 0 or negative,
   - Return the number
 =end
+
+def negative(number)
+  number.positive? ? -number : number
+end
+
+p negative(5) == -5
+p negative(-3) == -3
+p negative(0) == 0 # There's no such thing as -0 in ruby
