@@ -27,7 +27,9 @@ century(11201) == '113th'
 --- A
 - Divide the given number by a century (100.0) to obtain century as a float
 - Return the smallest whole number greater or equal to the float
-- Calculate the remainder of the returned whole number
+- If the last two digits of the returned whole number is 11, 12, or 13,
+  - Append 'th' to the number string
+- Else, find the remainder of the number when divided by 10
 - If the remainder is 1,
   - Append 'st' to the number string
 - If the remainder is 2,
@@ -37,3 +39,24 @@ century(11201) == '113th'
 - Else, if the remainder is 4 or greater
   - Append 'th' to the number string
 =end
+
+def century(year)
+  century = (year / 100.0).ceil
+  return "#{century}th" if (11..13).include?(century % 100)
+  case century % 10
+  when 1 then "#{century}st"
+  when 2 then "#{century}nd"
+  when 3 then "#{century}rd"
+  else        "#{century}th"
+  end
+end
+
+p century(2000) == '20th'
+p century(2001) == '21st'
+p century(1965) == '20th'
+p century(256) == '3rd'
+p century(5) == '1st'
+p century(10103) == '102nd'
+p century(1052) == '11th'
+p century(1127) == '12th'
+p century(11201) == '113th'
