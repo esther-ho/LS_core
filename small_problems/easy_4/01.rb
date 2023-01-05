@@ -28,6 +28,8 @@ def short_long_short(str1, str2)
   short, long = str1.size < str2.size ? [str1, str2] : [str2, str1]
   short + long + short
 end
+# Alternative:
+# short, long = [str1, str2].sort_by(&:size)
 
 p short_long_short('abc', 'defgh') == "abcdefghabc"
 p short_long_short('abcde', 'fgh') == "fghabcdefgh"
