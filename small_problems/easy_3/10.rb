@@ -21,10 +21,23 @@ uppercase?('') == true
 
 --- A
 - Remove all non-alphabetic characters from the string
-- Return `true` if string is empty
 - Check if string is equal to the its uppercase version
 - If they are the same,
   - Return `true`
 - Else, if they are not the same,
   - Return `false`
 =end
+
+def uppercase?(string)
+  string = string.delete "^a-zA-Z"
+  string == string.upcase
+  # Alternative:
+  # `string.count "A-Z" == string.size`
+end
+
+p uppercase?('t') == false
+p uppercase?('T') == true
+p uppercase?('Four Score') == false
+p uppercase?('FOUR SCORE') == true
+p uppercase?('4SCORE!') == true
+p uppercase?('') == true
