@@ -23,3 +23,12 @@ short_long_short('', 'xyz') == "xyz"
 - Concatenate the strings in the order:
   - Short, long, short
 =end
+
+def short_long_short(str1, str2)
+  short, long = str1.size < str2.size ? [str1, str2] : [str2, str1]
+  short + long + short
+end
+
+p short_long_short('abc', 'defgh') == "abcdefghabc"
+p short_long_short('abcde', 'fgh') == "fghabcdefgh"
+p short_long_short('', 'xyz') == "xyz"
