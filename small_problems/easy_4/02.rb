@@ -42,6 +42,7 @@ century(11201) == '113th'
 
 def century(year)
   century = (year / 100.0).ceil
+
   return "#{century}th" if (11..13).include?(century % 100)
   case century % 10
   when 1 then "#{century}st"
@@ -60,3 +61,23 @@ p century(10103) == '102nd'
 p century(1052) == '11th'
 p century(1127) == '12th'
 p century(11201) == '113th'
+
+=begin
+Alternative:
+def century(year)
+  century = (year / 100).ceil
+  suffix =
+    case century % 100
+    when 11..13 then 'th'
+    else
+      case century % 10
+      when 1 then 'st'
+      when 2 then 'nd'
+      when 3 then 'rd'
+      else 'th'
+      end
+    end
+
+  century.to_s + suffix
+end
+=end
