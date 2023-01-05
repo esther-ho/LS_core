@@ -20,7 +20,6 @@ uppercase?('') == true
 --- D
 
 --- A
-- Remove all non-alphabetic characters from the string
 - Check if string is equal to the its uppercase version
 - If they are the same,
   - Return `true`
@@ -29,7 +28,7 @@ uppercase?('') == true
 =end
 
 def uppercase?(string)
-  string = string.delete "^a-zA-Z"
+  # string = string.delete "^a-zA-Z" => redundant
   string == string.upcase
   # Alternative:
   # `string.count "A-Z" == string.size`
