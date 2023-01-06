@@ -19,8 +19,19 @@ string_to_integer('570') == 570
 - Initialize a hash of key-value pairs of numeric strings and numbers
 - Split the string into its individual characters
 - Iterate through each value in the resultant array
+- Set the initial total as 0
 - For each iteration,
   - Multiply the current total by 10
   - Return the appropriate numeric value from the hash based on the key
   - Add the numeric value
 =end
+
+def string_to_integer(num_string)
+  numbers = (('0'..'9').zip(0..9)).to_h
+  num_string.chars.inject(0) do |result, str|
+    result * 10 + numbers[str]
+  end
+end
+
+p string_to_integer('4321') == 4321
+p string_to_integer('570') == 570
