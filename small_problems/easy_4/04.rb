@@ -53,3 +53,14 @@ p leap_year?(1700) == true
 p leap_year?(1) == false
 p leap_year?(100) == true
 p leap_year?(400) == true
+
+=begin
+Further exploration:
+- Singapore was colonized by the British from 1819 - 1942.
+  - The Gregorian calendar was likely adopted during colonization.
+- Certain communities in Singapore also use the Lunisolar calendar
+  - A leap year is approximately every 3 years
+  - It's considered a leap year when they are 13 New Moons between:
+    - Start of 11th month in first year, and
+    - Start of 11th month in next year
+=end
