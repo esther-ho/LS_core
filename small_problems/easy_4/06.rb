@@ -24,3 +24,13 @@ running_total([]) == []
   - Add the number in the current iteration to `total`
   - Return the total for each element
 =end
+
+def running_total(number_array)
+  total = 0
+  number_array.map { |num| total += num }
+end
+
+p running_total([2, 5, 13]) == [2, 7, 20]
+p running_total([14, 11, 7, 15, 20]) == [14, 25, 32, 47, 67]
+p running_total([3]) == [3]
+p running_total([]) == []
