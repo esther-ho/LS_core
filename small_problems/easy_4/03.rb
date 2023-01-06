@@ -52,3 +52,13 @@ p leap_year?(1700) == false
 p leap_year?(1) == false
 p leap_year?(100) == false
 p leap_year?(400) == true
+
+=begin
+Further exploration:
+- Writing `if year % 100 == 0 then false` as your first line results in:
+  - Years divisible by 400 to also return false
+  - Years divisible by 400 are also divisible by 100
+- Testing if the year is divisible by `4` first results in:
+  - Years divisible by 100 also returning true
+  - Years divisible by 100 are also divisible by 4
+=end
