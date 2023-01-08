@@ -26,10 +26,10 @@ string_to_integer('570') == 570
   - Add the numeric value
 =end
 
+DIGITS = (('0'..'9').zip(0..9)).to_h
 def string_to_integer(num_string)
-  numbers = (('0'..'9').zip(0..9)).to_h
   num_string.chars.inject(0) do |result, str|
-    result * 10 + numbers[str]
+    result * 10 + DIGITS[str]
   end
 end
 
