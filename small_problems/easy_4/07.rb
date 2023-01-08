@@ -35,3 +35,15 @@ end
 
 p string_to_integer('4321') == 4321
 p string_to_integer('570') == 570
+
+# Further exploration
+# COonvert string representing hexadecimal num to integer value
+HEXA_DIGITS = DIGITS.merge((('A'..'F').zip(10..15)).to_h)
+
+def hexadecimal_to_integer(num_str)
+  num_str.upcase.chars.inject(0) do |result, value|
+    result * 16 + HEXA_DIGITS[value]
+  end
+end
+
+p hexadecimal_to_integer('4D9f') == 19871
