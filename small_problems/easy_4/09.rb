@@ -24,7 +24,7 @@ integer_to_string(5000) == '5000'
   - Prepend the string value to `string`
 =end
 
-DIGITS = ((0..9).zip('0'..'9')).to_h
+DIGITS = ('0'..'9').to_a
 
 def integer_to_string(integer)
   integer.digits.inject('') do |string, value|
