@@ -44,3 +44,12 @@ end
 p string_to_signed_integer('4321') == 4321
 p string_to_signed_integer('-570') == -570
 p string_to_signed_integer('+100') == 100
+
+=begin
+Further exploration - Refactored solution
+def string_to_signed_integer(string)
+  num_str = %w(- +).include?(string[0]) ? string[1..-1] : string
+  integer = string_to_integer(num_str)
+  string[0] == '-' ? -integer : integer
+end
+=end
