@@ -33,11 +33,15 @@ def integer_to_string(integer)
 end
 
 =begin
-Alternative:
+Alternatives:
 def integer_to_string(integer)
   integer.digits.each_with_object('') do |value, string|
     string.prepend(DIGITS[value])
   end
+end
+
+def integer_to_string(integer)
+  integer.digits.reverse.join
 end
 =end
 
