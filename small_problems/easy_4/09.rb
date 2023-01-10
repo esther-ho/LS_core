@@ -48,3 +48,48 @@ end
 p integer_to_string(4321) == '4321'
 p integer_to_string(0) == '0'
 p integer_to_string(5000) == '5000'
+
+=begin
+Mutating `String` methods without `!`
+- #<<
+- #[]=
+- #clear
+- #concat
+- #replace
+- #insert
+- #prepend
+
+Mutating `Array` methods without `!`
+- #<<
+- #[]=
+- #append
+- #concat
+- #delete
+- #delete_at
+- #delete_if
+- #fill
+- #insert
+- #keep_if
+- #pop
+- #push
+- #replace
+- #shift
+- #unshift
+- #prepend
+
+Mutating `Hash` methods without `!`
+- #clear
+- #delete
+- #delete_if
+- #replace
+- #keep_if
+- #rehash (if keys were changed)
+- #shift
+- #[]=
+- #update
+
+`Array#sort_by!` doesn't have a corresponding `#sort_by` method without `!`.
+However, it works similarly to `Enumerable#sort_by`.
+It appears that methods only have a mutating form are not marked with a `!`.
+Methods with non-mutating and mutating forms often use `!` for differentiation.
+=end
