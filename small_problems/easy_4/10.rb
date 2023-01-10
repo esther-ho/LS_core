@@ -17,7 +17,6 @@ signed_integer_to_string(0) == '0'
 - Split absolute value of integer into an array containing its digits
 --- A
 - Return '0' if integer is `0`
-- Set `negative` to `true` if the given integer is negative
 - Convert the integer to its absolute value
 - Split the integer into an array of digits
 - Iterate through the array
@@ -25,8 +24,22 @@ signed_integer_to_string(0) == '0'
 - For each iteration,
   - Find the string value of the digit at the current iteration
   - Prepend the string value to `string`
-- If `negative` is `true`
+- If the integer is negative
   - Prepend a `-` sign to the string
-- Else, if `negative` is `false`
+- Else, if the integer is not negative
   - Prepend a `+` sign to the string
 =end
+
+DIGITS = ('0'..'9').to_a
+
+def signed_integer_to_string(integer)
+  return '0' if integer == 0
+  string = integer.abs.digits.inject('') do |str, val|
+    str.prepend(DIGITS[val])
+  end
+  integer.negative? ? "-#{string}" : "+#{string}"
+end
+
+p signed_integer_to_string(4321) == '+4321'
+p signed_integer_to_string(-123) == '-123'
+p signed_integer_to_string(0) == '0'
