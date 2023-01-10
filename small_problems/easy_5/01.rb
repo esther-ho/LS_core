@@ -48,3 +48,13 @@ p ascii_value('Four score') == 984
 p ascii_value('Launch School') == 1251
 p ascii_value('a') == 97
 p ascii_value('') == 0
+
+=begin
+Further exploration:
+`char.ord.chr = char`
+- `Integer#chr` returns the string character represented by the ASCII value.
+- When using `String#ord` on a multi-character string,
+  - It returns only the ASCII value of the first character
+- Using `Integer#chr` on the sum ASCII will raise a RangeError
+  - `#chr` only works on single characters
+=end
