@@ -33,9 +33,14 @@ def ascii_value(string)
 end
 
 =begin
-Alternative:
+Alternatives:
 def ascii_value(string)
   string.chars.map(&:ord).sum
+end
+
+- `#codepoints` return an array of ASCII values of characters in the string
+def ascii_value(string)
+  string.codepoints.sum
 end
 =end
 
