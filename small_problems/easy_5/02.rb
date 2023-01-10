@@ -88,4 +88,21 @@ end
         min += 1440
       end` (min => 1320)
   - Both methods return the same value
+
+Further exploration #1:
+`delta_minutes %= MINUTES_PER_HOUR`
+
+Further exploration #2:
+def time_of_day(delta_minutes)
+  t = Time.new(2023)
+  t += delta_minutes * 60 # `Time` stores seconds
+  t.strftime("%0k:%0M")
+end
+
+Further exploration #3:
+def time_of_day(delta_minutes)
+  t = Time.new(2023, 1, 15)
+  t += delta_minutes * 60
+  t.strftime("%A %0k:%0M")
+end
 =end
