@@ -26,3 +26,20 @@ ascii_value('') == 0
   - Add the value to the total value
 - Return the total value
 =end
+
+def ascii_value(string)
+  return 0 if string.empty?
+  string.chars.inject(0) { |total, char| total + char.ord }
+end
+
+=begin
+Alternative:
+def ascii_value(string)
+  string.chars.map(&:ord).sum
+end
+=end
+
+p ascii_value('Four score') == 984
+p ascii_value('Launch School') == 1251
+p ascii_value('a') == 97
+p ascii_value('') == 0
