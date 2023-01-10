@@ -40,9 +40,6 @@ def signed_integer_to_string(integer)
   integer.negative? ? "-#{string}" : "+#{string}"
 end
 
-def signed_integer_to_string(integer)
-
-
 p signed_integer_to_string(4321) == '+4321'
 p signed_integer_to_string(-123) == '-123'
 p signed_integer_to_string(0) == '0'
