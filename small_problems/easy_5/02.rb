@@ -36,16 +36,16 @@ time_of_day(-4231) == "01:29"
 - Print `h` and `m` in 00:00 format
 =end
 
-HR = 24
-MIN = 60
+MIN_PER_HOUR = 60
+HR_PER_DAY = 24
 
 def time_of_day(integer)
   return '00:00' if integer == 0
-  h, m = integer.abs.divmod(MIN)
-  h %= HR
+  h, m = integer.abs.divmod(MIN_PER_HOUR)
+  h %= HR_PER_DAY
   if integer < 0
-    h = HR - 1 - h
-    m = MIN - m
+    h = HR_PER_DAY - 1 - h
+    m = MIN_PER_HOUR - m
   end
   h, m = [h, m].map { |s| s.to_s.rjust(2, '0') }
   "#{h}:#{m}"
@@ -58,3 +58,34 @@ p time_of_day(-1437) == "00:03"
 p time_of_day(3000) == "02:00"
 p time_of_day(800) == "13:20"
 p time_of_day(-4231) == "01:29"
+
+=begin
+Alternative:
+def time_of_day(integer)
+  h, m = integer.divmod(MIN_PER_HOUR)
+  h %= HR_PER_DAY
+  format("%02d:%02d", h, m)
+end
+
+- `#divmod` returns the quotient and modulus.
+- When dividing a negative number with a positive one,
+  - The quotient is negative
+  - The modulo is positive
+  - e.g. -5.divmod(2) = [-3, 1]
+- Using this property, we can divide both negative and positive integers
+  - e.g. 3 min before midnight is noted as (-3)
+  - `-3.divmod(60)` => [-1, 57]
+  - -3 % 60 => -3 - (60 * (-3 / 60).floor)
+  - `-1.divmod(24)` => [-1, 23]
+  - e.g. 3 min after midnight is noted as (3)
+  - `3.divmod(60)` => [0, 3]
+  - `0.divmod(24)` => [0, 0]
+- For example,
+  - For 1440 min / day
+  - `-3000 % 1440` => 1320
+  -  `min = -3000
+      while min < 0
+        min += 1440
+      end` (min => 1320)
+  - Both methods return the same value
+=end
