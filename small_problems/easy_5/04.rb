@@ -34,3 +34,12 @@ end
 p swap('Oh what a wonderful day it is') == 'hO thaw a londerfuw yad ti si'
 p swap('Abcde') == 'ebcdA'
 p swap('a') == 'a'
+
+=begin
+Further exploration:
+- Just passing the characters that need to be swapped doesn't work.
+- If only the characters are passed to the method,
+  - The method does not have the reference value to the word
+  - It is unable to return the new value of word to pass to `#map`
+  - `#map` returns a new array with only the characters that were swapped
+=end
