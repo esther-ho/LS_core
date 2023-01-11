@@ -8,7 +8,7 @@ Explicit rules:
 - String will always contain at least one word
 - String has only alphabetic characters and spaces
 Implicit rules:
-Case of the characters are preserved
+Lettercase of the characters are preserved
 --- E
 swap('Oh what a wonderful day it is') == 'hO thaw a londerfuw yad ti si'
 swap('Abcde') == 'ebcdA'
@@ -19,8 +19,18 @@ swap('a') == 'a'
 - Split the string into its separate words using ' ' as the delimiter
 - Iterate through the words array
 - For each iteration,
-  - Save the value of the first character as `first`
-  - Assign the value of the last character to the first character
   - Assign the value of the first character to the last character
+  - Assign the value of the last character to the first character
 - Rejoin the elements in the array with ' ' to return the string
 =end
+
+def swap(string)
+  words = string.split.each do |word|
+    word[0], word[-1] = word[-1], word[0]
+  end
+  words.join(' ')
+end
+
+p swap('Oh what a wonderful day it is') == 'hO thaw a londerfuw yad ti si'
+p swap('Abcde') == 'ebcdA'
+p swap('a') == 'a'
