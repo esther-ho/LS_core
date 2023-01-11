@@ -7,6 +7,9 @@ Input:
 Output:
 - Given string with non-alphabetic characters replaced by spaces
 - Consecutive spaces replaced by one space
+Implicit rules:
+- Numbers are not included in the string
+- Original string does not have to be modified
 --- E
 cleanup("---what's my +*& line?") == ' what s my line '
 --- D
@@ -15,3 +18,9 @@ cleanup("---what's my +*& line?") == ' what s my line '
 - Replace all non-alphabetic characters with spaces
 - Replace sets of multiple consecutive spaces with a single space
 =end
+
+def cleanup(string)
+  string.gsub(/[^a-z]/, ' ').squeeze(' ')
+end
+
+p cleanup("---what's my +*& line?") == ' what s my line '
