@@ -33,17 +33,16 @@ before_midnight('24:00') == 0
 =end
 
 MIN_PER_HOUR = 60
-MIN_PER_DAY = 1440
+HOUR_PER_DAY = 24
+MIN_PER_DAY = MIN_PER_HOUR * HOUR_PER_DAY
 
 def after_midnight(time)
-  return 0 if %w(00:00 24:00).include?(time)
   hr, min = time.split(':').map(&:to_i)
-  (hr * 60) + min
+  ((hr * MIN_PER_HOUR) + min) % MIN_PER_DAY
 end
 
 def before_midnight(time)
-  return 0 if %w(00:00 24:00).include?(time)
-  MIN_PER_DAY - after_midnight(time)
+  (MIN_PER_DAY - after_midnight(time)) % MIN_PER_DAY
 end
 
 p after_midnight('00:00') == 0
