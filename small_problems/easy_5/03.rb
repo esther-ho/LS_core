@@ -32,6 +32,8 @@ before_midnight('24:00') == 0
   - Subtract the result of `after_midnight` from MIN_PER_DAY
 =end
 
+require 'time'
+
 MIN_PER_HOUR = 60
 HOUR_PER_DAY = 24
 MIN_PER_DAY = MIN_PER_HOUR * HOUR_PER_DAY
@@ -51,3 +53,10 @@ p after_midnight('12:34') == 754
 p before_midnight('12:34') == 686
 p after_midnight('24:00') == 0
 p before_midnight('24:00') == 0
+
+=begin
+Further exploration:
+def after_midnight(time)
+  ((Time.parse(time) - Time.parse('00:00')) / SEC_PER_MIN) % MIN_PER_DAY
+end
+=end
