@@ -23,4 +23,7 @@ def cleanup(string)
   string.gsub(/[^a-z]/, ' ').squeeze(' ')
 end
 
+# Alternative: `string.gsub(/[^a-z]+, ' ')`
+# Replaces multiple non-alphabetic characters with one space
+
 p cleanup("---what's my +*& line?") == ' what s my line '
