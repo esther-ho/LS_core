@@ -24,7 +24,8 @@ word_sizes('') == {}
   - Values are the number of the given word length in the string
 --- A
 - Initialize an empty hash with a default value of 0
-- Remove all non-alphabetic characters
+- Convert all alphabetic characters to lowercase
+- Remove all non-alphabetic characters, except for spaces
 - Split the string into its substrings in an array using space as the delimiter
 - Iterate through the array
 - For each iteration,
@@ -33,3 +34,23 @@ word_sizes('') == {}
   - Increment the value by 1
 - Return the hash
 =end
+
+def word_sizes(string)
+  count = Hash.new(0)
+  string.delete('^a-zA-Z', '^ ').split.each do |word|
+    count[word.size] += 1
+  end
+  count
+end
+
+=begin
+Alternative:
+def word_sizes(string)
+  string.delete('^a-zA-Z', '^ ').split.map(&:size).tally
+end
+=end
+
+p word_sizes('Four score and seven.') == { 3 => 1, 4 => 1, 5 => 2 }
+p word_sizes('Hey diddle diddle, the cat and the fiddle!') == { 3 => 5, 6 => 3 }
+p word_sizes("What's up doc?") == { 5 => 1, 2 => 1, 3 => 1 }
+p word_sizes('') == {}
