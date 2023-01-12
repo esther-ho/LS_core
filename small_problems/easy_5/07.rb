@@ -9,6 +9,7 @@ Output:
 Explicit rules:
 - Non-alphabetic characters are excluded
 Implicit rules:
+- Words are separated by only a single space
 - String size is calculated alphabetic character substrings
   - Substrings are separated by spaces
   - Non-alphabetic characters are ignored
@@ -44,9 +45,24 @@ def word_sizes(string)
 end
 
 =begin
-Alternative:
+Alternatives:
 def word_sizes(string)
   string.delete('^a-zA-Z', '^ ').split.map(&:size).tally
+end
+
+# /i modifier ignores case
+def word_sizes(string)
+  string.gsub(/[^a-z ]+/i, '').split.map(&:size).tally
+end
+
+# Delete non-alphabetic characters after splitting
+def word_size(string)
+  count = Hash.new(0)
+  string.split.each do |word|
+    clean_word = word.delete('^a-zA-Z')
+    count[clean_word] += 1
+  end
+  count
 end
 =end
 
