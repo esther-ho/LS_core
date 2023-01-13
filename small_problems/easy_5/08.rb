@@ -35,6 +35,7 @@ NUM_WORD = {
   16 => 'sixteen', 17 => 'seventeen',
   18 => 'eighteen', 19 => 'nineteen'
 }
+# Can be modified to be an array of words instead
 
 def alphabetic_number_sort(nums)
   nums.sort { |n1, n2| NUM_WORD[n1] <=> NUM_WORD[n2] }
@@ -55,4 +56,11 @@ NUM_WORDS = %w(zero one two three four
 def alphabetic_number_sort(nums)
   nums.sort_by { |num| NUM_WORDS[num] }
 end
+
+- `Enumerable#sort_by` was used instead of `Array#sort_by!`.
+- `Array#sort_by!` performs two operations:
+  - It modifies the original array (side-effect).
+  - It returns the modified array (return value).
+- Methods should have a clear, defined purpose.
+- Using `Array#sort_by!` can cause unintended consequences in a larger program.
 =end
