@@ -6,7 +6,7 @@ Output:
 - A new string that contains characters from the original string but,
   - Characters epeated consecutively are condensed into a single character.
 Explicit rules:
-- `String#squeeze` & `String#squeeze!` cannot be used.
+- `Stringpsqueeze` & `Stringpsqueeze!` cannot be used.
 Implicit rules:
 - Lettercase of the characters is preserved.
 - Position of the characters in the string is preserved.
@@ -24,7 +24,19 @@ crunch('') == '
 - Assign the array to the variable `clean`
 - Iterate through the array
 - For each iteration,
-  - If the previous character matches the current character,
+  - If it is not the first character and,
+  - The previous character matches the current character,
     - Delete the current character
 - Join the `clean` array without spaces to return the modified string
 =end
+
+def crunch(string)
+  clean = string.chars
+  clean.delete_if.with_index { |char, i| char == clean[i - 1] if i != 0 }.join
+end
+
+p crunch('ddaaiillyy ddoouubbllee') == 'daily double'
+p crunch('4444abcabccba') == '4abcabcba'
+p crunch('ggggggggggggggg') == 'g'
+p crunch('a') == 'a'
+p crunch('') == ''
