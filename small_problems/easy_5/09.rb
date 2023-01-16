@@ -41,3 +41,24 @@ p crunch('4444abcabccba') == '4abcabcba'
 p crunch('ggggggggggggggg') == 'g'
 p crunch('a') == 'a'
 p crunch('') == ''
+
+=begin
+Further exploration:
+- When using `String#each_char` or `String#chars`, you can:
+  - Use `Enumerable#with_index` or `Enumerable#each_with_index`
+    - Allows you to reference index
+
+- Modified method using `String#each_char`
+def crunch(string)
+  crunch_text = ''
+  string.each_char.with_index do |text, index|
+    crunch_text << text unless char = string[index + 1]
+  end
+  crunch_text
+end
+
+- Method using regular expressions
+def crunch(string)
+  string.scan(/(.)\1*/).join
+end
+=end
