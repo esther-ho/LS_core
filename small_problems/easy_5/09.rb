@@ -31,8 +31,9 @@ crunch('') == '
 =end
 
 def crunch(string)
-  clean = string.chars
-  clean.delete_if.with_index { |char, i| char == clean[i - 1] if i != 0 }.join
+  string.chars.delete_if.with_index do |char, i|
+    char == string[i - 1] if i != 0
+  end.join
 end
 
 p crunch('ddaaiillyy ddoouubbllee') == 'daily double'
