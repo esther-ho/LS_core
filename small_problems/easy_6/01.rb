@@ -35,3 +35,21 @@ dms(360) == %(360°00'00") || dms(360) == %(0°00'00")
   - Assign the remainder to `minutes`
 - Format the output to "%(dd°mm'ss")"
 =end
+
+DEGREE = "\xC2\xB0"
+MIN_PER_DEGREE = 60
+SEC_PER_MIN = 60
+SEC_PER_DEGREE = MIN_PER_DEGREE * SEC_PER_MIN
+
+def dms(degrees_num)
+  min, sec = (degrees_num * SEC_PER_DEGREE).divmod(SEC_PER_MIN)
+  degree, min = min.divmod(MIN_PER_DEGREE)
+  format(%(%d#{DEGREE}%02d'%02d"), degree, min, sec)
+end
+
+p dms(30) == %(30°00'00")
+p dms(76.73) == %(76°43'48")
+p dms(254.6) == %(254°36'00")
+p dms(93.034773) == %(93°02'05")
+p dms(0) == %(0°00'00")
+p dms(360) == %(360°00'00") || dms(360) == %(0°00'00")
