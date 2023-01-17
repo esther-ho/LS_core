@@ -63,4 +63,18 @@ def dms(degrees_num)
   min, sec = (remainder * SEC_PER_DEGREE).divmod(60)
   format(%(#{degree}#{DEGREE}%02d'%02d"), min, sec)
 end
+
+Further exploration:
+- When input < 0 or input > 360
+
+def dms(degrees_float)
+  degrees_float %= 360
+  min, sec = (degrees_float * SEC_PER_DEGREE).divmod(SEC_PER_MIN)
+  degree, min = min.divmod(MIN_PER_DEGREE)
+  format(%(%d#{DEGREE}%02d'%02d"), degree, min, sec)
+end
+
+p dms(400) == %(40°00'00")
+p dms(-40) == %(320°00'00")
+p dms(-420) == %(300°00'00")
 =end
