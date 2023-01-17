@@ -53,3 +53,14 @@ p dms(254.6) == %(254°36'00")
 p dms(93.034773) == %(93°02'05")
 p dms(0) == %(0°00'00")
 p dms(360) == %(360°00'00") || dms(360) == %(0°00'00")
+
+=begin
+Possible alternative:
+- Differs by a second
+
+def dms(degrees_num)
+  degree, remainder = degrees_num.divmod(1)
+  min, sec = (remainder * SEC_PER_DEGREE).divmod(60)
+  format(%(#{degree}#{DEGREE}%02d'%02d"), min, sec)
+end
+=end
