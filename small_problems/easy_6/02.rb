@@ -21,5 +21,13 @@ remove_vowels(%w(ABC AEIOU XYZ)) == ['BC', '', 'XYZ']
 - Iterate through the array
 - For each iteration,
   - Delete vowels (case-insensitive)
-- Return the new modified array 
+- Return the new modified array
 =end
+
+def remove_vowels(string_array)
+  string_array.map { |word| word.delete "aeiouAEIOU" }
+end
+
+p remove_vowels(%w(abcdefghijklmnopqrstuvwxyz)) == %w(bcdfghjklmnpqrstvwxyz)
+p remove_vowels(%w(green YELLOW black white)) == %w(grn YLLW blck wht)
+p remove_vowels(%w(ABC AEIOU XYZ)) == ['BC', '', 'XYZ']
