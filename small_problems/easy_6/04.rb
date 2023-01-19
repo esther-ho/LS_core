@@ -34,27 +34,21 @@ list == [] # true
 - The original input is given as an array of elements
 - The output is the mutated version of the original array
 --- A
-- Find the mid-point of the array and save it as `mid`
 - Iterate through the original array
-- Assign front as '0'
-- Assign back as '-1'
-- While the value of `front` is less than `mid`
+- Assign start as '0'
+- While the value of `start` is less than the mid-point of the array
 - For each iteration,
-  - Swap the elements at indexes `front` and `back`
-  - Increment `front` by 1
-  - Decrease `back` by 1
+  - Swap the elements at indexes `start` and index[-start - 1]
+    - e.g. index[0] and index[-1], index[1] and index[-2] etc
+  - Increment `start` by 1
 - Return the modified array
 =end
 
 def reverse!(array)
-  mid = array.size / 2
-  front = 0
-  back = -1
-
-  while front < mid
-    array[front], array[back] = array[back], array[front]
-    front += 1
-    back -= 1
+  start = 0
+  while start < (array.size / 2)
+    array[start], array[-start - 1] = array[-start - 1], array[start]
+    start += 1
   end
   array
 end
