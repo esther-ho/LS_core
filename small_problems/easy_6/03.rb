@@ -43,3 +43,17 @@ p find_fibonacci_index_by_length(10) == 45
 p find_fibonacci_index_by_length(100) == 476
 p find_fibonacci_index_by_length(1000) == 4782
 p find_fibonacci_index_by_length(10000) == 47847
+
+=begin
+Alternative:
+- Solve for the number based on number of digits using math
+- More efficient than calculating Fibonacci numbers until # of digits reached
+- Digits(n) ≈ (n)log10(phi) - ((log10(5)) / 2) + 1
+
+def find_fibonacci_index_by_length(digits)
+  phi = (Math.sqrt(5) + 1) / 2.0
+  quotient = digits + (Math.log10(5) / 2) - 1
+  divisor = Math.log10(phi)
+  (quotient / divisor).ceil
+end
+=end
