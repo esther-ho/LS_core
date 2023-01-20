@@ -41,6 +41,9 @@ def reverse(array)
   end
 end
 
+# Alternative using `Enumerable#inject`:
+# `array.inject([]) { |arr, i| arr.unshift(i) }`
+
 p reverse([1, 2, 3, 4]) == [4, 3, 2, 1]    # => true
 p reverse(%w(a b e d c)) == %w(c d e b a)  # => true
 p reverse(['abc']) == ['abc']              # => true
