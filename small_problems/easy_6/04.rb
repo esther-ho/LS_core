@@ -44,6 +44,8 @@ list == [] # true
 - Return the modified array
 =end
 
+# Note that this method has both a side-effect and return value
+# Seen as bad practice; you want it to have either
 def reverse!(array)
   start = 0
   while start < (array.size / 2)
