@@ -27,7 +27,7 @@ halvsies([]) == [[], []]
 =end
 
 def halvsies(num_arr)
-  num_arr.partition.with_index { |_, i| i < (num_arr.size + 1) / 2 }
+  num_arr.partition.with_index { |_, i| i < num_arr.size / 2.0 }
 end
 
 p halvsies([1, 2, 3, 4]) == [[1, 2], [3, 4]]
