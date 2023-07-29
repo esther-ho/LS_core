@@ -28,7 +28,7 @@ find_dup([18,  9, 36, 96, 31, 19, 54, 75, 42, 15,
 =end
 
 def find_dup(num_arr)
-  num_arr.each { |n| return n if num_arr.count(n) == 2 }
+  num_arr.find { |n| num_arr.count(n) == 2 }
 end
 
 find_dup([1, 5, 3, 1]) == 1
