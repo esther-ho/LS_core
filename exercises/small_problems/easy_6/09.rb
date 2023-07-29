@@ -25,7 +25,7 @@ include?([], nil) == false
 =end
 
 def include?(arr, search_value)
-  arr.any? { |el| el == search_value }
+  !!arr.index(search_value)
 end
 
 include?([1,2,3,4,5], 3) == true
