@@ -30,13 +30,10 @@ swapcase('AbCCCd123') == 'aBcccD123'
 =end
 
 def swapcase(string)
-  string.chars.map do |char|
-    char unless char =~ /[a-z]/i
-    char =~ /[a-z]/ ? char.upcase : char.downcase
-  end.join
+  string.gsub(/./) { |chr| chr == chr.upcase ? chr.downcase : chr.upcase }
 end
 
-p swapcase('CamelCase') == 'cAMELcASE'
-p swapcase('Tonight on XYZ-TV') == 'tONIGHT ON xyz-tv'
-p swapcase('123') == '123'
-p swapcase('AbCCCd123') == 'aBcccD123'
+swapcase('CamelCase') == 'cAMELcASE'
+swapcase('Tonight on XYZ-TV') == 'tONIGHT ON xyz-tv'
+swapcase('123') == '123'
+swapcase('AbCCCd123') == 'aBcccD123'
