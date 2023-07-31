@@ -22,14 +22,25 @@ staggered_case('ignore 77 the 444 numbers') == 'IgNoRe 77 ThE 444 nUmBeRs'
 - Else, replace it with its lowercase version
 =end
 
-def staggered_case(str)
-  count = 0
+# def staggered_case(str)
+#   count = 0
+#   str.chars.map do |char|
+#     count += 1 if char =~ /[a-z]/i
+#     count.odd? ? char.upcase : char.downcase
+#   end.join
+# end
+
+# Alternative:
+def staggered_case(str, include_nonletter = true, start_upper = true)
+  count = (start_upper ? 0 : -1)
+
   str.chars.map do |char|
-    count += 1 if char =~ /[a-z]/i
+    count += 1 if include_nonletter || !include_nonletter && char =~ /[a-z]/i
+
     count.odd? ? char.upcase : char.downcase
   end.join
 end
 
-p staggered_case('I Love Launch School!') #== 'I lOvE lAuNcH sChOoL!'
-p staggered_case('ALL CAPS') #== 'AlL cApS'
-p staggered_case('ignore 77 the 444 numbers') #== 'IgNoRe 77 ThE 444 nUmBeRs'
+staggered_case('I Love Launch School!', false) == 'I lOvE lAuNcH sChOoL!'
+staggered_case('ALL CAPS', false) == 'AlL cApS'
+staggered_case('ignore 77 the 444 numbers', false) == 'IgNoRe 77 ThE 444 nUmBeRs'
