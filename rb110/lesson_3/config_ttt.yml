@@ -1,3 +1,40 @@
 board: "\n     |     |\n  %s  |  %s  |  %s\n     |     |\n
   ----+-----+----\n     |     |\n  %s  |  %s  |  %s\n     |     |\n
   ----+-----+----\n     |     |\n  %s  |  %s  |  %s\n     |     |\n\n"
+  
+prompts:
+  welcome: ">> Welcome to Tic-Tac-Toe!\n"
+  name: ">> Enter your name:"
+  valid_name: ">> Make sure to use a valid name.\n"
+
+  greeting: ">> Hi, %s"
+  view_rules: ">> Would you like to learn the rules of the game?\n>> Enter 'Y' to view the rules, or 'N' to proceed to the game."
+  invalid_view_rules: ">> Please enter 'Y' to view the rules, or 'N' to proceed to the game."
+  rules: |
+    -------------------------------------------------------------------
+                                   RULES
+    -------------------------------------------------------------------
+    Objectives:
+    - You (as 'X') and the computer (as 'O') take turns putting marks
+      on empty squares in a 3 x 3 square grid.
+    - The first player to get 3 marks in a row (vertical, horizontal,
+      or diagonal) wins the round.
+    - First player to 5 wins is the grand winner!
+
+    Possible positions to mark:
+    
+             |       |
+        [1]  |  [2]  |  [3]
+             |       |
+      -------+-------+-------
+             |       |
+        [4]  |  [5]  |  [6]
+             |       |
+      -------+-------+-------
+             |       |
+        [7]  |  [8]  |  [9]
+             |       |
+
+    -------------------------------------------------------------------
+     >> Press any other key to start the game.
+    -------------------------------------------------------------------
