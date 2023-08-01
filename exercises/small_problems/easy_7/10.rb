@@ -25,3 +25,23 @@ end
 
 penultimate('last word') == 'last'
 penultimate('Launch School is great!') == 'is'
+
+# Further exploration
+
+def middle_word(str)
+  # Edge cases:
+  # No words or only one word
+  # - Return empty string if no words
+  # - Return empty string if only whitespace  
+  # - Return word if only one word
+  # Even number of words
+  # - Return the word after the middle point
+
+ str.strip.empty? ? '' : str.split[(str.split.size) / 2]
+end
+
+middle_word('last word') == 'word'
+middle_word('last') == 'last'
+middle_word('') == ''
+middle_word('   ') == ''
+middle_word('last word again') == 'word'
