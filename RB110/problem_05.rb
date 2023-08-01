@@ -8,6 +8,6 @@ munsters = {
   "Marilyn" => { "age" => 23, "gender" => "female"}
 }
 
-males = munsters.select { |k, hsh| hsh['gender'] == 'male' }
+males = munsters.select { |_, h| h['gender'] == 'male' }
 
-males.map { |k, hsh| hsh['age'] }.sum
+males.map { |_, h| h['age'] }.sum
