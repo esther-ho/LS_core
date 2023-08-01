@@ -1,7 +1,17 @@
-board: "\n     |     |\n  %s  |  %s  |  %s\n     |     |\n
-  ----+-----+----\n     |     |\n  %s  |  %s  |  %s\n     |     |\n
-  ----+-----+----\n     |     |\n  %s  |  %s  |  %s\n     |     |\n\n"
-  
+board: "\n      |     |\n  %s   |  %s  |  %s\n      |     |\n
+        -----+-----+-----\n      |     |\n  %s   |  %s  |  %s \n      |     |\n
+        -----+-----+-----\n      |     |\n  %s   |  %s  |  %s \n      |     |\n\n"
+
+markers:
+  initial: ' '
+  player: 'X'
+  computer: 'O'
+
+winning_lines:
+  horizontal: [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+  vertical: [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
+  diagonal: [[0, 4, 8], [2, 4, 6]]
+
 prompts:
   welcome: ">> Welcome to Tic-Tac-Toe!\n"
   name: ">> Enter your name:"
@@ -38,3 +48,6 @@ prompts:
     -------------------------------------------------------------------
      >> Press any other key to start the game.
     -------------------------------------------------------------------
+    
+  choose_square: "Choose a square (%s):"
+  invalid_square: "Sorry, that's not a valid choice."
