@@ -29,6 +29,9 @@ def count_occurrences(arr)
   arr.uniq.each do |vehicle|
     puts "#{vehicle} => #{arr.count(vehicle)}"
   end
+
+  # Alternative
+  # arr.tally.each { |k, v| puts "#{k} => #{v}" }
 end
 
 vehicles = [
