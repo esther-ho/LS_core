@@ -6,7 +6,7 @@ MARKERS = CONFIG['markers']
 PLAYERS = CONFIG['players']
 WINNING_LINES = CONFIG['winning_lines']
 GRID_SIZE = 3**2
-MIDDLE_SQUARE = 5
+CENTER_SQUARE = 5
 ROUNDS_TO_WIN = 5
 
 def prompt(key, substitution = nil)
@@ -121,8 +121,8 @@ def computer_choice(brd)
     computer_wins.sample
   elsif !player_wins.empty?
     player_wins.sample
-  elsif empty_squares(brd).include?(MIDDLE_SQUARE)
-    MIDDLE_SQUARE
+  elsif empty_squares(brd).include?(CENTER_SQUARE)
+    CENTER_SQUARE
   else
     empty_squares(brd).sample
   end
