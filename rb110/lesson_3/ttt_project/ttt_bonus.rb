@@ -216,11 +216,11 @@ loop do
       prompt 'tie'
     end
 
-    break unless !match_winner(score) && yes?('continue')
+    break unless !match_won?(score) && yes?('continue')
   end
 
   prompt "champion_#{match_winner(score)}"
-  break unless match_winner(score) && yes?('again')
+  break unless match_won?(score) && yes?('again')
 end
 
 prompt 'bye'
