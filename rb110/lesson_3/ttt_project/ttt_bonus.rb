@@ -167,6 +167,10 @@ def update_score!(winner, score)
   end
 end
 
+def match_won?(score)
+  score.fetch_values(*PLAYERS).include?(ROUNDS_TO_WIN)
+end
+
 def match_winner(score)
   score.key(ROUNDS_TO_WIN)
 end
@@ -187,7 +191,7 @@ loop do
 
   score = initialize_score
 
-  until score.fetch_values(*PLAYERS).include?(ROUNDS_TO_WIN)
+  until match_won?(score)
     system 'clear'
     current_player = starting_player
     round_winner = nil
