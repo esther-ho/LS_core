@@ -1,16 +1,27 @@
-board: "\n      |     |\n  %s   |  %s  |  %s\n      |     |\n
-        -----+-----+-----\n      |     |\n  %s   |  %s  |  %s \n      |     |\n
-        -----+-----+-----\n      |     |\n  %s   |  %s  |  %s \n      |     |\n\n"
-
 markers:
   initial: ' '
   player: 'X'
   computer: 'O'
 
-winning_lines:
-  horizontal: [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
-  vertical: [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
-  diagonal: [[0, 4, 8], [2, 4, 6]]
+winning_lines: [[0, 1, 2], [3, 4, 5], [6, 7, 8], # horizontal
+                [0, 3, 6], [1, 4, 7], [2, 5, 8], # vertical
+                [0, 4, 8], [2, 4, 6]]            # diagonal
+
+board: |+
+  
+  -------------------
+  |     |     |     |
+  |  %s  |  %s  |  %s  |
+  |     |     |     |
+  ------+-----+-----+
+  |     |     |     |
+  |  %s  |  %s  |  %s  |
+  |     |     |     |
+  ------+-----+-----+
+  |     |     |     |
+  |  %s  |  %s  |  %s  |
+  |     |     |     |
+  -------------------
 
 prompts:
   welcome: ">> Welcome to Tic-Tac-Toe!\n"
@@ -49,5 +60,12 @@ prompts:
      >> Press any other key to start the game.
     -------------------------------------------------------------------
     
-  choose_square: "Choose a square (%s):"
-  invalid_square: "Sorry, that's not a valid choice."
+  choose_square: ">> Choose a square (%s):"
+  invalid_square: ">> Sorry, that's not a valid choice."
+
+  winner: ">> %s won!"
+  tie: ">> It's a tie!"
+
+  again: ">> Want to have a rematch?\n>> Enter 'Y' to continue, or 'N' to end the game."
+  invalid_again: ">> Please enter 'Y' to continue, or 'N' to end the game."
+  bye: ">> Thank you for playing Tic-Tac-Toe! Goodbye!"

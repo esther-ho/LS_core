@@ -26,14 +26,14 @@ def valid_name
   name.split.map(&:capitalize).join(' ')
 end
 
-def rules?
+def valid_answer?(key)
   answer = nil
-  prompt 'view_rules'
+  prompt key
 
   loop do
     answer = gets.chomp.strip
     break if answer =~ /^(y|yes|n|no)$/i
-    prompt 'invalid_view_rules'
+    prompt "invalid_#{key}"
   end
 
   !!(answer =~ /^(y|yes)$/i)
@@ -50,11 +50,20 @@ def initialize_board
 end
 
 def display_board(brd)
+  system 'clear'
   puts CONFIG['board'] % brd
 end
 
 def empty_squares(brd)
   brd.filter_map.with_index { |v, i| i + 1 if v == ' ' }
+end
+
+def joinor(choices, delimiter = ', ', word = 'or')
+  case choices.size
+  when 1 then choices.first
+  when 2 then choices.join(" #{word} ")
+  else "#{choices[0..-2].join(delimiter)} #{word} #{choices[-1]}"
+  end
 end
 
 def player_choice(brd)
@@ -75,23 +84,33 @@ def computer_choice(brd)
   empty_squares(brd).sample
 end
 
-def place_piece!(brd, current_player)
-  square =
-    if current_player == 'player'
-      player_choice(brd)
-    else
-      computer_choice(brd)
-    end
-
-  brd[square - 1] = MARKERS[current_player]
+def place_piece!(brd, player)
+  square = (player == 'computer' ? computer_choice(brd) : player_choice(brd))
+  brd[square - 1] = MARKERS[player]
 end
 
-def joinor(choices, delimiter = ', ', word = 'or')
-  case choices.size
-  when 1 then choices.first
-  when 2 then choices.join(" #{word} ")
-  else "#{choices[0..-2].join(delimiter)} #{word} #{choices[-1]}"
+def board_full?(brd)
+  empty_squares(brd).empty?
+end
+
+def detect_winner(brd)
+  markers = [MARKERS['player'], MARKERS['computer']]
+  moves = WINNING_LINES.map { |i1, i2, i3| [brd[i1], brd[i2], brd[i3]] }
+
+  markers.each do |marker|
+    return MARKERS.key(marker) unless moves.select { |l| l.all?(marker) }.empty?
   end
+
+  nil
+end
+
+def someone_won?(brd)
+  !!detect_winner(brd)
+end
+
+def who_won(brd, name)
+  winner = detect_winner(brd)
+  winner == 'computer' ? winner.capitalize : name
 end
 
 # Main program
@@ -100,12 +119,31 @@ system 'clear'
 prompt 'welcome'
 name = valid_name
 prompt 'greeting', "#{name}!"
-display_rules if rules?
+display_rules if valid_answer?('view_rules')
 
-system 'clear'
-board = initialize_board
-display_board(board)
+loop do
+  system 'clear'
+  board = initialize_board
 
-place_piece!(board, 'player')
-place_piece!(board, 'computer')
-display_board(board)
+  loop do
+    display_board(board)
+
+    place_piece!(board, 'player')
+    break if someone_won?(board) || board_full?(board)
+    place_piece!(board, 'computer')
+
+    break if someone_won?(board) || board_full?(board)
+  end
+
+  display_board(board)
+
+  if someone_won?(board)
+    prompt 'winner', who_won(board, name)
+  else
+    prompt 'tie'
+  end
+
+  break unless valid_answer?('again')
+end
+
+prompt 'bye'
