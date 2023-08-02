@@ -1,8 +1,4 @@
-# Game loop - 5 rounds is grand winner
-# Starting player random + choice
-
 require 'psych'
-require 'pry'
 require 'io/console'
 
 CONFIG = Psych.load_file('config_ttt.yml')
@@ -16,6 +12,27 @@ def prompt(key, substitution = nil)
   msg = CONFIG['prompts'][key]
   msg = format(msg, substitution) if substitution
   puts msg
+end
+
+def whose_choice
+  PLAYERS.sample
+end
+
+def pick_first(player)
+  choice = nil
+
+  if player == PLAYERS[1]
+    choice = PLAYERS.sample
+  else
+    prompt 'player_choice'
+    loop do
+      choice = gets.chomp.strip
+      break if choice =~ /^[1|2]$/
+      prompt 'invalid_player_choice'
+    end
+  end
+
+  PLAYERS[choice.to_i - 1]
 end
 
 def yes?(key)
@@ -151,7 +168,7 @@ def update_score!(winner, score)
 end
 
 def match_winner(score)
-  score.key(5)
+  score.key(ROUNDS_TO_WIN)
 end
 
 # Main program
@@ -159,13 +176,20 @@ end
 system 'clear'
 prompt 'welcome'
 display_rules if yes?('view_rules')
-current_player = PLAYERS[0]
 
 loop do
+  system 'clear'
+  starting_player = whose_choice
+  prompt "pick_#{starting_player}"
+  starting_player = pick_first(starting_player)
+  prompt "first_#{starting_player}"
+  sleep 2
+
   score = initialize_score
 
-  until score.fetch_values(*PLAYERS).include?(5)
+  until score.fetch_values(*PLAYERS).include?(ROUNDS_TO_WIN)
     system 'clear'
+    current_player = starting_player
     round_winner = nil
     board = initialize_board
 

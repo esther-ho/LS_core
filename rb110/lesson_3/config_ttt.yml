@@ -9,31 +9,29 @@ winning_lines: [[0, 1, 2], [3, 4, 5], [6, 7, 8], # horizontal
                 [0, 3, 6], [1, 4, 7], [2, 5, 8], # vertical
                 [0, 4, 8], [2, 4, 6]]            # diagonal
 
-scoreboard: |+
-
-  ----------------------------
+scoreboard: |
+  --------------------------
           CURRENT SCORE       
           
   Your Wins - %d
   Computer's Wins - %d
   Ties - %d
-  ----------------------------                
-
+  --------------------------
 board: |+
   
-  -------------------
-  |     |     |     |
-  |  %s  |  %s  |  %s  |
-  |     |     |     |
-  ------+-----+-----+
-  |     |     |     |
-  |  %s  |  %s  |  %s  |
-  |     |     |     |
-  ------+-----+-----+
-  |     |     |     |
-  |  %s  |  %s  |  %s  |
-  |     |     |     |
-  -------------------
+  -------------------------  
+  |       |       |       |
+  |   %s   |   %s   |   %s   |
+  |       |       |       |
+  --------+-------+--------
+  |       |       |       |
+  |   %s   |   %s   |   %s   |
+  |       |       |       |
+  --------+-------+--------
+  |       |       |       |
+  |   %s   |   %s   |   %s   |
+  |       |       |       |
+  -------------------------
 
 prompts:
   welcome: ">> Welcome to Tic-Tac-Toe!\n"
@@ -43,7 +41,9 @@ prompts:
     -------------------------------------------------------------------
                                    RULES
     -------------------------------------------------------------------
+
     Objectives:
+
     - You (as 'X') and the computer (as 'O') take turns putting marks
       on empty squares in a 3 x 3 square grid.
     - The first player to get 3 marks in a row (vertical, horizontal,
@@ -52,22 +52,33 @@ prompts:
 
     Possible positions to mark:
     
-             |       |
-        [1]  |  [2]  |  [3]
-             |       |
-      -------+-------+-------
-             |       |
-        [4]  |  [5]  |  [6]
-             |       |
-      -------+-------+-------
-             |       |
-        [7]  |  [8]  |  [9]
-             |       |
+      -------------------------
+      |       |       |       |
+      |  [1]  |  [2]  |  [3]  |
+      |       |       |       |
+      --------+-------+--------
+      |       |       |       |
+      |  [4]  |  [5]  |  [6]  |
+      |       |       |       |
+      --------+-------+--------
+      |       |       |       |
+      |  [7]  |  [8]  |  [9]  |
+      |       |       |       |
+      -------------------------
 
     -------------------------------------------------------------------
      >> Press any other key to start the game.
     -------------------------------------------------------------------
-    
+
+  pick_computer: ">> Computer gets to pick the starting player."
+  pick_player: ">> You get to pick the starting player."
+
+  player_choice: ">> Enter '1' to go first or '2' for the computer to go first."
+  invalid_player_choice: ">> Please enter '1' to go first or '2' for the computer to go first."
+
+  first_computer: ">> Computer goes first."
+  first_player: ">> You go first."
+
   choose_square: ">> Choose a square (%s):"
   invalid_square: ">> Sorry, that's not a valid choice."
 
