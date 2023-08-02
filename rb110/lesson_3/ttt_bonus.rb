@@ -4,6 +4,7 @@ require 'io/console'
 
 CONFIG = Psych.load_file('config_ttt.yml')
 MARKERS = CONFIG['markers']
+PLAYERS = CONFIG['players']
 WINNING_LINES = CONFIG['winning_lines']
 GRID_SIZE = 3**2
 
@@ -80,12 +81,36 @@ def player_choice(brd)
   square
 end
 
+def winning_moves(brd)
+  markers = MARKERS.fetch_values(*PLAYERS)
+  squares = empty_squares(brd)
+  possible_moves = PLAYERS.each_with_object({}) { |m, h| h[m] = [] }
+
+  squares.product(markers).each do |square, marker|
+    temp_brd = brd.dup
+    temp_brd[square - 1] = marker
+    possible_moves[MARKERS.key(marker)] << square if detect_winner(temp_brd)
+  end
+
+  possible_moves
+end
+
 def computer_choice(brd)
-  empty_squares(brd).sample
+  computer_wins, player_wins = winning_moves(brd).values
+
+  if !computer_wins.empty?
+    computer_wins.sample
+  elsif !player_wins.empty?
+    player_wins.sample
+  elsif empty_squares(brd).include?(5)
+    5
+  else
+    empty_squares(brd).sample
+  end
 end
 
 def place_piece!(brd, player)
-  square = (player == 'computer' ? computer_choice(brd) : player_choice(brd))
+  square = (player == PLAYERS[1] ? computer_choice(brd) : player_choice(brd))
   brd[square - 1] = MARKERS[player]
 end
 
@@ -94,11 +119,11 @@ def board_full?(brd)
 end
 
 def detect_winner(brd)
-  markers = [MARKERS['player'], MARKERS['computer']]
-  moves = WINNING_LINES.map { |i1, i2, i3| [brd[i1], brd[i2], brd[i3]] }
+  markers = MARKERS.fetch_values(*PLAYERS)
+  lines = WINNING_LINES.map { |i1, i2, i3| [brd[i1], brd[i2], brd[i3]] }
 
   markers.each do |marker|
-    return MARKERS.key(marker) unless moves.select { |l| l.all?(marker) }.empty?
+    return MARKERS.key(marker) unless lines.select { |l| l.all?(marker) }.empty?
   end
 
   nil
@@ -110,7 +135,7 @@ end
 
 def who_won(brd, name)
   winner = detect_winner(brd)
-  winner == 'computer' ? winner.capitalize : name
+  winner == PLAYERS[0] ? name : winner.capitalize
 end
 
 # Main program
@@ -128,10 +153,9 @@ loop do
   loop do
     display_board(board)
 
-    place_piece!(board, 'player')
+    place_piece!(board, PLAYERS[0])
     break if someone_won?(board) || board_full?(board)
-    place_piece!(board, 'computer')
-
+    place_piece!(board, PLAYERS[1])
     break if someone_won?(board) || board_full?(board)
   end
 
