@@ -194,7 +194,6 @@ loop do
   until match_won?(score)
     system 'clear'
     current_player = starting_player
-    round_winner = nil
     board = initialize_board
 
     loop do
