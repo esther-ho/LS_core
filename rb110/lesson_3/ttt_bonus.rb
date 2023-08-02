@@ -1,3 +1,7 @@
+# Alternate player
+# Game loop - 5 rounds is grand winner
+# Starting player random + choice
+
 require 'psych'
 require 'pry'
 require 'io/console'
@@ -14,20 +18,7 @@ def prompt(key, substitution = nil)
   puts msg
 end
 
-def valid_name
-  name = nil
-
-  loop do
-    prompt 'name'
-    name = gets.chomp.strip
-    break if name =~ /^[a-z]+\ ?[a-z]*$/i
-    prompt 'valid_name'
-  end
-
-  name.split.map(&:capitalize).join(' ')
-end
-
-def valid_answer?(key)
+def yes?(key)
   answer = nil
   prompt key
 
@@ -96,7 +87,7 @@ def winning_moves(brd)
 end
 
 def computer_choice(brd)
-  computer_wins, player_wins = winning_moves(brd).values
+  player_wins, computer_wins = winning_moves(brd).values
 
   if !computer_wins.empty?
     computer_wins.sample
@@ -133,18 +124,16 @@ def someone_won?(brd)
   !!detect_winner(brd)
 end
 
-def who_won(brd, name)
+def who_won(brd)
   winner = detect_winner(brd)
-  winner == PLAYERS[0] ? name : winner.capitalize
+  winner == PLAYERS[0] ? 'winner_player' : 'winner_computer'
 end
 
 # Main program
 
 system 'clear'
 prompt 'welcome'
-name = valid_name
-prompt 'greeting', "#{name}!"
-display_rules if valid_answer?('view_rules')
+display_rules if yes?('view_rules')
 
 loop do
   system 'clear'
@@ -162,12 +151,12 @@ loop do
   display_board(board)
 
   if someone_won?(board)
-    prompt 'winner', who_won(board, name)
+    prompt who_won(board)
   else
     prompt 'tie'
   end
 
-  break unless valid_answer?('again')
+  break unless yes?('again')
 end
 
 prompt 'bye'

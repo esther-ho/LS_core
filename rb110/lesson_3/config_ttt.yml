@@ -27,10 +27,6 @@ board: |+
 
 prompts:
   welcome: ">> Welcome to Tic-Tac-Toe!\n"
-  name: ">> Enter your name:"
-  valid_name: ">> Make sure to use a valid name.\n"
-
-  greeting: ">> Hi, %s"
   view_rules: ">> Would you like to learn the rules of the game?\n>> Enter 'Y' to view the rules, or 'N' to proceed to the game."
   invalid_view_rules: ">> Please enter 'Y' to view the rules, or 'N' to proceed to the game."
   rules: |
@@ -65,7 +61,8 @@ prompts:
   choose_square: ">> Choose a square (%s):"
   invalid_square: ">> Sorry, that's not a valid choice."
 
-  winner: ">> %s won!"
+  winner_player: ">> You won!"
+  winner_computer: "Computer won!"
   tie: ">> It's a tie!"
 
   again: ">> Want to have a rematch?\n>> Enter 'Y' to continue, or 'N' to end the game."
