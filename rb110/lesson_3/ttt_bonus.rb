@@ -101,8 +101,12 @@ def computer_choice(brd)
 end
 
 def place_piece!(brd, player)
-  square = (player == PLAYERS[1] ? computer_choice(brd) : player_choice(brd))
+  square = (player == PLAYERS[0] ? player_choice(brd) : computer_choice(brd))
   brd[square - 1] = MARKERS[player]
+end
+
+def alternate_player(current)
+  PLAYERS.select { |player| player != current }.first
 end
 
 def board_full?(brd)
@@ -134,6 +138,7 @@ end
 system 'clear'
 prompt 'welcome'
 display_rules if yes?('view_rules')
+current_player = PLAYERS[0]
 
 loop do
   system 'clear'
@@ -142,9 +147,8 @@ loop do
   loop do
     display_board(board)
 
-    place_piece!(board, PLAYERS[0])
-    break if someone_won?(board) || board_full?(board)
-    place_piece!(board, PLAYERS[1])
+    place_piece!(board, current_player)
+    current_player = alternate_player(current_player)
     break if someone_won?(board) || board_full?(board)
   end
 
