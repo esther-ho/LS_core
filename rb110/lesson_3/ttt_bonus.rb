@@ -1,4 +1,3 @@
-# Alternate player
 # Game loop - 5 rounds is grand winner
 # Starting player random + choice
 
@@ -11,6 +10,7 @@ MARKERS = CONFIG['markers']
 PLAYERS = CONFIG['players']
 WINNING_LINES = CONFIG['winning_lines']
 GRID_SIZE = 3**2
+ROUNDS_TO_WIN = 5
 
 def prompt(key, substitution = nil)
   msg = CONFIG['prompts'][key]
@@ -37,12 +37,22 @@ def display_rules
   $stdin.getch
 end
 
+def initialize_score
+  [*PLAYERS, 'tie'].each_with_object({}) do |score, hsh|
+    hsh[score] = 0
+  end
+end
+
+def display_score(score)
+  system 'clear'
+  puts CONFIG['scoreboard'] % score.values
+end
+
 def initialize_board
   [MARKERS['initial']] * GRID_SIZE
 end
 
 def display_board(brd)
-  system 'clear'
   puts CONFIG['board'] % brd
 end
 
@@ -129,8 +139,19 @@ def someone_won?(brd)
 end
 
 def who_won(brd)
-  winner = detect_winner(brd)
-  winner == PLAYERS[0] ? 'winner_player' : 'winner_computer'
+  detect_winner(brd)
+end
+
+def update_score!(winner, score)
+  if winner
+    score[winner] += 1
+  else
+    score['tie'] += 1
+  end
+end
+
+def match_winner(score)
+  score.key(5)
 end
 
 # Main program
@@ -141,26 +162,38 @@ display_rules if yes?('view_rules')
 current_player = PLAYERS[0]
 
 loop do
-  system 'clear'
-  board = initialize_board
+  score = initialize_score
 
-  loop do
+  until score.fetch_values(*PLAYERS).include?(5)
+    system 'clear'
+    round_winner = nil
+    board = initialize_board
+
+    loop do
+      display_score(score)
+      display_board(board)
+
+      place_piece!(board, current_player)
+      current_player = alternate_player(current_player)
+      break if someone_won?(board) || board_full?(board)
+    end
+
+    round_winner = who_won(board)
+    update_score!(round_winner, score)
+    display_score(score)
     display_board(board)
 
-    place_piece!(board, current_player)
-    current_player = alternate_player(current_player)
-    break if someone_won?(board) || board_full?(board)
+    if someone_won?(board)
+      prompt "round_#{round_winner}"
+    else
+      prompt 'tie'
+    end
+
+    break unless !match_winner(score) && yes?('continue')
   end
 
-  display_board(board)
-
-  if someone_won?(board)
-    prompt who_won(board)
-  else
-    prompt 'tie'
-  end
-
-  break unless yes?('again')
+  prompt "champion_#{match_winner(score)}"
+  break unless match_winner(score) && yes?('again')
 end
 
 prompt 'bye'
