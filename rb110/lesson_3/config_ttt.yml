@@ -34,7 +34,7 @@ board: |+
   -------------------------
 
 prompts:
-  welcome: ">> Welcome to Tic-Tac-Toe!\n"
+  welcome: ">> Welcome to Tic-Tac-Toe!"
   view_rules: ">> Would you like to learn the rules of the game?\n>> Enter 'Y' to view the rules, or 'N' to proceed to the game."
   invalid_view_rules: ">> Please enter 'Y' to view the rules, or 'N' to proceed to the game."
   rules: |
@@ -70,14 +70,14 @@ prompts:
      >> Press any other key to start the game.
     -------------------------------------------------------------------
 
-  pick_computer: ">> Computer gets to pick the starting player."
   pick_player: ">> You get to pick the starting player."
+  pick_computer: ">> Computer gets to pick the starting player."
 
   player_choice: ">> Enter '1' to go first or '2' for the computer to go first."
   invalid_player_choice: ">> Please enter '1' to go first or '2' for the computer to go first."
 
-  first_computer: ">> Computer goes first."
   first_player: ">> You go first."
+  first_computer: ">> Computer goes first."
 
   choose_square: ">> Choose a square (%s):"
   invalid_square: ">> Sorry, that's not a valid choice."
