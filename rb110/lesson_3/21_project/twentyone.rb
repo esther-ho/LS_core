@@ -28,6 +28,23 @@ def initialize_hand_totals
   PLAYERS.each_with_object({}) { |player, hsh| hsh[player] = 0 }
 end
 
+def prompt_yes_no(key)
+  answer = nil
+  prompt key
+
+  loop do
+    answer = gets.chomp.strip
+    break if answer =~ /^(y|yes|n|no)$/i
+    prompt "invalid_#{key}"
+  end
+
+  answer
+end
+
+def yes?(answer)
+  !!(answer =~ /^(y|yes)$/i)
+end
+
 def display_hands(hands, hand_totals, hide_one: false)
   display = (hide_one ? CONFIG['hidden_hands'] : CONFIG['visible_hands'])
 
@@ -161,53 +178,60 @@ end
 
 # Main method
 
-deck = initialize_deck
-hands = initialize_hands
-hand_totals = initialize_hand_totals
-dealer, player = PLAYERS
+loop do
+  deck = initialize_deck
+  hands = initialize_hands
+  hand_totals = initialize_hand_totals
+  dealer, player = PLAYERS
 
-deal!(deck, hands, hand_totals)
+  deal!(deck, hands, hand_totals)
 
-until busted?(hand_totals)
-  display_hands(hands, hand_totals, hide_one: true)
+  until busted?(hand_totals)
+    display_hands(hands, hand_totals, hide_one: true)
 
-  prompt 'turn_player'
-  prompt 'player_has_21' if player_has_21?(hand_totals[player])
+    prompt 'turn_player'
+    prompt 'player_has_21' if player_has_21?(hand_totals[player])
 
-  answer = prompt_hit_stay
+    answer = prompt_hit_stay
 
-  if player_stay?(answer)
-    prompt 'stay_player', hand_totals[player]
+    if player_stay?(answer)
+      prompt 'stay_player', hand_totals[player]
+      prompt 'update_hand'
+      sleep 2
+      break
+    end
+
+    prompt 'hit_player'
     prompt 'update_hand'
     sleep 2
-    break
+
+    hit!(deck, hands, hand_totals, player)
   end
 
-  prompt 'hit_player'
-  prompt 'update_hand'
-  sleep 2
+  until busted?(hand_totals)
+    display_hands(hands, hand_totals, hide_one: false)
 
-  hit!(deck, hands, hand_totals, player)
-end
+    prompt 'turn_dealer'
 
-until busted?(hand_totals)
-  display_hands(hands, hand_totals, hide_one: false)
+    if dealer_stay?(hand_totals[dealer])
+      prompt 'stay_dealer', hand_totals[dealer]
+      prompt 'update_hand'
+      sleep 3
+      break
+    end
 
-  prompt 'turn_dealer'
-
-  if dealer_stay?(hand_totals[dealer])
-    prompt 'stay_dealer', hand_totals[dealer]
+    prompt 'hit_dealer'
     prompt 'update_hand'
-    sleep 3
-    break
+    sleep 2
+
+    hit!(deck, hands, hand_totals, dealer)
   end
 
-  prompt 'hit_dealer'
-  prompt 'update_hand'
-  sleep 3
+  display_hands(hands, hand_totals, hide_one: false)
+  display_result(hand_totals)
 
-  hit!(deck, hands, hand_totals, dealer)
+  answer = prompt_yes_no 'play_again'
+  break unless yes?(answer)
 end
 
-display_hands(hands, hand_totals, hide_one: false)
-display_result(hand_totals)
+prompt 'bye'
