@@ -1,10 +1,10 @@
 require 'psych'
-require 'pry'
+require 'io/console'
 
 CONFIG = Psych.load_file('config_twentyone.yml')
 SUITS = CONFIG['suits']
 CARDS = CONFIG['cards']
-ACE_SUMS = CONFIG['ace_sums']
+ACE_SUMS = CONFIG['possible_ace_sums']
 PLAYERS = [:dealer, :player]
 DEAL_TIMES = 2
 MAX_TOTAL = 21
@@ -50,6 +50,12 @@ end
 
 def yes?(answer)
   !!(answer =~ /^(y|yes)$/i)
+end
+
+def display_rules
+  system 'clear'
+  prompt 'rules'
+  $stdin.getch
 end
 
 def display_score(score)
@@ -154,6 +160,18 @@ def dealer_stay?(hand_total)
   hand_total >= DEALER_MIN
 end
 
+def display_hit(player)
+  prompt "hit_#{player}"
+  prompt 'update_hand'
+  sleep 2
+end
+
+def display_stay(player, hand_totals)
+  prompt "stay_#{player}", hand_totals[player]
+  prompt 'update_hand'
+  sleep 3
+end
+
 def detect_result(hand_totals)
   dealer, player = hand_totals.values
 
@@ -206,58 +224,55 @@ end
 
 # Main method
 
+system 'clear'
+prompt 'welcome'
+view_rules = prompt_yes_no 'view_rules'
+
+if yes?(view_rules)
+  display_rules
+else
+  prompt 'start_game'
+  sleep 4
+end
+
 loop do
   score = initialize_score
+  dealer, player = PLAYERS
 
   until match_won?(score)
     deck = initialize_deck
     hands = initialize_hands
     hand_totals = initialize_hand_totals
-    dealer, player = PLAYERS
 
     deal!(deck, hands, hand_totals)
 
     until busted?(hand_totals)
       display_score(score)
       display_hands(hands, hand_totals, hide_one: true)
-
-      prompt 'turn_player'
       prompt 'player_has', hand_totals[player]
 
       answer = prompt_hit_stay
 
       if player_stay?(answer)
-        prompt 'stay_player', hand_totals[player]
-        prompt 'update_hand'
-        sleep 2
+        display_stay(player, hand_totals)
         break
       end
 
-      prompt 'hit_player'
-      prompt 'update_hand'
-      sleep 2
-
+      display_hit(player)
       hit!(deck, hands, hand_totals, player)
     end
 
     until busted?(hand_totals)
       display_score(score)
       display_hands(hands, hand_totals, hide_one: false)
-
-      prompt 'turn_dealer'
       prompt 'dealer_has', hand_totals[dealer]
 
       if dealer_stay?(hand_totals[dealer])
-        prompt 'stay_dealer', hand_totals[dealer]
-        prompt 'update_hand'
-        sleep 3
+        display_stay(dealer, hand_totals)
         break
       end
 
-      prompt 'hit_dealer'
-      prompt 'update_hand'
-      sleep 2
-
+      display_hit(dealer)
       hit!(deck, hands, hand_totals, dealer)
     end
 
@@ -272,8 +287,8 @@ loop do
   end
 
   prompt "match_win_#{match_winner(score)}"
-  answer = prompt_yes_no 'play_again'
-  break unless yes?(answer)
+  play_again = prompt_yes_no 'play_again'
+  break unless yes?(play_again)
 end
 
 prompt 'bye'

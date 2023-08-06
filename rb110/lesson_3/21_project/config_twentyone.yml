@@ -1,7 +1,7 @@
 suits: ["\u2664", "\u2665", "\u2667", "\u2666"]
 cards : { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 10, 'Jack': 10, 'Queen': 10, 'King': 10, 'Ace': [1, 11] }
 
-ace_sums: { 1: [1, 11], 2: [2, 12, 22], 3: [3, 13, 23, 33], 4: [4, 14, 24, 34, 44] }
+possible_ace_sums: { 1: [1, 11], 2: [2, 12], 3: [3, 13], 4: [4, 14] }
 
 scoreboard: |
   --------------------------
@@ -24,12 +24,55 @@ visible_hands: |
   =================================================================
 
 prompts:
-  player_has: "=> Your hand total is %d!"
-  dealer_has: "=> Dealer's hand total is %d!"
-  update_hand: "=> Updating hand..."
+  welcome: "=> Welcome to Twenty-One!"
+  view_rules: "=> Would you like to learn the rules of the game?\n=> Enter 'Y' to view the rules, or 'N' to proceed to the game."
+  invalid_view_rules: "=> Please enter 'Y' to view the rules, or 'N' to proceed to the game."
+  rules: |
+    -----------------------------------------------------------------------
+                                   RULES
+    -----------------------------------------------------------------------
 
-  turn_dealer: "=> Dealer turn..."
-  turn_player: "=> Your turn..."
+    Objectives:
+
+    - The goal of Twenty-One is to try to get as close to 21 as possible,
+      without going over.
+    - If a player goes over 21, it's a "bust" and the player loses.
+    - If neither "busts", the player with the higher hand total wins.
+    - First one to win 5 rounds wins the match!
+
+    Gameplay:
+
+    - The game consists of a "dealer" and a "player" (you).
+    - Both players are dealt 2 cards at the start of the round.
+    - You can see your 2 cards, but only 1 of the dealer's cards.
+    - Hand totals are determined based on card values (see below).
+    - Player goes first.
+      - You decide if you will "hit" to draw a card or "stay".
+      - If you "bust", dealer wins.
+    - Dealer goes after player "stays".
+      - They have to "hit" until their hand total is at least 17.
+      - If they "bust", player wins.
+    - If both "stay", the player with the highest hand total is the winner.
+
+    Card Values:
+
+    - 2 - 10: Face value
+    - Jack, Queen, King: 10
+    - Ace: 1 or 11
+
+    -----------------------------------------------------------------------
+     => Press any other key to start the game.
+    -----------------------------------------------------------------------
+
+  start_game: |
+    => Alright, you will be playing against the dealer.
+    => The goal is to get as close to 21 as possible, without going over.
+    => First one to win 5 rounds is the winner of the match!
+    => Loading game...
+
+  player_has: "=> Your turn...\n=> Your hand total is %d!"
+  dealer_has: "=> Dealer turn...\n=> Dealer's hand total is %d!"
+  update_hand: "=> Updating hand..."
 
   hit_stay: "=> (H)it or (S)tay?"
   invalid_hit_stay: "=> Hm...that doesn't look like a valid choice.\n=> Enter 'h' or 'hit' to hit, and 's' and 'stay' to stay."
@@ -50,7 +93,7 @@ prompts:
   next_round: "=> Starting next round..."
 
   match_win_player: "=> Congratulations! You beat the dealer and won the match!"
-  match_win_dealer: ">> Oh no, you lost the match! Better luck next time."
+  match_win_dealer: "=> Oh no, you lost the match! Better luck next time."
 
   play_again: "=> Want to have a rematch?\n=> Enter 'Y' to continue, or 'N' to end the game."
   invalid_play_again: "=> Please enter 'Y' to continue, or 'N' to end the game."
