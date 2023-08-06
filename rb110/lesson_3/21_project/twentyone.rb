@@ -9,6 +9,7 @@ PLAYERS = [:dealer, :player]
 DEAL_TIMES = 2
 MAX_TOTAL = 21
 DEALER_MIN = 17
+ROUNDS_TO_WIN = 5
 
 def prompt(key, substitution = nil)
   msg = CONFIG['prompts'][key]
@@ -28,6 +29,12 @@ def initialize_hand_totals
   PLAYERS.each_with_object({}) { |player, hsh| hsh[player] = 0 }
 end
 
+def initialize_score
+  [*PLAYERS, :tie].each_with_object({}) do |score, hsh|
+    hsh[score] = 0
+  end
+end
+
 def prompt_yes_no(key)
   answer = nil
   prompt key
@@ -45,10 +52,13 @@ def yes?(answer)
   !!(answer =~ /^(y|yes)$/i)
 end
 
+def display_score(score)
+  system 'clear'
+  puts CONFIG['scoreboard'] % score.values
+end
+
 def display_hands(hands, hand_totals, hide_one: false)
   display = (hide_one ? CONFIG['hidden_hands'] : CONFIG['visible_hands'])
-
-  system 'clear'
   puts format(display, *visible_hands(hands, hand_totals, hide_one))
 end
 
@@ -168,68 +178,100 @@ def busted?(hand_totals)
   [:busted_dealer, :busted_player].include?(detect_result(hand_totals))
 end
 
-def someone_won?(hand_totals)
-  [:win_dealer, :win_player].include?(detect_result(hand_totals))
+def who_won(hand_totals)
+  result = detect_result(hand_totals)
+
+  if [:busted_player, :win_dealer].include?(result)
+    PLAYERS[0]
+  elsif [:busted_dealer, :win_player].include?(result)
+    PLAYERS[1]
+  end
 end
 
-def player_has_21?(hand_total)
-  hand_total == MAX_TOTAL
+def update_score!(score, winner)
+  if winner
+    score[winner] += 1
+  else
+    score[:tie] += 1
+  end
+end
+
+def match_won?(score)
+  score.fetch_values(*PLAYERS).include?(ROUNDS_TO_WIN)
+end
+
+def match_winner(score)
+  score.key(ROUNDS_TO_WIN)
 end
 
 # Main method
 
 loop do
-  deck = initialize_deck
-  hands = initialize_hands
-  hand_totals = initialize_hand_totals
-  dealer, player = PLAYERS
+  score = initialize_score
 
-  deal!(deck, hands, hand_totals)
+  until match_won?(score)
+    deck = initialize_deck
+    hands = initialize_hands
+    hand_totals = initialize_hand_totals
+    dealer, player = PLAYERS
 
-  until busted?(hand_totals)
-    display_hands(hands, hand_totals, hide_one: true)
+    deal!(deck, hands, hand_totals)
 
-    prompt 'turn_player'
-    prompt 'player_has_21' if player_has_21?(hand_totals[player])
+    until busted?(hand_totals)
+      display_score(score)
+      display_hands(hands, hand_totals, hide_one: true)
 
-    answer = prompt_hit_stay
+      prompt 'turn_player'
+      prompt 'player_has', hand_totals[player]
 
-    if player_stay?(answer)
-      prompt 'stay_player', hand_totals[player]
+      answer = prompt_hit_stay
+
+      if player_stay?(answer)
+        prompt 'stay_player', hand_totals[player]
+        prompt 'update_hand'
+        sleep 2
+        break
+      end
+
+      prompt 'hit_player'
       prompt 'update_hand'
       sleep 2
-      break
+
+      hit!(deck, hands, hand_totals, player)
     end
 
-    prompt 'hit_player'
-    prompt 'update_hand'
-    sleep 2
+    until busted?(hand_totals)
+      display_score(score)
+      display_hands(hands, hand_totals, hide_one: false)
 
-    hit!(deck, hands, hand_totals, player)
-  end
+      prompt 'turn_dealer'
+      prompt 'dealer_has', hand_totals[dealer]
 
-  until busted?(hand_totals)
-    display_hands(hands, hand_totals, hide_one: false)
+      if dealer_stay?(hand_totals[dealer])
+        prompt 'stay_dealer', hand_totals[dealer]
+        prompt 'update_hand'
+        sleep 3
+        break
+      end
 
-    prompt 'turn_dealer'
-
-    if dealer_stay?(hand_totals[dealer])
-      prompt 'stay_dealer', hand_totals[dealer]
+      prompt 'hit_dealer'
       prompt 'update_hand'
-      sleep 3
-      break
+      sleep 2
+
+      hit!(deck, hands, hand_totals, dealer)
     end
 
-    prompt 'hit_dealer'
-    prompt 'update_hand'
-    sleep 2
+    round_winner = who_won(hand_totals)
+    update_score!(score, round_winner)
 
-    hit!(deck, hands, hand_totals, dealer)
+    display_score(score)
+    display_hands(hands, hand_totals, hide_one: false)
+    display_result(hand_totals)
+    prompt 'next_round' unless match_won?(score)
+    sleep 2
   end
 
-  display_hands(hands, hand_totals, hide_one: false)
-  display_result(hand_totals)
-
+  prompt "match_win_#{match_winner(score)}"
   answer = prompt_yes_no 'play_again'
   break unless yes?(answer)
 end

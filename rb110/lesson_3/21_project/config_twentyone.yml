@@ -3,9 +3,18 @@ cards : { '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, '10': 
 
 ace_sums: { 1: [1, 11], 2: [2, 12, 22], 3: [3, 13, 23, 33], 4: [4, 14, 24, 34, 44] }
 
+scoreboard: |
+  --------------------------
+          CURRENT SCORE       
+          
+  Dealer's Wins - %d
+  Your Wins - %d
+  Ties - %d
+  --------------------------
+
 hidden_hands: |
   =================================================================
-  Dealer has %s and ?%s
+  Dealer has %s and unknown card%s
   You have: %s, for a total of %d
   =================================================================
 visible_hands: |
@@ -15,7 +24,8 @@ visible_hands: |
   =================================================================
 
 prompts:
-  player_has_21: "=> Your hand total is 21!"
+  player_has: "=> Your hand total is %d!"
+  dealer_has: "=> Dealer's hand total is %d!"
   update_hand: "=> Updating hand..."
 
   turn_dealer: "=> Dealer turn..."
@@ -37,6 +47,11 @@ prompts:
   win_player: "=> You win!"
   tie: "=> It's a tie."
 
-  play_again: ">> Want to have a rematch?\n>> Enter 'Y' to continue, or 'N' to end the game."
-  invalid_play_again: ">> Please enter 'Y' to continue, or 'N' to end the game."
-  bye: ">> Thank you for playing Twenty-One! Goodbye!"
+  next_round: "=> Starting next round..."
+
+  match_win_player: "=> Congratulations! You beat the dealer and won the match!"
+  match_win_dealer: ">> Oh no, you lost the match! Better luck next time."
+
+  play_again: "=> Want to have a rematch?\n=> Enter 'Y' to continue, or 'N' to end the game."
+  invalid_play_again: "=> Please enter 'Y' to continue, or 'N' to end the game."
+  bye: "=> Thank you for playing Twenty-One! Goodbye!"
