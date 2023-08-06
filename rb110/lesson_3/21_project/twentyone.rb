@@ -9,6 +9,12 @@ PLAYERS = [:dealer, :player]
 DEAL_TIMES = 2
 MAX_TOTAL = 21
 
+def prompt(key, substitution = nil)
+  msg = CONFIG['prompts'][key]
+  msg = format(msg, substitution) if substitution
+  puts msg
+end
+
 def initialize_deck
   CARDS.keys.product(SUITS).map { |card| card.join(' ') }.shuffle
 end
@@ -65,6 +71,12 @@ def deal!(deck, hands, hand_totals)
   end
 end
 
+def hit!(deck, hands, hand_totals, player)
+  card = deck.pop
+  add_to_hand!(card, hands[player])
+  hand_totals[player] = update_total(hands[player])
+end
+
 def update_total(hand)
   totals = possible_totals(hand)
   valid_totals = totals.select { |total| total < MAX_TOTAL }
@@ -92,10 +104,32 @@ def find_card_values(hand)
   hand.map { |card| CARDS[card[0..-3]] }
 end
 
+def prompt_hit_stay
+  answer = nil
+  prompt 'hit_stay'
+
+  loop do
+    answer = gets.chomp
+    break if answer =~ /^(h(it)*|s(tay)*)$/i
+    prompt 'invalid_hit_stay'
+  end
+
+  answer
+end
+
+def player_stay?(answer)
+  answer =~ /^s(tay)*$/i
+end
+
 deck = initialize_deck
 hands = initialize_hands
 hand_totals = initialize_hand_totals
 dealer, player = PLAYERS
 
 deal!(deck, hands, hand_totals)
+display_hands(hands, hand_totals, hide_one: true)
+
+answer = prompt_hit_stay
+
+hit!(deck, hands, hand_totals, player) unless player_stay?(answer)
 display_hands(hands, hand_totals, hide_one: true)

@@ -13,3 +13,7 @@ visible_hands: |
   Dealer has: %s, for a total of %s
   You have: %s, for a total of %d
   =================================================================
+
+prompts:
+  hit_stay: "=> (H)it or (S)tay?"
+  invalid_hit_stay: "=> Hm...that doesn't look like a valid choice.\n=> Enter 'h' or 'hit' to hit, and 's' and 'stay' to stay."
