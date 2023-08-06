@@ -142,8 +142,16 @@ def detect_result(hand_totals)
   end
 end
 
-def display_result(hand_totals, substitution = nil)
-  prompt "#{detect_result(hand_totals)}", substitution
+def display_result(hand_totals)
+  prompt detect_result(hand_totals).to_s
+end
+
+def busted?(hand_totals)
+  [:busted_dealer, :busted_player].include?(detect_result(hand_totals))
+end
+
+def someone_won?(hand_totals)
+  [:win_dealer, :win_player].include?(detect_result(hand_totals))
 end
 
 # Main method
