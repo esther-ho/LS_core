@@ -4,10 +4,11 @@ require 'pry'
 CONFIG = Psych.load_file('config_twentyone.yml')
 SUITS = CONFIG['suits']
 CARDS = CONFIG['cards']
-ACE_TOTALS = CONFIG['ace_totals']
+ACE_SUMS = CONFIG['ace_sums']
 PLAYERS = [:dealer, :player]
 DEAL_TIMES = 2
 MAX_TOTAL = 21
+DEALER_MIN = 17
 
 def prompt(key, substitution = nil)
   msg = CONFIG['prompts'][key]
@@ -85,9 +86,9 @@ end
 
 def possible_totals(hand)
   card_values = find_card_values(hand)
-  return [card_values.sum] unless ace?(hand)
+  return [card_values.sum] unless ace?(card_values)
 
-  aces, other_cards = separate_aces(hand)
+  aces, other_cards = separate_aces(card_values)
   aces = ACE_SUMS.fetch(aces.size)
   aces.map { |ace| ace + other_cards.sum }
 end
@@ -121,6 +122,12 @@ def player_stay?(answer)
   answer =~ /^s(tay)*$/i
 end
 
+def dealer_stay?(hand_total)
+  hand_total >= DEALER_MIN
+end
+
+# Main method
+
 deck = initialize_deck
 hands = initialize_hands
 hand_totals = initialize_hand_totals
@@ -133,3 +140,7 @@ answer = prompt_hit_stay
 
 hit!(deck, hands, hand_totals, player) unless player_stay?(answer)
 display_hands(hands, hand_totals, hide_one: true)
+
+display_hands(hands, hand_totals, hide_one: false)
+hit!(deck, hands, hand_totals, dealer) unless dealer_stay?(hand_totals[dealer])
+display_hands(hands, hand_totals, hide_one: false)
