@@ -15,8 +15,20 @@ visible_hands: |
   =================================================================
 
 prompts:
+  player_has_21: "=> Your hand total is 21!"
+  update_hand: "=> Updating hand..."
+
+  turn_dealer: "=> Dealer turn..."
+  turn_player: "=> Your turn..."
+
   hit_stay: "=> (H)it or (S)tay?"
   invalid_hit_stay: "=> Hm...that doesn't look like a valid choice.\n=> Enter 'h' or 'hit' to hit, and 's' and 'stay' to stay."
+
+  stay_dealer: "=> Dealer stayed at %d."
+  stay_player: "=> You stayed at %d."
+
+  hit_dealer: "=> Dealer chose to hit!"
+  hit_player: "=> You chose to hit!"
 
   busted_dealer: "=> Dealer busted! You win!"
   busted_player: "=> You busted! Dealer wins!"

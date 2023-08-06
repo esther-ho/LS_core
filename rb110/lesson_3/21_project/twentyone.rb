@@ -31,6 +31,7 @@ end
 def display_hands(hands, hand_totals, hide_one: false)
   display = (hide_one ? CONFIG['hidden_hands'] : CONFIG['visible_hands'])
 
+  system 'clear'
   puts format(display, *visible_hands(hands, hand_totals, hide_one))
 end
 
@@ -154,6 +155,10 @@ def someone_won?(hand_totals)
   [:win_dealer, :win_player].include?(detect_result(hand_totals))
 end
 
+def player_has_21?(hand_total)
+  hand_total == MAX_TOTAL
+end
+
 # Main method
 
 deck = initialize_deck
@@ -162,15 +167,47 @@ hand_totals = initialize_hand_totals
 dealer, player = PLAYERS
 
 deal!(deck, hands, hand_totals)
-display_hands(hands, hand_totals, hide_one: true)
 
-answer = prompt_hit_stay
+until busted?(hand_totals)
+  display_hands(hands, hand_totals, hide_one: true)
 
-hit!(deck, hands, hand_totals, player) unless player_stay?(answer)
-display_hands(hands, hand_totals, hide_one: true)
+  prompt 'turn_player'
+  prompt 'player_has_21' if player_has_21?(hand_totals[player])
+
+  answer = prompt_hit_stay
+
+  if player_stay?(answer)
+    prompt 'stay_player', hand_totals[player]
+    prompt 'update_hand'
+    sleep 2
+    break
+  end
+
+  prompt 'hit_player'
+  prompt 'update_hand'
+  sleep 2
+
+  hit!(deck, hands, hand_totals, player)
+end
+
+until busted?(hand_totals)
+  display_hands(hands, hand_totals, hide_one: false)
+
+  prompt 'turn_dealer'
+
+  if dealer_stay?(hand_totals[dealer])
+    prompt 'stay_dealer', hand_totals[dealer]
+    prompt 'update_hand'
+    sleep 3
+    break
+  end
+
+  prompt 'hit_dealer'
+  prompt 'update_hand'
+  sleep 3
+
+  hit!(deck, hands, hand_totals, dealer)
+end
 
 display_hands(hands, hand_totals, hide_one: false)
-hit!(deck, hands, hand_totals, dealer) unless dealer_stay?(hand_totals[dealer])
-display_hands(hands, hand_totals, hide_one: false)
-
 display_result(hand_totals)
