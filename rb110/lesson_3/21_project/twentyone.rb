@@ -126,6 +126,26 @@ def dealer_stay?(hand_total)
   hand_total >= DEALER_MIN
 end
 
+def detect_result(hand_totals)
+  dealer, player = hand_totals.values
+
+  if dealer > MAX_TOTAL
+    :busted_dealer
+  elsif player > MAX_TOTAL
+    :busted_player
+  elsif dealer > player
+    :win_dealer
+  elsif player > dealer
+    :win_player
+  else
+    :tie
+  end
+end
+
+def display_result(hand_totals, substitution = nil)
+  prompt "#{detect_result(hand_totals)}", substitution
+end
+
 # Main method
 
 deck = initialize_deck
@@ -144,3 +164,5 @@ display_hands(hands, hand_totals, hide_one: true)
 display_hands(hands, hand_totals, hide_one: false)
 hit!(deck, hands, hand_totals, dealer) unless dealer_stay?(hand_totals[dealer])
 display_hands(hands, hand_totals, hide_one: false)
+
+display_result(hand_totals)

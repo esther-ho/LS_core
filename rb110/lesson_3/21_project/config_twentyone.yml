@@ -17,3 +17,10 @@ visible_hands: |
 prompts:
   hit_stay: "=> (H)it or (S)tay?"
   invalid_hit_stay: "=> Hm...that doesn't look like a valid choice.\n=> Enter 'h' or 'hit' to hit, and 's' and 'stay' to stay."
+
+  busted_dealer: "=> Dealer busted! You win!"
+  busted_player: "=> You busted! Dealer wins!"
+
+  win_dealer: "=> Dealer wins!"
+  win_player: "=> You win!"
+  tie: "=> It's a tie."
