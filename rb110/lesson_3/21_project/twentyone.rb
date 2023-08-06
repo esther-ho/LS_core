@@ -276,8 +276,7 @@ loop do
       hit!(deck, hands, hand_totals, dealer)
     end
 
-    round_winner = who_won(hand_totals)
-    update_score!(score, round_winner)
+    update_score!(score, who_won(hand_totals))
 
     display_score(score)
     display_hands(hands, hand_totals, hide_one: false)

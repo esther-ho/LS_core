@@ -68,11 +68,12 @@ prompts:
     => Alright, you will be playing against the dealer.
     => The goal is to get as close to 21 as possible, without going over.
     => First one to win 5 rounds is the winner of the match!
+
     => Loading game...
 
-  player_has: "=> Your turn...\n=> Your hand total is %d!"
-  dealer_has: "=> Dealer turn...\n=> Dealer's hand total is %d!"
-  update_hand: "=> Updating hand..."
+  player_has: "=> Your turn...\n\n=> Your hand total is %d!"
+  dealer_has: "=> Dealer's turn...\n\n=> Dealer's hand total is %d!"
+  update_hand: "\n=> Updating hand..."
 
   hit_stay: "=> (H)it or (S)tay?"
   invalid_hit_stay: "=> Hm...that doesn't look like a valid choice.\n=> Enter 'h' or 'hit' to hit, and 's' and 'stay' to stay."
@@ -90,7 +91,7 @@ prompts:
   win_player: "=> You win!"
   tie: "=> It's a tie."
 
-  next_round: "=> Starting next round..."
+  next_round: "\n=> Starting next round..."
 
   match_win_player: "=> Congratulations! You beat the dealer and won the match!"
   match_win_dealer: "=> Oh no, you lost the match! Better luck next time."
