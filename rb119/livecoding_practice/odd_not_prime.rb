@@ -34,8 +34,9 @@ Output: integer
 - Create a reference array of all odd integers between 1 and given integer
   - Iterate through a range of numbers from 1 to given integer
   - Add numbers to the reference array if they are odd
-- Find the integers in the reference array that are NOT prime
-  - Initialize an empty array 'not_prime'
+- Find the integers in the reference array besides 1 that are NOT prime 
+  - Initialize an array 'not_prime' with an integer `1`
+    - `1` is always odd and not prime
   - Push the integer `1` into 'not_prime' if the given integer is 1 or greater
   - Iterate through the reference array
     - If the number at the current iteration is divisible by any numbers from 2 to the integer at the current iteration (excluding the current integer)
@@ -48,8 +49,7 @@ Output: integer
 def odd_not_prime(int)
   odd_ints = (1..int).each_with_object([]) { |i, arr| arr << i if i.odd? }
 
-  not_prime = []
-  not_prime << 1 unless int < 1
+  not_prime = [1]
 
   odd_ints.each do |i|
     (2..(i - 1)).each do |divisor|
