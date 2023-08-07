@@ -71,7 +71,7 @@ def count_vowel_substrings(string)
   substrings.size
 end
 
-p count_vowel_substrings("abcde") #== 0
-p count_vowel_substrings("cuaieuouac") #== 7
-p count_vowel_substrings("aeiouu") #== 2
-p count_vowel_substrings("unicornarihan") #== 0
+p count_vowel_substrings("abcde") == 0
+p count_vowel_substrings("cuaieuouac") == 7
+p count_vowel_substrings("aeiouu") == 2
+p count_vowel_substrings("unicornarihan") == 0
