@@ -35,10 +35,12 @@ Output: integer
   - Iterate through a range of numbers from 1 to given integer
   - Add numbers to the reference array if they are odd
 - Find the integers in the reference array besides 1 that are NOT prime 
-  - Initialize an array 'not_prime' with an integer `1`
-    - `1` is always odd and not prime
-  - Push the integer `1` into 'not_prime' if the given integer is 1 or greater
+  - Initialize an empty array 'not_prime'
+
+
   - Iterate through the reference array
+      - Push the integer `1` into 'not_prime' if integer at current iteration is `1`
+        - `1` is always odd and not prime
     - If the number at the current iteration is divisible by any numbers from 2 to the integer at the current iteration (excluding the current integer)
       - Push the number into 'not_prime' array
       - Exit the iteration
@@ -49,9 +51,11 @@ Output: integer
 def odd_not_prime(int)
   odd_ints = (1..int).each_with_object([]) { |i, arr| arr << i if i.odd? }
 
-  not_prime = [1]
+  not_prime = []
 
   odd_ints.each do |i|
+    not_prime << i if i == 1
+    
     (2..(i - 1)).each do |divisor|
       break not_prime << i if i % divisor == 0
     end
