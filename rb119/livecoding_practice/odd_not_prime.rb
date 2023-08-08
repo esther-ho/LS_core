@@ -36,8 +36,6 @@ Output: integer
   - Add numbers to the reference array if they are odd
 - Find the integers in the reference array besides 1 that are NOT prime 
   - Initialize an empty array 'not_prime'
-
-
   - Iterate through the reference array
       - Push the integer `1` into 'not_prime' if integer at current iteration is `1`
         - `1` is always odd and not prime
@@ -55,7 +53,7 @@ def odd_not_prime(int)
 
   odd_ints.each do |i|
     not_prime << i if i == 1
-    
+
     (2..(i - 1)).each do |divisor|
       break not_prime << i if i % divisor == 0
     end
