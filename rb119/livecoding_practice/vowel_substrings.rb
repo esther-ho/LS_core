@@ -49,7 +49,7 @@ p count_vowel_substrings("unicornarihan") == 0
 =end
 
 def find_substrings(string, arr)
-  0.upto(string.size) do |i|
+  0.upto(string.size - 1) do |i|
     5.upto(string.size) do |length|
       substring = string[i, length]
       arr << substring unless substring.size < length

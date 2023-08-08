@@ -43,7 +43,7 @@ p longest('zyba') == 'z'
 =end
 
 def sorted_substrings(string, arr)
-  0.upto(string.size) do |i|
+  0.upto(string.size - 1) do |i|
     1.upto(string.size) do |length|
       substring = string[i, length]
       break if substring.size < length
