@@ -19,20 +19,21 @@ def whose_choice
   PLAYERS.sample
 end
 
-def pick_first(player)
+def prompt_pick_first
   choice = nil
+  prompt 'player_choice'
 
-  if player == PLAYERS[1]
-    choice = PLAYERS.sample
-  else
-    prompt 'player_choice'
-    loop do
-      choice = gets.chomp.strip
-      break if choice =~ /^[1|2]$/
-      prompt 'invalid_player_choice'
-    end
+  loop do
+    choice = gets.chomp.strip
+    break if choice =~ /^[1|2]$/
+    prompt 'invalid_player_choice'
   end
 
+  choice
+end
+
+def pick_first(player)
+  choice = (player == PLAYERS[1] ? PLAYERS.sample : prompt_pick_first)
   PLAYERS[choice.to_i - 1]
 end
 
@@ -90,18 +91,17 @@ def joinor(choices, delimiter = ', ', word = 'or')
   end
 end
 
-def player_choice(brd)
+def prompt_pick_square(brd)
   square = nil
 
   loop do
     prompt 'choose_square', joinor(empty_squares(brd))
-    square = gets.chomp.to_i
-    break if empty_squares(brd).include?(square)
-
+    square = gets.chomp
+    break if square =~ /^\d{1}$/ && empty_squares(brd).include?(square.to_i)
     prompt 'invalid_square'
   end
 
-  square
+  square.to_i
 end
 
 def winning_moves(brd)
@@ -133,7 +133,11 @@ def computer_choice(brd)
 end
 
 def place_piece!(brd, player)
-  square = (player == PLAYERS[0] ? player_choice(brd) : computer_choice(brd))
+  square = if player == PLAYERS[0]
+             prompt_pick_square(brd)
+           else
+             computer_choice(brd)
+           end
   brd[square - 1] = MARKERS[player]
 end
 
@@ -233,7 +237,7 @@ loop do
 
   prompt "champion_#{match_winner(score)}"
   play_again = prompt_yes_no 'play_again'
-  break unless yes?('play_again')
+  break unless yes?(play_again)
 end
 
 prompt 'bye'
