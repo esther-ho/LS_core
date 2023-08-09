@@ -67,15 +67,14 @@ prompts:
       -------------------------
 
     -------------------------------------------------------------------
-     => Press any other key to start the game.
+     => Press any key to continue.
     -------------------------------------------------------------------
 
   start_game: |
     => Alright, you will be playing against the computer.
     => The goal is to get 3 marks in a row.
     => First one to win 5 rounds is the winner of the match!
-
-    => Loading game...
+    => Press any key to continue.
 
   pick_player: "=> You get to pick the starting player."
   pick_computer: "=> Computer gets to pick the starting player."
@@ -83,15 +82,16 @@ prompts:
   player_choice: "=> Enter '1' to go first or '2' for the computer to go first."
   invalid_player_choice: "=> Please enter '1' to go first or '2' for the computer to go first."
 
-  first_player: "=> You go first."
-  first_computer: "=> Computer goes first."
+  first_player: "=> You go first.\n=> Press any key to start the game."
+  first_computer: "=> Computer goes first.\n=> Press any key to start the game."
 
   choose_square: "=> Choose a square (%s):"
   invalid_square: "=> Sorry, that's not a valid choice."
 
-  round_player: "=> You won!\n "
-  round_computer: "Computer won!\n "
-  tie: "=> It's a tie!\n "
+  round_player: "=> You won!"
+  round_computer: "Computer won!"
+  tie: "=> It's a tie!"
+  continue: "\n=> Press any key to continue."
 
   champion_player: "=> Hooray! You beat the computer and are the grand winner!"
   champion_computer: "=> Oh no, you lost the match! Better luck next time."

@@ -194,17 +194,17 @@ if yes?(view_rules)
   display_rules
 else
   prompt 'start_game'
-  sleep 4
+  $stdin.getch
 end
 
-loop do
-  system 'clear'
-  starting_player = whose_choice
-  prompt "pick_#{starting_player}"
-  starting_player = pick_first(starting_player)
-  prompt "first_#{starting_player}"
-  sleep 2
+system 'clear'
+starting_player = whose_choice
+prompt "pick_#{starting_player}"
+starting_player = pick_first(starting_player)
+prompt "first_#{starting_player}"
+$stdin.getch
 
+loop do
   score = initialize_score
 
   until match_won?(score)
@@ -233,11 +233,16 @@ loop do
     end
 
     break unless !match_won?(score)
+
+    prompt 'continue'
+    $stdin.getch
   end
 
   prompt "champion_#{match_winner(score)}"
   play_again = prompt_yes_no 'play_again'
   break unless yes?(play_again)
+
+  starting_player = alternate_player(starting_player)
 end
 
 prompt 'bye'
