@@ -75,12 +75,12 @@ def initialize_board
   [MARKERS['initial']] * GRID_SIZE
 end
 
-def display_board(brd)
-  puts CONFIG['board'] % brd
+def display_board(board)
+  puts CONFIG['board'] % board
 end
 
-def empty_squares(brd)
-  brd.filter_map.with_index { |v, i| i + 1 if v == ' ' }
+def empty_squares(board)
+  board.filter_map.with_index { |v, i| i + 1 if v == ' ' }
 end
 
 def joinor(choices, delimiter = ', ', word = 'or')
@@ -91,67 +91,67 @@ def joinor(choices, delimiter = ', ', word = 'or')
   end
 end
 
-def prompt_pick_square(brd)
+def prompt_pick_square(board)
   square = nil
 
   loop do
-    prompt 'choose_square', joinor(empty_squares(brd))
+    prompt 'choose_square', joinor(empty_squares(board))
     square = gets.chomp
-    break if square =~ /^\d{1}$/ && empty_squares(brd).include?(square.to_i)
+    break if square =~ /^\d{1}$/ && empty_squares(board).include?(square.to_i)
     prompt 'invalid_square'
   end
 
   square.to_i
 end
 
-def winning_moves(brd)
+def winning_moves(board)
   markers = MARKERS.fetch_values(*PLAYERS)
-  squares = empty_squares(brd)
+  squares = empty_squares(board)
   possible_moves = PLAYERS.each_with_object({}) { |m, h| h[m] = [] }
 
   squares.product(markers).each do |square, marker|
-    temp_brd = brd.dup
-    temp_brd[square - 1] = marker
-    possible_moves[MARKERS.key(marker)] << square if detect_winner(temp_brd)
+    temp_board = board.dup
+    temp_board[square - 1] = marker
+    possible_moves[MARKERS.key(marker)] << square if detect_winner(temp_board)
   end
 
   possible_moves
 end
 
-def computer_choice(brd)
-  player_wins, computer_wins = winning_moves(brd).values
+def computer_choice(board)
+  player_wins, computer_wins = winning_moves(board).values
 
   if !computer_wins.empty?
     computer_wins.sample
   elsif !player_wins.empty?
     player_wins.sample
-  elsif empty_squares(brd).include?(CENTER_SQUARE)
+  elsif empty_squares(board).include?(CENTER_SQUARE)
     CENTER_SQUARE
   else
-    empty_squares(brd).sample
+    empty_squares(board).sample
   end
 end
 
-def place_piece!(brd, player)
+def place_piece!(board, player)
   square = if player == PLAYERS[0]
-             prompt_pick_square(brd)
+             prompt_pick_square(board)
            else
-             computer_choice(brd)
+             computer_choice(board)
            end
-  brd[square - 1] = MARKERS[player]
+  board[square - 1] = MARKERS[player]
 end
 
 def alternate_player(current)
   PLAYERS.select { |player| player != current }.first
 end
 
-def board_full?(brd)
-  empty_squares(brd).empty?
+def board_full?(board)
+  empty_squares(board).empty?
 end
 
-def detect_winner(brd)
+def detect_winner(board)
   markers = MARKERS.fetch_values(*PLAYERS)
-  lines = WINNING_LINES.map { |i1, i2, i3| [brd[i1], brd[i2], brd[i3]] }
+  lines = WINNING_LINES.map { |i1, i2, i3| [board[i1], board[i2], board[i3]] }
 
   markers.each do |marker|
     return MARKERS.key(marker) unless lines.select { |l| l.all?(marker) }.empty?
@@ -160,12 +160,12 @@ def detect_winner(brd)
   nil
 end
 
-def someone_won?(brd)
-  !!detect_winner(brd)
+def someone_won?(board)
+  !!detect_winner(board)
 end
 
-def who_won(brd)
-  detect_winner(brd)
+def who_won(board)
+  detect_winner(board)
 end
 
 def update_score!(winner, score)
