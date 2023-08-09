@@ -92,8 +92,6 @@ prompts:
   round_player: "=> You won!\n "
   round_computer: "Computer won!\n "
   tie: "=> It's a tie!\n "
-  continue: "=> Want to continue?\n=> Enter 'Y' to continue, or 'N' to end the game."
-  invalid_continue: "=> Please enter 'Y' to continue, or 'N' to end the game."
 
   champion_player: "=> Hooray! You beat the computer and are the grand winner!"
   champion_computer: "=> Oh no, you lost the match! Better luck next time."
