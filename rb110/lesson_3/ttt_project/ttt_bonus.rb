@@ -36,17 +36,21 @@ def pick_first(player)
   PLAYERS[choice.to_i - 1]
 end
 
-def yes?(key)
+def prompt_yes_no(key)
   answer = nil
   prompt key
 
   loop do
     answer = gets.chomp.strip
-    break if answer =~ /^(y|yes|n|no)$/i
+    break if answer =~ /^(y(es)*|n(o)*)$/i
     prompt "invalid_#{key}"
   end
 
-  !!(answer =~ /^(y|yes)$/i)
+  answer
+end
+
+def yes?(answer)
+  !!(answer =~ /^(y(es)*)$/i)
 end
 
 def display_rules
@@ -180,7 +184,14 @@ end
 
 system 'clear'
 prompt 'welcome'
-display_rules if yes?('view_rules')
+view_rules = prompt_yes_no 'view_rules'
+
+if yes?(view_rules)
+  display_rules
+else
+  prompt 'start_game'
+  sleep 4
+end
 
 loop do
   system 'clear'
@@ -217,11 +228,12 @@ loop do
       prompt 'tie'
     end
 
-    break unless !match_won?(score) && yes?('continue')
+    break unless !match_won?(score)
   end
 
   prompt "champion_#{match_winner(score)}"
-  break unless match_won?(score) && yes?('again')
+  play_again = prompt_yes_no 'play_again'
+  break unless yes?('play_again')
 end
 
 prompt 'bye'
