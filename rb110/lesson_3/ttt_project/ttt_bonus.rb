@@ -15,8 +15,14 @@ def prompt(key, substitution = nil)
   puts msg
 end
 
-def whose_choice
-  PLAYERS.sample
+def initialize_score
+  [*PLAYERS, 'tie'].each_with_object({}) do |score, hsh|
+    hsh[score] = 0
+  end
+end
+
+def initialize_board
+  [MARKERS['initial']] * GRID_SIZE
 end
 
 def prompt_pick_first
@@ -32,11 +38,6 @@ def prompt_pick_first
   choice
 end
 
-def pick_first(player)
-  choice = (player == PLAYERS[1] ? PLAYERS.sample : prompt_pick_first)
-  PLAYERS[choice.to_i - 1]
-end
-
 def prompt_yes_no(key)
   answer = nil
   prompt key
@@ -50,47 +51,6 @@ def prompt_yes_no(key)
   answer
 end
 
-def yes?(answer)
-  !!(answer =~ /^(y(es)*)$/i)
-end
-
-def display_rules
-  system 'clear'
-  prompt 'rules'
-  $stdin.getch
-end
-
-def initialize_score
-  [*PLAYERS, 'tie'].each_with_object({}) do |score, hsh|
-    hsh[score] = 0
-  end
-end
-
-def display_score(score)
-  system 'clear'
-  puts CONFIG['scoreboard'] % score.values
-end
-
-def initialize_board
-  [MARKERS['initial']] * GRID_SIZE
-end
-
-def display_board(board)
-  puts CONFIG['board'] % board
-end
-
-def empty_squares(board)
-  board.filter_map.with_index { |v, i| i + 1 if v == ' ' }
-end
-
-def joinor(choices, delimiter = ', ', word = 'or')
-  case choices.size
-  when 1 then choices.first
-  when 2 then choices.join(" #{word} ")
-  else "#{choices[0..-2].join(delimiter)} #{word} #{choices[-1]}"
-  end
-end
-
 def prompt_pick_square(board)
   square = nil
 
@@ -102,6 +62,42 @@ def prompt_pick_square(board)
   end
 
   square.to_i
+end
+
+def display_rules
+  system 'clear'
+  prompt 'rules'
+  $stdin.getch
+end
+
+def display_score(score)
+  system 'clear'
+  puts CONFIG['scoreboard'] % score.values
+end
+
+def display_board(board)
+  puts CONFIG['board'] % board
+end
+
+def whose_choice
+  PLAYERS.sample
+end
+
+def pick_first(player)
+  choice = (player == PLAYERS[1] ? PLAYERS.sample : prompt_pick_first)
+  PLAYERS[choice.to_i - 1]
+end
+
+def joinor(choices, delimiter = ', ', word = 'or')
+  case choices.size
+  when 1 then choices.first
+  when 2 then choices.join(" #{word} ")
+  else "#{choices[0..-2].join(delimiter)} #{word} #{choices[-1]}"
+  end
+end
+
+def empty_squares(board)
+  board.filter_map.with_index { |v, i| i + 1 if v == ' ' }
 end
 
 def winning_moves(board)
@@ -141,12 +137,12 @@ def place_piece!(board, player)
   board[square - 1] = MARKERS[player]
 end
 
-def alternate_player(current)
-  PLAYERS.select { |player| player != current }.first
-end
-
-def board_full?(board)
-  empty_squares(board).empty?
+def update_score!(winner, score)
+  if winner
+    score[winner] += 1
+  else
+    score['tie'] += 1
+  end
 end
 
 def detect_winner(board)
@@ -160,24 +156,28 @@ def detect_winner(board)
   nil
 end
 
+def alternate_player(current)
+  PLAYERS.select { |player| player != current }.first
+end
+
+def yes?(answer)
+  !!(answer =~ /^(y(es)*)$/i)
+end
+
+def board_full?(board)
+  empty_squares(board).empty?
+end
+
 def someone_won?(board)
   !!detect_winner(board)
 end
 
-def who_won(board)
-  detect_winner(board)
-end
-
-def update_score!(winner, score)
-  if winner
-    score[winner] += 1
-  else
-    score['tie'] += 1
-  end
-end
-
 def match_won?(score)
   score.fetch_values(*PLAYERS).include?(ROUNDS_TO_WIN)
+end
+
+def who_won(board)
+  detect_winner(board)
 end
 
 def match_winner(score)
