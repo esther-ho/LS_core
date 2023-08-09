@@ -46,23 +46,17 @@ Output: an integer
 - Return 0 if the array is empty or only contains 1 value
 - Count all the pairs in the input array
   - Initialize a new array containing only the unique integers from the input array
-  - Initialize a new variable `count` with a value of `0`
   - Iterate through the array of unique integers
-  - Count each integer in the input array
-  - Divide the count by 2
-  - Increment `count` by the result
-- Return the count
+    - Convert each integer to its count in the input array
+    - Divide the count by 2
+    - Sum all counts
+- Return the sum
 =end
 
 def pairs(numbers)
   return 0 if numbers.empty? || numbers.size == 1
 
-  count = 0
-  numbers.uniq.each do |num|
-    count += numbers.count(num) / 2
-  end
-
-  count
+  numbers.uniq.map { |n| numbers.count(n) / 2 }.sum
 end
 
 p pairs([1, 2, 5, 6, 5, 2]) == 2
