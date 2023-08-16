@@ -287,7 +287,7 @@ loop do
     display_cards(hands, player)
     display_result(hand_totals)
     prompt 'next_round' unless match_won?(score)
-    sleep 2
+    $stdin.getch
   end
 
   prompt "match_win_#{match_winner(score)}"

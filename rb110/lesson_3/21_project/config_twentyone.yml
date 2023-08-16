@@ -84,7 +84,7 @@ prompts:
   win_player: "=> You win!"
   tie: "=> It's a tie."
 
-  next_round: "\n=> Starting next round..."
+  next_round: "\n=> Press any key to start the next round."
 
   match_win_player: "=> Congratulations! You beat the dealer and won the match!"
   match_win_dealer: "=> Oh no, you lost the match! Better luck next time."
