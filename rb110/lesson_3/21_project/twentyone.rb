@@ -223,7 +223,7 @@ if yes?(view_rules)
   display_rules
 else
   prompt 'start_game'
-  sleep 4
+  $stdin.getch
 end
 
 loop do

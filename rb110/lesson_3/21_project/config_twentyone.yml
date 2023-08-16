@@ -51,7 +51,7 @@ prompts:
     - Ace: 1 or 11
 
     -----------------------------------------------------------------------
-     => Press any other key to start the game.
+     => Press any key to start the game.
     -----------------------------------------------------------------------
 
   start_game: |
@@ -59,7 +59,7 @@ prompts:
     => The goal is to get as close to 21 as possible, without going over.
     => First one to win 5 rounds is the winner of the match!
 
-    => Loading game...
+    => Press any key to start the game.
 
   hand_dealer: "Dealer's hand total: %s"
   hand_player: "Your hand total: %s"
