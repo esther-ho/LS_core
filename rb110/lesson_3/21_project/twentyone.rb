@@ -11,12 +11,6 @@ MAX_TOTAL = 21
 DEALER_MIN = 17
 ROUNDS_TO_WIN = 5
 
-def prompt(key, substitution = nil)
-  msg = CONFIG['prompts'][key]
-  msg = format(msg, substitution) if substitution
-  puts msg
-end
-
 def initialize_deck
   CARDS.keys.product(SUITS).map { |card| card.join(' ') }.shuffle
 end
@@ -33,6 +27,25 @@ def initialize_score
   [*PLAYERS, :tie].each_with_object({}) do |score, hsh|
     hsh[score] = 0
   end
+end
+
+def prompt(key, substitution = nil)
+  msg = CONFIG['prompts'][key]
+  msg = format(msg, substitution) if substitution
+  puts msg
+end
+
+def prompt_hit_stay
+  answer = nil
+  prompt 'hit_stay'
+
+  loop do
+    answer = gets.chomp
+    break if answer =~ /^(h(it)*|s(tay)*)$/i
+    prompt 'invalid_hit_stay'
+  end
+
+  answer
 end
 
 def prompt_yes_no(key)
@@ -63,30 +76,50 @@ def display_score(score)
   puts CONFIG['scoreboard'] % score.values
 end
 
-def display_hands(hands, hand_totals, hide_one: false)
-  display = (hide_one ? CONFIG['hidden_hands'] : CONFIG['visible_hands'])
-  puts format(display, *visible_hands(hands, hand_totals, hide_one))
+def display_cards(hands, player, hand_totals)
+  cards = hands[player].map { |card| format_cards(card) }
+  cards = cards.transpose.map { |line| line.join(' ') }
+
+  prompt "hand_#{player}", hand_totals[player].to_s
+  puts cards
 end
 
-def visible_hands(hands, hand_totals, hide_one)
-  dealer_hand, player_hand = hands.values
-  dealer_total, player_total = hand_totals.values
+def display_one_card(hands, player)
+  hands = [hands[player][0], nil]
+  cards = hands.map { |card| format_cards(card) }
+  cards = cards.transpose.map { |line| line.join(' ') }
 
-  if hide_one
-    dealer_hand = hands[PLAYERS[0]].first
-    dealer_total = nil
-  end
-
-  [joinor(dealer_hand), dealer_total, joinor(player_hand), player_total]
+  prompt "hand_#{player}", '?'
+  puts cards
 end
 
-def joinor(hand, delimiter: ', ', word: 'and')
-  return hand if !hand.is_a?(Array)
+def display_hit(player)
+  prompt "hit_#{player}"
+  prompt 'update_hand'
+  sleep 3
+end
 
-  case hand.size
-  when 2 then hand.join(" #{word} ")
-  else "#{hand[0..-2].join(delimiter)} #{word} #{hand[-1]}"
+def display_stay(player, hand_totals)
+  prompt "stay_#{player}", hand_totals[player]
+  prompt 'update_hand'
+  sleep 3
+end
+
+def display_result(hand_totals)
+  prompt detect_result(hand_totals).to_s
+end
+
+def format_cards(card)
+  return CONFIG['card_unknown'] unless card
+
+  suit = card[-1]
+  face = card.include?('10') ? card[0, 2] : "#{card[0]} "
+  card_info = [suit, face, suit]
+
+  card = CONFIG['card_known'].map.with_index do |line, i|
+    format(line, card_info[i])
   end
+  card.unshift('+-----+').push('+-----+')
 end
 
 def add_to_hand!(card, hand)
@@ -113,43 +146,25 @@ def hit!(deck, hands, hand_totals, player)
 end
 
 def update_total(hand)
-  totals = possible_totals(hand)
-  valid_totals = totals.select { |total| total < MAX_TOTAL }
-  valid_totals.empty? ? totals.min : valid_totals.max
-end
+  card_values = hand.map { |card| CARDS[card[0..-3]] }
+  total = card_values.sum
+  return total unless card_values.include?(CARDS['Ace'])
 
-def possible_totals(hand)
-  card_values = find_card_values(hand)
-  return [card_values.sum] unless ace?(card_values)
-
-  aces, other_cards = separate_aces(card_values)
-  aces = ACE_SUMS.fetch(aces.size)
-  aces.map { |ace| ace + other_cards.sum }
-end
-
-def ace?(hand)
-  !!hand.include?(CARDS['Ace'])
-end
-
-def separate_aces(hand)
-  hand.partition { |card| card == CARDS['Ace'] }
-end
-
-def find_card_values(hand)
-  hand.map { |card| CARDS[card[0..-3]] }
-end
-
-def prompt_hit_stay
-  answer = nil
-  prompt 'hit_stay'
-
-  loop do
-    answer = gets.chomp
-    break if answer =~ /^(h(it)*|s(tay)*)$/i
-    prompt 'invalid_hit_stay'
+  ace_count = card_values.count(CARDS['Ace'])
+  ace_count.times do
+    break if total <= 21
+    total -= 10
   end
 
-  answer
+  total
+end
+
+def update_score!(score, winner)
+  if winner
+    score[winner] += 1
+  else
+    score[:tie] += 1
+  end
 end
 
 def player_stay?(answer)
@@ -158,18 +173,6 @@ end
 
 def dealer_stay?(hand_total)
   hand_total >= DEALER_MIN
-end
-
-def display_hit(player)
-  prompt "hit_#{player}"
-  prompt 'update_hand'
-  sleep 2
-end
-
-def display_stay(player, hand_totals)
-  prompt "stay_#{player}", hand_totals[player]
-  prompt 'update_hand'
-  sleep 3
 end
 
 def detect_result(hand_totals)
@@ -188,10 +191,6 @@ def detect_result(hand_totals)
   end
 end
 
-def display_result(hand_totals)
-  prompt detect_result(hand_totals).to_s
-end
-
 def busted?(hand_totals)
   [:busted_dealer, :busted_player].include?(detect_result(hand_totals))
 end
@@ -203,14 +202,6 @@ def who_won(hand_totals)
     PLAYERS[0]
   elsif [:busted_dealer, :win_player].include?(result)
     PLAYERS[1]
-  end
-end
-
-def update_score!(score, winner)
-  if winner
-    score[winner] += 1
-  else
-    score[:tie] += 1
   end
 end
 
@@ -232,7 +223,7 @@ if yes?(view_rules)
   display_rules
 else
   prompt 'start_game'
-  sleep 4
+  $stdin.getch
 end
 
 loop do
@@ -248,7 +239,8 @@ loop do
 
     until busted?(hand_totals)
       display_score(score)
-      display_hands(hands, hand_totals, hide_one: true)
+      display_one_card(hands, dealer)
+      display_cards(hands, player, hand_totals)
       prompt 'player_has', hand_totals[player]
 
       answer = prompt_hit_stay
@@ -264,7 +256,8 @@ loop do
 
     until busted?(hand_totals)
       display_score(score)
-      display_hands(hands, hand_totals, hide_one: false)
+      display_cards(hands, dealer, hand_totals)
+      display_cards(hands, player, hand_totals)
       prompt 'dealer_has', hand_totals[dealer]
 
       if dealer_stay?(hand_totals[dealer])
@@ -279,10 +272,13 @@ loop do
     update_score!(score, who_won(hand_totals))
 
     display_score(score)
-    display_hands(hands, hand_totals, hide_one: false)
+    display_cards(hands, dealer, hand_totals)
+    display_cards(hands, player, hand_totals)
     display_result(hand_totals)
-    prompt 'next_round' unless match_won?(score)
-    sleep 2
+    unless match_won?(score)
+      prompt 'next_round'
+      $stdin.getch
+    end
   end
 
   prompt "match_win_#{match_winner(score)}"
