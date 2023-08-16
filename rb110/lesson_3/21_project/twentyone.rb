@@ -63,7 +63,7 @@ def display_score(score)
   puts CONFIG['scoreboard'] % score.values
 end
 
-def display_cards(hands, player)
+def display_cards(hands, player, hand_totals)
   cards = format_cards(hands, player, unknown_card: false)
 
   player_hand = hands[player].map do |card|
@@ -75,7 +75,7 @@ def display_cards(hands, player)
 
   cards = cards.map.with_index { |line, i| format(line, *player_hand[i]) }
 
-  prompt "hand_#{player}"
+  prompt "hand_#{player}", hand_totals[player].to_s
   puts cards
 end
 
@@ -88,7 +88,7 @@ def display_one_card(hands, player)
   cards = format_cards(hands, player, unknown_card: true)
   cards = cards.map.with_index { |line, i| format(line, first_card[i]) }
 
-  prompt "hand_#{player}"
+  prompt "hand_#{player}", '?'
   puts cards
 end
 
@@ -165,7 +165,7 @@ end
 def display_hit(player)
   prompt "hit_#{player}"
   prompt 'update_hand'
-  sleep 2
+  sleep 3
 end
 
 def display_stay(player, hand_totals)
@@ -251,7 +251,7 @@ loop do
     until busted?(hand_totals)
       display_score(score)
       display_one_card(hands, dealer)
-      display_cards(hands, player)
+      display_cards(hands, player, hand_totals)
       prompt 'player_has', hand_totals[player]
 
       answer = prompt_hit_stay
@@ -267,8 +267,8 @@ loop do
 
     until busted?(hand_totals)
       display_score(score)
-      display_cards(hands, dealer)
-      display_cards(hands, player)
+      display_cards(hands, dealer, hand_totals)
+      display_cards(hands, player, hand_totals)
       prompt 'dealer_has', hand_totals[dealer]
 
       if dealer_stay?(hand_totals[dealer])
@@ -283,11 +283,13 @@ loop do
     update_score!(score, who_won(hand_totals))
 
     display_score(score)
-    display_cards(hands, dealer)
-    display_cards(hands, player)
+    display_cards(hands, dealer, hand_totals)
+    display_cards(hands, player, hand_totals)
     display_result(hand_totals)
-    prompt 'next_round' unless match_won?(score)
-    $stdin.getch
+    unless match_won?(score)
+      prompt 'next_round'
+      $stdin.getch
+    end
   end
 
   prompt "match_win_#{match_winner(score)}"

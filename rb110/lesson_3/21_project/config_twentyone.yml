@@ -61,8 +61,8 @@ prompts:
 
     => Loading game...
 
-  hand_dealer: "Dealer's hand:"
-  hand_player: "Your hand:"
+  hand_dealer: "Dealer's hand total: %s"
+  hand_player: "Your hand total: %s"
 
   player_has: "=> Your turn...\n\n=> Your hand total is %d!"
   dealer_has: "=> Dealer's turn...\n\n=> Dealer's hand total is %d!"
