@@ -64,44 +64,33 @@ def display_score(score)
 end
 
 def display_cards(hands, player, hand_totals)
-  cards = format_cards(hands, player, unknown_card: false)
-
-  player_hand = hands[player].map do |card|
-    suit = card[-1]
-    value = card[0]
-    [nil, suit, value, suit, nil]
-  end
-  player_hand = player_hand.transpose
-
-  cards = cards.map.with_index { |line, i| format(line, *player_hand[i]) }
+  cards = hands[player].map { |card| format_cards(card) }
+  cards = cards.transpose.map { |line| line.join(' ') }
 
   prompt "hand_#{player}", hand_totals[player].to_s
   puts cards
 end
 
 def display_one_card(hands, player)
-  first_card = hands[player][0]
-  suit = first_card[-1]
-  value = first_card[0]
-  first_card = [nil, suit, value, suit, nil]
-
-  cards = format_cards(hands, player, unknown_card: true)
-  cards = cards.map.with_index { |line, i| format(line, first_card[i]) }
+  hands = [hands[player][0], nil]
+  cards = hands.map { |card| format_cards(card) }
+  cards = cards.transpose.map { |line| line.join(' ') }
 
   prompt "hand_#{player}", '?'
   puts cards
 end
 
-def format_cards(hands, player, unknown_card: false)
-  card_count = hands[player].size - 1
-  additional_cards = [CONFIG['card_known']] * card_count
-  cards = if unknown_card
-            CONFIG['card_known'].zip(CONFIG['card_unknown'])
-          else
-            CONFIG['card_known'].zip(*additional_cards)
-          end
+def format_cards(card)
+  return CONFIG['card_unknown'] unless card
 
-  cards.map { |line| line.join(' ') }
+  suit = card[-1]
+  face = card.include?('10') ? card[0, 2] : "#{card[0]} "
+  card_info = [suit, face, suit]
+
+  card = CONFIG['card_known'].map.with_index do |line, i|
+    format(line, card_info[i])
+  end
+  card.unshift('+-----+').push('+-----+')
 end
 
 def add_to_hand!(card, hand)
