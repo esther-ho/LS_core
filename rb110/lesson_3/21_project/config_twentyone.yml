@@ -10,16 +10,8 @@ scoreboard: |
   Ties - %d
   --------------------------
 
-hidden_hands: |
-  =================================================================
-  Dealer has %s and unknown card%s
-  You have: %s, for a total of %d
-  =================================================================
-visible_hands: |
-  =================================================================
-  Dealer has: %s, for a total of %s
-  You have: %s, for a total of %d
-  =================================================================
+card_known: ["%s-------", "|%s    |", "|  %s  |", "|    %s|", "%s-------"]
+card_unknown: ["-------", "|#####|", "|#####|", "|#####|", "-------"]
 
 prompts:
   welcome: "=> Welcome to Twenty-One!"
@@ -68,6 +60,9 @@ prompts:
     => First one to win 5 rounds is the winner of the match!
 
     => Loading game...
+
+  hand_dealer: "Dealer's hand:"
+  hand_player: "Your hand:"
 
   player_has: "=> Your turn...\n\n=> Your hand total is %d!"
   dealer_has: "=> Dealer's turn...\n\n=> Dealer's hand total is %d!"

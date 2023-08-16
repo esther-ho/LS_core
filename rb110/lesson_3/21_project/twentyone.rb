@@ -63,30 +63,45 @@ def display_score(score)
   puts CONFIG['scoreboard'] % score.values
 end
 
-def display_hands(hands, hand_totals, hide_one: false)
-  display = (hide_one ? CONFIG['hidden_hands'] : CONFIG['visible_hands'])
-  puts format(display, *visible_hands(hands, hand_totals, hide_one))
+def display_cards(hands, player)
+  cards = format_cards(hands, player, unknown_card: false)
+
+  player_hand = hands[player].map do |card|
+    suit = card[-1]
+    value = card[0]
+    [nil, suit, value, suit, nil]
+  end
+  player_hand = player_hand.transpose
+
+  cards = cards.map.with_index { |line, i| format(line, *player_hand[i]) }
+
+  prompt "hand_#{player}"
+  puts cards
 end
 
-def visible_hands(hands, hand_totals, hide_one)
-  dealer_hand, player_hand = hands.values
-  dealer_total, player_total = hand_totals.values
+def display_one_card(hands, player)
+  first_card = hands[player][0]
+  suit = first_card[-1]
+  value = first_card[0]
+  first_card = [nil, suit, value, suit, nil]
 
-  if hide_one
-    dealer_hand = hands[PLAYERS[0]].first
-    dealer_total = nil
-  end
+  cards = format_cards(hands, player, unknown_card: true)
+  cards = cards.map.with_index { |line, i| format(line, first_card[i]) }
 
-  [joinor(dealer_hand), dealer_total, joinor(player_hand), player_total]
+  prompt "hand_#{player}"
+  puts cards
 end
 
-def joinor(hand, delimiter: ', ', word: 'and')
-  return hand if !hand.is_a?(Array)
+def format_cards(hands, player, unknown_card: false)
+  card_count = hands[player].size - 1
+  additional_cards = [CONFIG['card_known']] * card_count
+  cards = if unknown_card
+            CONFIG['card_known'].zip(CONFIG['card_unknown'])
+          else
+            CONFIG['card_known'].zip(*additional_cards)
+          end
 
-  case hand.size
-  when 2 then hand.join(" #{word} ")
-  else "#{hand[0..-2].join(delimiter)} #{word} #{hand[-1]}"
-  end
+  cards.map { |line| line.join(' ') }
 end
 
 def add_to_hand!(card, hand)
@@ -235,7 +250,8 @@ loop do
 
     until busted?(hand_totals)
       display_score(score)
-      display_hands(hands, hand_totals, hide_one: true)
+      display_one_card(hands, dealer)
+      display_cards(hands, player)
       prompt 'player_has', hand_totals[player]
 
       answer = prompt_hit_stay
@@ -251,7 +267,8 @@ loop do
 
     until busted?(hand_totals)
       display_score(score)
-      display_hands(hands, hand_totals, hide_one: false)
+      display_cards(hands, dealer)
+      display_cards(hands, player)
       prompt 'dealer_has', hand_totals[dealer]
 
       if dealer_stay?(hand_totals[dealer])
@@ -266,7 +283,8 @@ loop do
     update_score!(score, who_won(hand_totals))
 
     display_score(score)
-    display_hands(hands, hand_totals, hide_one: false)
+    display_cards(hands, dealer)
+    display_cards(hands, player)
     display_result(hand_totals)
     prompt 'next_round' unless match_won?(score)
     sleep 2
