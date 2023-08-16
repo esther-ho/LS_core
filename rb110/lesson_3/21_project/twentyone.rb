@@ -11,12 +11,6 @@ MAX_TOTAL = 21
 DEALER_MIN = 17
 ROUNDS_TO_WIN = 5
 
-def prompt(key, substitution = nil)
-  msg = CONFIG['prompts'][key]
-  msg = format(msg, substitution) if substitution
-  puts msg
-end
-
 def initialize_deck
   CARDS.keys.product(SUITS).map { |card| card.join(' ') }.shuffle
 end
@@ -33,6 +27,25 @@ def initialize_score
   [*PLAYERS, :tie].each_with_object({}) do |score, hsh|
     hsh[score] = 0
   end
+end
+
+def prompt(key, substitution = nil)
+  msg = CONFIG['prompts'][key]
+  msg = format(msg, substitution) if substitution
+  puts msg
+end
+
+def prompt_hit_stay
+  answer = nil
+  prompt 'hit_stay'
+
+  loop do
+    answer = gets.chomp
+    break if answer =~ /^(h(it)*|s(tay)*)$/i
+    prompt 'invalid_hit_stay'
+  end
+
+  answer
 end
 
 def prompt_yes_no(key)
@@ -78,6 +91,22 @@ def display_one_card(hands, player)
 
   prompt "hand_#{player}", '?'
   puts cards
+end
+
+def display_hit(player)
+  prompt "hit_#{player}"
+  prompt 'update_hand'
+  sleep 3
+end
+
+def display_stay(player, hand_totals)
+  prompt "stay_#{player}", hand_totals[player]
+  prompt 'update_hand'
+  sleep 3
+end
+
+def display_result(hand_totals)
+  prompt detect_result(hand_totals).to_s
 end
 
 def format_cards(card)
@@ -130,17 +159,12 @@ def update_total(hand)
   total
 end
 
-def prompt_hit_stay
-  answer = nil
-  prompt 'hit_stay'
-
-  loop do
-    answer = gets.chomp
-    break if answer =~ /^(h(it)*|s(tay)*)$/i
-    prompt 'invalid_hit_stay'
+def update_score!(score, winner)
+  if winner
+    score[winner] += 1
+  else
+    score[:tie] += 1
   end
-
-  answer
 end
 
 def player_stay?(answer)
@@ -149,18 +173,6 @@ end
 
 def dealer_stay?(hand_total)
   hand_total >= DEALER_MIN
-end
-
-def display_hit(player)
-  prompt "hit_#{player}"
-  prompt 'update_hand'
-  sleep 3
-end
-
-def display_stay(player, hand_totals)
-  prompt "stay_#{player}", hand_totals[player]
-  prompt 'update_hand'
-  sleep 3
 end
 
 def detect_result(hand_totals)
@@ -179,10 +191,6 @@ def detect_result(hand_totals)
   end
 end
 
-def display_result(hand_totals)
-  prompt detect_result(hand_totals).to_s
-end
-
 def busted?(hand_totals)
   [:busted_dealer, :busted_player].include?(detect_result(hand_totals))
 end
@@ -194,14 +202,6 @@ def who_won(hand_totals)
     PLAYERS[0]
   elsif [:busted_dealer, :win_player].include?(result)
     PLAYERS[1]
-  end
-end
-
-def update_score!(score, winner)
-  if winner
-    score[winner] += 1
-  else
-    score[:tie] += 1
   end
 end
 
