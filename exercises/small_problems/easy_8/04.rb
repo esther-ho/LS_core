@@ -75,3 +75,22 @@ p palindromes('hello-madam-did-madam-goodbye') == [
 p palindromes('knitting cassettes') == [
   'nittin', 'itti', 'tt', 'ss', 'settes', 'ette', 'tt'
 ]
+
+# Further exploration
+
+def nonsensitive_palindromes(string)
+  (0..string.size - 1).each_with_object([]) do |start_index, arr|
+    2.upto(string[start_index..-1].size) do |length|
+      substring = string[start_index, length]
+      arr << substring if nonsensitive_palindrome?(substring)
+    end
+  end
+end
+
+def nonsensitive_palindrome?(string)
+  letters_only = string.gsub(/[^a-z]/i, '').downcase
+  letters_only == letters_only.reverse && letters_only.size >= 2
+end
+
+p nonsensitive_palindromes('Abcba') == ["Abcba", "bcb"]
+p nonsensitive_palindromes('Abc-Ba') == ["Abc-Ba", "bc-B"]
