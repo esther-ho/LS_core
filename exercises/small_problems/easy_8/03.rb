@@ -42,6 +42,16 @@ def substrings(string)
   end
 end
 
+# Alternative:
+
+# def substrings(string)
+#   (0..string.size - 1).flat_map do |start_index|
+#     (1..string[start_index..-1].size).map do |length|
+#       string[start_index, length]
+#     end
+#   end
+# end
+
 p substrings('abcde') == [
   'a', 'ab', 'abc', 'abcd', 'abcde',
   'b', 'bc', 'bcd', 'bcde',
