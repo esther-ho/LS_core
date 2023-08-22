@@ -50,6 +50,21 @@ def palindromes(string)
   substrings(string).select { |substring| substring == substring.reverse }
 end
 
+# Alternative:
+
+# def palindromes(string)
+#   (0..string.size - 1).each_with_object([]) do |start_index, arr|
+#     2.upto(string[start_index..-1].size) do |length|
+#       substring = string[start_index, length]
+#       arr << substring if palindrome?(substring)
+#     end
+#   end
+# end
+
+# def palindrome?(string)
+#   string == string.reverse
+# end
+
 p palindromes('abcd') == []
 p palindromes('madam') == ['madam', 'ada']
 p palindromes('hello-madam-did-madam-goodbye') == [
