@@ -50,6 +50,12 @@ def word_lengths(sentence)
   words.map! { |word| word + ' ' + word.size.to_s }
 end
 
+# Alternative:
+
+# def word_lengths(sentence)
+#   sentence.scan(/\S+/).map { |word| "#{word} #{word.size}" }
+# end
+
 p word_lengths("cow sheep chicken") == ["cow 3", "sheep 5", "chicken 7"]
 
 p word_lengths("baseball hot dogs and apple pie") ==
