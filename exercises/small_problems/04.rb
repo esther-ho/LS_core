@@ -34,8 +34,6 @@ Output: an array of strings with word length appended
 '' -> []
 
 --- A
-- Check if the string is empty
-  - Return an empty array if string is empty
 - Split string into its words separated by spaces
 - Find the length of each word
 - Modify each word to contain its word length appended
@@ -44,10 +42,7 @@ Output: an array of strings with word length appended
 =end
 
 def word_lengths(sentence)
-  return [] if sentence.empty?
-
-  words = sentence.split
-  words.map! { |word| word + ' ' + word.size.to_s }
+  sentence.split.map { |word| word + ' ' + word.size.to_s }
 end
 
 # Alternative:
