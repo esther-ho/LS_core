@@ -52,6 +52,16 @@ def twice(number)
   left == right ? number : number * 2
 end
 
+# Alternative:
+# Find if left side and right side of number match
+
+# def twice(number)
+  # num_string = number.to_s
+  # left = num_string.slice!(0..(num_string.size / 2 - 1))
+  # right = num_string
+  # left == right ? number : number * 2
+# end
+
 p twice(37) == 74
 p twice(44) == 44
 p twice(334433) == 668866
