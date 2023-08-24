@@ -10,9 +10,8 @@ Explicit rules
 - Number of digits being rotated depends on the first integer passed to the method
 
 Implicit rules
-- Rotating two digits results in the last digit being moved to the second-last place
-- Rotating three digits results in the last digit being moved to the second-last place, then the last digit being moved to the third-last place
-- The number of digits rotated does not exceed the number of digits in the given number
+- Rotating two digits results in the second-last digit being moved to the end
+- Rotating three digits results in the third-last digit being moved to the end
 
 --- E
 rotate_rightmost_digits(735291, 1) == 735291
@@ -45,7 +44,7 @@ end
 
 def rotate_rightmost_digits(number, digits)
   num_string = number.to_s
-  num_string += rotate_string(num_string.slice!(-digits..-1))
+  num_string.sub!(/\d{#{digits}}$/) { |n| rotate_string(n) }
   num_string.to_i
 end
 
