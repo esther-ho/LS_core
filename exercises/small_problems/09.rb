@@ -40,13 +40,13 @@ Output: arrays of words that are anagrams
 - Print the groups
 =end
 
-def print_anagrams(words)
-  anagrams = words.map do |word1|
-    words.select { |word2| (word1.chars - word2.chars).empty? }
-  end
+# def print_anagrams(words)
+#   anagrams = words.map do |word1|
+#     words.select { |word2| (word1.chars - word2.chars).empty? }
+#   end
   
-  anagrams.uniq.each { |anagram| p anagram }
-end
+#   anagrams.uniq.each { |anagram| p anagram }
+# end
 
 # Alternative:
 
@@ -65,8 +65,12 @@ end
 #   anagrams.each { |_, v| p v }
 # end
 
+# def print_anagrams(words)
+#   words.group_by { |word| word.chars.sort }.each_value { |group| p group }
+# end
+
 words =  ['demo', 'none', 'tied', 'evil', 'dome', 'mode', 'live',
           'fowl', 'veil', 'wolf', 'diet', 'vile', 'edit', 'tide',
           'flow', 'neon']
 
-print_anagrams(words)          
+print_anagrams(words)
