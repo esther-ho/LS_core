@@ -42,5 +42,20 @@ end
 #   grades.find { |_, v| v.include?(scores.sum / 3) }.first
 # end
 
+# Further exploration
+
+# def get_grade(*scores)
+#   average = scores.sum / 3
+
+#   case average
+#   when 90.. then 'A'
+#   when 80...90 then 'B'
+#   when 70...80 then 'C'
+#   when 60...70 then 'D'
+#   else              'F'
+#   end
+# end
+
 p get_grade(95, 90, 93) == "A"
 p get_grade(50, 50, 95) == "D"
+# p get_grade(110, 95, 120) == 'A'
