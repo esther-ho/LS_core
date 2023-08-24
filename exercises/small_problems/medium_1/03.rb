@@ -53,3 +53,20 @@ p max_rotation(3) == 3
 p max_rotation(35) == 53
 p max_rotation(105) == 15 # the leading zero gets dropped
 p max_rotation(8_703_529_146) == 7_321_609_845
+
+# Further exploration
+
+# 735291 -> 352917 -> 329175 -> 321759 -> 321579
+# 10001 -> 00011 -> 00110 -> 00101 -> 00110 -> 110
+
+# def max_rotation(number)
+#   num_string = number.to_s
+
+#   num_string.size.downto(2) do |digits|
+#     num_string.sub!(/\d{#{digits}}$/) { |chars| chars[1..-1] + chars[0] }
+#   end
+
+#   num_string.to_i
+# end
+
+# p max_rotation(10001) == 110
