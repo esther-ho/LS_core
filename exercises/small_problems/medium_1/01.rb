@@ -50,3 +50,23 @@ p rotate_array(['a']) == ['a']
 p x = [1, 2, 3, 4]
 p rotate_array(x) == [2, 3, 4, 1]   # => true
 p x == [1, 2, 3, 4]                 # => true
+
+# Further exploration
+
+# Rotates a string
+
+def rotate_string(string)
+  string[1..-1] + string[0]
+end
+
+p rotate_string('hello') == 'elloh'
+p rotate_string('a') == 'a'
+
+# Rotates an integer
+
+def rotate_integer(integer)
+  rotate_string(integer.to_s).to_i
+end
+
+p rotate_integer(123) == 231
+p rotate_integer(1) == 1
