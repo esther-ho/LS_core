@@ -41,12 +41,11 @@ Output: arrays of words that are anagrams
 =end
 
 def print_anagrams(words)
-  anagrams = words.map { |word| word.chars.sort.join }
-  anagrams = anagrams.uniq.select { |word| anagrams.count(word) > 1 }
-  
-  anagrams.map do |anagram|
-    p words.select { |word| anagram == word.chars.sort.join }
+  anagrams = words.map do |word1|
+    words.select { |word2| (word1.chars - word2.chars).empty? }
   end
+  
+  anagrams.uniq.each { |anagram| p anagram }
 end
 
 # Alternative:
