@@ -34,5 +34,13 @@ def get_grade(*scores)
   end
 end
 
+# Alternative
+
+# def get_grade(*scores)
+#   grades = { 'A' => 90..100, 'B' => 80...90, 'C' => 70...80, 'D' => 60...70, 'F' => 0...60 }
+
+#   grades.find { |_, v| v.include?(scores.sum / 3) }.first
+# end
+
 p get_grade(95, 90, 93) == "A"
 p get_grade(50, 50, 95) == "D"
