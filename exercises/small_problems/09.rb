@@ -49,6 +49,23 @@ def print_anagrams(words)
   end
 end
 
+# Alternative:
+
+# def print_anagrams(words)
+#   anagrams = {}
+
+#   words.each do |word|
+#     anagram = word.chars.sort.join
+#     if anagrams.key?(anagram)
+#       anagrams[anagram] << word
+#     else
+#       anagrams[anagram] = [word]
+#     end
+#   end
+
+#   anagrams.each { |_, v| p v }
+# end
+
 words =  ['demo', 'none', 'tied', 'evil', 'dome', 'mode', 'live',
           'fowl', 'veil', 'wolf', 'diet', 'vile', 'edit', 'tide',
           'flow', 'neon']
