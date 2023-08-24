@@ -30,7 +30,7 @@ def get_grade(*scores)
   when 80...90 then 'B'
   when 70...80 then 'C'
   when 60...70 then 'D'
-  when 0...60 then 'F'
+  else              'F'
   end
 end
 
