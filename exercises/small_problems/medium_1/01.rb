@@ -37,6 +37,12 @@ def rotate_array(array)
   array.push(array.shift)
 end
 
+# Alternative:
+
+# def rotate_array(array)
+#   array.values_at(1..-1, 0)
+# end
+
 p rotate_array([7, 3, 5, 2, 9, 1]) == [3, 5, 2, 9, 1, 7]
 p rotate_array(['a', 'b', 'c']) == ['b', 'c', 'a']
 p rotate_array(['a']) == ['a']
