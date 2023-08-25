@@ -48,6 +48,20 @@ def max_rotation(number)
   number
 end
 
+# Alternative
+
+# def max_rotation(number)
+#   num_string = number.to_s
+#   rotated_string = ''
+
+#   until num_string.empty?
+#     num_string = num_string[1..-1] + num_string[0]
+#     rotated_string << num_string.slice!(0)
+#   end
+
+#   rotated_string.to_i
+# end
+
 p max_rotation(735291) == 321579
 p max_rotation(3) == 3
 p max_rotation(35) == 53
