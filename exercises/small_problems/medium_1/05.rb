@@ -79,9 +79,19 @@ end
 # Alternative
 
 # def diamond(size)
+  # one_end = (1..size).step(2).to_a
+  # whole_diamond = one_end + one_end[0..-2].reverse
+  # whole_diamond.map { |length| ('*' * length).center(size) }
+# end
+
+# Further exploration
+
+# def diamond(size)
 #   one_end = (1..size).step(2).to_a
-#   one_end.map! do |num|
-#     ('*' * num).center(size)
+#   one_end.map! do |length|
+#     string = '*'
+#     string += '*'.rjust(length - 1) if length > 1
+#     string.center(size)
 #   end
 
 #   one_end + one_end[0..-2].reverse
@@ -89,4 +99,5 @@ end
 
 puts diamond(1)
 puts diamond(3)
+puts diamond(5)
 puts diamond(9)
