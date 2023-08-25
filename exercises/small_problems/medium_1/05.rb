@@ -76,6 +76,17 @@ def diamond(size)
   one_end + [middle] + one_end.reverse
 end
 
+# Alternative
+
+# def diamond(size)
+#   one_end = (1..size).step(2).to_a
+#   one_end.map! do |num|
+#     ('*' * num).center(size)
+#   end
+
+#   one_end + one_end[0..-2].reverse
+# end
+
 puts diamond(1)
 puts diamond(3)
 puts diamond(9)
