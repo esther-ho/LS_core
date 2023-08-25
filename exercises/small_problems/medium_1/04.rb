@@ -66,7 +66,7 @@ end
 # Further exploration
 
 # def lights_on(total_switches)
-#   (1..total_switches).select { |n| (Math.sqrt(n) % 1).zero?  }
+#   (1..total_switches).map { |n| n**2 }.select { |n| n <= total_switches }
 # end
 
 p lights_on(3) == [1]
