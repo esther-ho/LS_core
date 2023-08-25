@@ -37,18 +37,32 @@ n == 3 # => [1]
   - Create a new array that contains only the n-th lights that remain on
 =end
 
-def lights_on(total_switches)
-  lights = [0] * total_switches
+# def lights_on(total_switches)
+#   lights = [0] * total_switches
 
-  1.upto(total_switches) do |n|
-    lights.map!.with_index do |light, switch|
-      next light if (switch + 1) % n != 0
-      light == 0 ? 1 : 0   
-    end
-  end
+#   1.upto(total_switches) do |n|
+#     lights.map!.with_index do |light, switch|
+#       next light if (switch + 1) % n != 0
+#       light == 0 ? 1 : 0   
+#     end
+#   end
 
-  lights.filter_map.with_index { |light, i| (i + 1) if light == 1 }
-end
+#   lights.filter_map.with_index { |light, i| (i + 1) if light == 1 }
+# end
 
+# Alternative
+
+# def lights_on(total_switches)
+#   lights = [false] * total_switches
+#   1.upto(total_switches) do |n|
+#     n.step(by: n, to: total_switches) do |switch|
+#       lights[switch - 1] = !lights[switch - 1]
+#     end
+#   end
+
+#   lights.filter_map.with_index { |light, i| i + 1 if light }
+# end
+
+p lights_on(3) == [1]
 p lights_on(5) == [1, 4]
 p lights_on(10) == [1, 4, 9]
