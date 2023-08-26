@@ -37,4 +37,20 @@ end
 
 p word_to_digit('Please call me at five five five one two three four. Thanks.') == 'Please call me at 5 5 5 1 2 3 4. Thanks.'
 
+# Further exploration
 
+def word_to_digit(sentence)
+  words = %w(zero one two three four five six seven eight nine)
+  digits = ('0'..'9').to_a
+  digits_hash = words.zip(digits).to_h
+  regex = Regexp.union(digits_hash.keys)
+
+  new_sentence = sentence.gsub(/(#{regex} *)/i) do |word|
+    word[-1] == ' ' ? digits_hash[word[0..-2]] : digits_hash[word]
+  end
+
+  p new_sentence.gsub(/(\d{3})(\d{3})(\d{4})/, '(\1) \2-\3')
+end
+
+p word_to_digit('Can you say one two three? What about 4 5 6?') == 'Can you say 123? What about 4 5 6?'
+p word_to_digit('Please call one two three four five six 7890.') == 'Please call (123) 456-7890.'
