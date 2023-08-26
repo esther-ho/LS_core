@@ -81,16 +81,24 @@ def minilang(commands)
   stack = []
 
   commands.split.each do |command|
-    case command
-    when 'ADD'   then register += stack.pop
-    when 'SUB'   then register -= stack.pop
-    when 'MULT'  then register *= stack.pop
-    when 'DIV'   then register /= stack.pop
-    when 'MOD'   then register %= stack.pop
-    when 'PUSH'  then stack << register
-    when 'POP'   then register = stack.pop
-    when 'PRINT' then puts register
-    else              register = command.to_i
+    if stack.empty? && command !~ /^(-*\d+|PRINT|PUSH)$/
+      puts "Stack is empty!"
+      break
+    else
+      case command
+      when 'ADD'     then register += stack.pop
+      when 'SUB'     then register -= stack.pop
+      when 'MULT'    then register *= stack.pop
+      when 'DIV'     then register /= stack.pop
+      when 'MOD'     then register %= stack.pop
+      when 'PUSH'    then stack << register
+      when 'POP'     then register = stack.pop
+      when 'PRINT'   then puts register
+      when /^-*\d+$/ then register = command.to_i
+      else
+        puts "Invalid command!"
+        break
+      end
     end
   end
 end
@@ -102,27 +110,36 @@ minilang('5 PUSH 3 MULT PRINT')
 # 15
 
 minilang('5 PRINT PUSH 3 PRINT ADD PRINT')
-# # 5
-# # 3
-# # 8
+# 5
+# 3
+# 8
 
 minilang('5 PUSH POP PRINT')
-# # 5
+# 5
 
 minilang('3 PUSH 4 PUSH 5 PUSH PRINT ADD PRINT POP PRINT ADD PRINT')
-# # 5
-# # 10
-# # 4
-# # 7
+# 5
+# 10
+# 4
+# 7
 
 minilang('3 PUSH PUSH 7 DIV MULT PRINT ')
-# # 6
+# 6
 
 minilang('4 PUSH PUSH 7 MOD MULT PRINT ')
-# # 12
+# 12
 
 minilang('-3 PUSH 5 SUB PRINT')
-# # 8
+# 8
 
 minilang('6 PUSH')
 # (nothing printed; no PRINT commands)
+
+# Further exploration
+minilang('3 PUSH 5 MOD PUSH 7 PUSH 3 PUSH 4 PUSH 5 MULT ADD SUB DIV PRINT')
+
+minilang('3 PUSH TWO MOD PRINT')
+# => Invalid command
+
+minilang('3 PUSH 5 DIV MULT PRINT')
+# => Empty stack
