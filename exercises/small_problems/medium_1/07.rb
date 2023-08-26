@@ -28,11 +28,13 @@ Output: a modified string
 =end
 
 def word_to_digit(sentence)
-  words = %w(one two three four five six seven eight nine)
-  digits = ('1'..'9').to_a
+  words = %w(zero one two three four five six seven eight nine)
+  digits = ('0'..'9').to_a
   digits_hash = words.zip(digits).to_h
 
-  sentence.gsub(/#{Regexp.union(digits_hash.keys)}/) { |word| digits_hash[word] }
+  sentence.gsub(Regexp.union(digits_hash.keys)) { |word| digits_hash[word] }
 end
 
 p word_to_digit('Please call me at five five five one two three four. Thanks.') == 'Please call me at 5 5 5 1 2 3 4. Thanks.'
+
+
