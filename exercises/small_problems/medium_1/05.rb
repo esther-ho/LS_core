@@ -88,13 +88,11 @@ end
 
 # def diamond(size)
 #   one_end = (1..size).step(2).to_a
-#   one_end.map! do |length|
-#     string = '*'
-#     string += '*'.rjust(length - 1) if length > 1
-#     string.center(size)
-#   end
+#   whole_diamond = one_end + one_end[0..-2].reverse
 
-#   one_end + one_end[0..-2].reverse
+#   whole_diamond.map do |length|
+#     (length == 1 ? '*' : "*#{' ' * (length - 2)}*").center(size)
+#   end
 # end
 
 puts diamond(1)
