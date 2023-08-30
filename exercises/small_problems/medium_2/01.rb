@@ -30,5 +30,30 @@ def longest_sentence(text)
   puts "Word count: #{sentences[-1].split.size}"
 end
 
+# Further exploration
+
+# def longest_sentence(text)
+#   sentences = text.split(/(?<=[.?!])/)
+#   sentences.sort_by! { |sentence| sentence.split.size }
+#   puts sentences[-1]
+#   puts "Word count: #{sentences[-1].split.size}"
+# end
+
+# def longest_word(text)
+#   words = text.split(/[ .?!,\n]/)
+#   words.sort_by! { |word| word.size }
+#   puts words[-1]
+#   puts "Word length: #{words[-1].size}"
+# end
+
+# def longest_paragraph(text)
+#   paragraphs = text.split(/\n{2,}/)
+#   paragraphs.sort_by! { |paragraph| paragraph.split.size }
+#   puts paragraphs[-1]
+#   puts "Word count: #{paragraphs[-1].split.size}"
+# end
+
 text = File.read('gutenberg_text.txt')
 longest_sentence(text)
+# longest_word(text)
+# longest_paragraph(text)
