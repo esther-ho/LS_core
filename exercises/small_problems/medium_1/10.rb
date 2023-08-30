@@ -51,10 +51,21 @@ end
 #   last_2[1]
 # end
 
+# Further exploration
+
+# def fibonacci_last(n)
+#   last_digits = [0, 1, 1]
+#   until last_digits.size == 60
+#     last_digits << (last_digits[-2] + last_digits[-1]) % 10
+#   end
+
+#   last_digits[n % 60]
+# end
+
 p fibonacci_last(15)        # -> 0  (the 15th Fibonacci number is 610)
 p fibonacci_last(20)        # -> 5 (the 20th Fibonacci number is 6765)
 p fibonacci_last(100)       # -> 5 (the 100th Fibonacci number is 354224848179261915075)
 p fibonacci_last(100_001)   # -> 1 (this is a 20899 digit number)
 p fibonacci_last(1_000_007) # -> 3 (this is a 208989 digit number)
-# fibonacci_last(123456789) # -> 4
-
+p fibonacci_last(123456789) # -> 4
+p fibonacci_last(123_456_789_987_745) # -> 5
