@@ -24,33 +24,29 @@ Questions:
 =end
 
 def longest_sentence(text)
-  sentences = text.split(/\.|\?|\!/)
-  sentences.sort_by! { |sentence| sentence.split.size }
-  puts "#{sentences[-1]}"
-  puts "Word count: #{sentences[-1].split.size}"
+  longest = text.split(/\.|\?|\!/).max_by { |sentence| sentence.split.size }
+  puts longest
+  puts "Word count: #{longest.split.size}"
 end
 
 # Further exploration
 
 # def longest_sentence(text)
-#   sentences = text.split(/(?<=[.?!])/)
-#   sentences.sort_by! { |sentence| sentence.split.size }
-#   puts sentences[-1]
-#   puts "Word count: #{sentences[-1].split.size}"
+#   longest = text.split(/(?<=[.?!])/).max_by { |sentence| sentence.split.size }
+#   puts longest
+#   puts "Word count: #{longest.split.size}"
 # end
 
 # def longest_word(text)
-#   words = text.split(/[ .?!,\n]/)
-#   words.sort_by! { |word| word.size }
-#   puts words[-1]
-#   puts "Word length: #{words[-1].size}"
+#   longest = text.split(/[ .?!,\n]/).max_by(&:size)
+#   puts longest
+#   puts "Word length: #{longest.size}"
 # end
 
 # def longest_paragraph(text)
-#   paragraphs = text.split(/\n{2,}/)
-#   paragraphs.sort_by! { |paragraph| paragraph.split.size }
-#   puts paragraphs[-1]
-#   puts "Word count: #{paragraphs[-1].split.size}"
+#   longest = text.split(/\n{2,}/).max_by { |paragraph| paragraph.split.size }
+#   puts longest
+#   puts "Word count: #{longest.split.size}"
 # end
 
 text = File.read('gutenberg_text.txt')
