@@ -76,11 +76,7 @@ end
 # def block_word?(word)
 #   blocks = %w(BO XK DQ CP NA GT RE FS JW HU VI LY ZM)
 
-#   blocks.each do |block|
-#     return false if word.count(block + block.downcase) > 1
-#   end
-
-#   true
+#   blocks.all? { |block| word.upcase.count(block) < 2 }
 # end
 
 p block_word?('bob') == false
