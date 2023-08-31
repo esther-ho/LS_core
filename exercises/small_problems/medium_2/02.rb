@@ -71,6 +71,18 @@ def block_word?(word)
   true
 end
 
+# Alternative
+
+# def block_word?(word)
+#   blocks = %w(BO XK DQ CP NA GT RE FS JW HU VI LY ZM)
+
+#   blocks.each do |block|
+#     return false if word.count(block + block.downcase) > 1
+#   end
+
+#   true
+# end
+
 p block_word?('bob') == false
 p block_word?('BATCH') == true
 p block_word?('BUTCH') == false
