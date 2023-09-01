@@ -44,3 +44,28 @@ p balanced?('Hey!') == true
 p balanced?(')Hey!(') == false
 p balanced?('What ((is))) up(') == false
 p balanced?('What ())(is() up') == false
+
+# Further exploration
+
+# def all_balanced?(string)
+#   pairs = { '(' => ')', '{' => '}', '[' => ']' }
+#   stack = []
+#   string = string.gsub(/[^'"(){}\[\]]/, '')
+  
+#   string.each_char do |char|
+#     if char.match(/['"]/)
+#       stack[-1] == char ? stack.pop : stack.push(char)
+#     else
+#       stack.push(char) if char.match(/[({\[]/)
+#       return false if char.match(/[)}\]]/) && pairs[stack.pop] != char
+#     end
+#   end
+
+#   stack.empty?
+# end
+
+# p all_balanced?("'Hey!'") == true
+# p all_balanced?('What [{is}] [t]his') == true
+# p all_balanced?('"Hey!') == false
+# p all_balanced?('What is)"() this') == false
+# p all_balanced?('What is [(t])h}is') == false
