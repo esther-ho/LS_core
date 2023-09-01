@@ -26,13 +26,9 @@ output: boolean
 =end
 
 def balanced?(string)
-  parantheses = string.gsub(/[^\(\)]/, '')
-  
-  while parantheses.include?('()')
-    parantheses.gsub!('()', '')
-  end
-
-  parantheses.empty?
+  parentheses = string.gsub(/[^()]/, '')
+  parentheses.gsub!('()', '') while parentheses.include?('()')
+  parentheses.empty?
 end
 
 p balanced?('What (is) this?') == true
