@@ -44,20 +44,12 @@ p balanced?('What ())(is() up') == false
 # Further exploration
 
 # def all_balanced?(string)
-#   pairs = { '(' => ')', '{' => '}', '[' => ']' }
-#   stack = []
-#   string = string.gsub(/[^'"(){}\[\]]/, '')
-  
-#   string.each_char do |char|
-#     if char.match(/['"]/)
-#       stack[-1] == char ? stack.pop : stack.push(char)
-#     else
-#       stack.push(char) if char.match(/[({\[]/)
-#       return false if char.match(/[)}\]]/) && pairs[stack.pop] != char
-#     end
-#   end
+#   string = string.gsub(/[^'"\(\){}\[\]]/, '')
+#   regex = /''|""|\(\)|{}|\[\]/
 
-#   stack.empty?
+#   string.gsub!(regex, '') while string.match?(regex)
+
+#   string.empty?
 # end
 
 # p all_balanced?("'Hey!'") == true
