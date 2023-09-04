@@ -41,6 +41,23 @@ def bubble_sort!(array)
   end
 end
 
+# Further exploration
+
+# def bubble_sort!(array)
+#   array.size.times do |round|
+#     swapped = false
+
+#     (0...array.size - round).each do |i|
+#       if (array[i] <=> array[i + 1]) == 1
+#         array[i], array[i + 1] = array[i + 1], array[i]
+#         swapped = true
+#       end
+#     end
+
+#     break unless swapped
+#   end
+# end
+
 array = [5, 3]
 bubble_sort!(array)
 p array == [3, 5]
