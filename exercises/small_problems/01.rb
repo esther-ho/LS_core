@@ -45,11 +45,9 @@ def madlibs(text)
     adverb:%w(easily lazily noisily excitedly)
   }
 
-  text = text.gsub(/%{\w+}/) do |word| 
-    word % words_hash.transform_values(&:sample)
+  text = text.each_line do |line| 
+    puts line % words_hash.transform_values(&:sample)
   end
-
-  puts text
 end
 
 text = File.read('madlibs.txt')
