@@ -39,6 +39,20 @@ def featured(number)
   end
 end
 
+# Alternative
+
+# def featured(number)
+#   quotient = number / 7
+#   nearest_multiple = (quotient.odd? ? quotient + 2 : quotient + 1) * 7
+
+#   nearest_multiple.step(by: 14) do |num|
+#     return num if num.digits.uniq == num.digits
+#     break if num.digits.size > 10
+#   end
+
+#   "There is no possible number that fulfills those requirements."
+# end
+
 p featured(12) == 21
 p featured(20) == 21
 p featured(21) == 35
