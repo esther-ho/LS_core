@@ -44,17 +44,17 @@ end
 # Further exploration
 
 # def bubble_sort!(array)
-#   array.size.times do |round|
+#   1.upto(array.size - 1) do |sorted_end|
 #     swapped = false
 
-#     (0...array.size - round).each do |i|
+#     (0...array.size - sorted_end).each do |i|
 #       if (array[i] <=> array[i + 1]) == 1
 #         array[i], array[i + 1] = array[i + 1], array[i]
 #         swapped = true
 #       end
 #     end
 
-#     break unless swapped
+#     break if array.size - 1 == sorted_end || !swapped
 #   end
 # end
 
