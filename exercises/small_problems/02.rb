@@ -45,13 +45,13 @@ output: print a 8-pointed star
 =end
 
 def star(grid)
-  side = (0...(grid / 2)).map do |line|
-    '***'.chars.join(' ' * line).center(grid)
-  end
+  bottom =
+    (0...(grid / 2)).map do |line|
+      %w(* * *).join(' ' * line).center(grid)
+    end
 
-  puts [side.reverse, '*' * grid, side]
+  puts bottom.reverse, '*' * grid, bottom
 end
 
 star(7)
-puts
 star(9)
