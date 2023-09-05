@@ -4,7 +4,8 @@ end
 
 counter = 10
 
-10.times do
+# Execute loop until counter == 0
+until counter.zero?
   puts counter
   # The return value of the `decrease` method call needs to be saved
   counter = decrease(counter)
