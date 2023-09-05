@@ -68,6 +68,33 @@ def merge(arr1, arr2)
   results.concat(arr2[index2..-1])
 end
 
+# Further exploration
+
+# def merge_sort(array)
+#   length = 1
+
+#   while length < array.size
+#     result = []
+
+#     0.step(by: length * 2, to: array.size - 1) do |i|
+#       el1 = array[i, length]
+#       el2 = array[i + length, length]
+
+#       if [el1, el2].any?(nil)
+#         result << [el1, el2].compact
+#         break
+#       end
+      
+#       result << merge(el1, el2)
+#     end
+
+#     array = result.flatten
+#     length *= 2
+#   end
+
+#   array
+# end
+
 p merge_sort([9, 5, 7, 1]) == [1, 5, 7, 9]
 p merge_sort([5, 3]) == [3, 5]
 p merge_sort([6, 2, 7, 1, 4]) == [1, 2, 4, 6, 7]
