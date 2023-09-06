@@ -3,7 +3,8 @@ def valid_series?(nums)
 
   odd_count = nums.count { |n| n.odd? }
   # `=` assignment operator instead of `==` comparison operator was used
-  odd_count == 3 ? true : false
+  # Ternary operator doesn't have to be used since it returns a boolean
+  odd_count == 3
 end
 
 p valid_series?([5, 6, 2, 7, 3, 12, 4, 8])        # should return true
