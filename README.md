@@ -1,2 +1,2 @@
-# RB101
+# LS Core
 Assignments for Launch School
