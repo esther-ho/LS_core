@@ -1,14 +1,13 @@
 module Walkable
   def walk
-    "#{set_name} #{gait} forward"
+    "#{name} #{gait} forward"
   end
 
-  def set_name
-    self.class != Noble ? name : title + ' ' + name
-  end
 end
 
-class Person
+# Using inheritance will eliminate duplicate `#to_s` methods but the hierarchy could get too complicated
+
+class Animal
   include Walkable
 
   attr_reader :name
@@ -17,6 +16,12 @@ class Person
     @name = name
   end
 
+  def to_s
+    name
+  end
+end
+
+class Person < Animal
   private
 
   def gait
@@ -24,16 +29,7 @@ class Person
   end
 end
 
-class Cat
-  include Walkable
-
-
-  attr_reader :name
-
-  def initialize(name)
-    @name = name
-  end
-
+class Cat < Animal
   private
 
   def gait
@@ -41,15 +37,7 @@ class Cat
   end
 end
 
-class Cheetah
-  include Walkable
-
-  attr_reader :name
-
-  def initialize(name)
-    @name = name
-  end
-
+class Cheetah < Cat
   private
 
   def gait
@@ -57,14 +45,16 @@ class Cheetah
   end
 end
 
-class Noble
-  include Walkable
-
-  attr_reader :name, :title
+class Noble < Person
+  attr_reader :title
 
   def initialize(name, title)
-    @name = name
+    super(name)
     @title = title
+  end
+
+  def to_s
+    "#{title} #{name}"
   end
 
   private
