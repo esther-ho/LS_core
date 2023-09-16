@@ -1,10 +1,16 @@
 class Shelter
   def initialize
     @owners = {}
+    @unadopted_pets = []
+  end
+
+  def add_pet(pet)
+    unadopted_pets << pet
   end
 
   def adopt(owner, pet)
     owner.pets << pet
+    unadopted_pets.delete(pet)
     owners[owner.name] ||= owner
   end
 
@@ -16,9 +22,15 @@ class Shelter
     end
   end
 
+  def print_unadopted
+    puts "The Animal Shelter has the following unadopted pets:"
+    puts unadopted_pets
+  end
+
   private
 
   attr_reader :owners
+  attr_reader :unadopted_pets
 end
 
 class Pet
@@ -70,3 +82,23 @@ shelter.adopt(bholmes, chester)
 shelter.print_adoptions
 puts "#{phanson.name} has #{phanson.number_of_pets} adopted pets."
 puts "#{bholmes.name} has #{bholmes.number_of_pets} adopted pets."
+
+# Further exploration
+
+asta       = Pet.new('dog', 'Asta')
+laddie     = Pet.new('dog', 'Laddie')
+fluffy     = Pet.new('cat', 'Fluffy')
+kat        = Pet.new('cat', 'Kat')
+ben        = Pet.new('cat', 'Ben')
+chatterbox = Pet.new('parakeet', 'Chatterbox')
+bluebell   = Pet.new('parakeet', 'Bluebell')
+
+shelter.add_pet(asta)
+shelter.add_pet(laddie)
+shelter.add_pet(fluffy)
+shelter.add_pet(kat)
+shelter.add_pet(ben)
+shelter.add_pet(chatterbox)
+shelter.add_pet(bluebell)
+puts "-----------"
+shelter.print_unadopted
