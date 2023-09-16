@@ -11,7 +11,8 @@ class Shelter
   def print_adoptions
     owners.each do |name, owner|
       puts "#{name} has adopted the following pets:"
-      owner.print_pets
+      puts owner.pets
+      puts
     end
   end
 
@@ -27,6 +28,10 @@ class Pet
     @type = type
     @name = name
   end
+
+  def to_s
+    "a #{type} named #{name}"
+  end
 end
 
 class Owner
@@ -36,12 +41,6 @@ class Owner
   def initialize(name)
     @name = name
     @pets = []
-  end
-
-  def print_pets
-    pets.each do |pet|
-      puts "a #{pet.type} named #{pet.name}"
-    end
   end
 
   def number_of_pets
