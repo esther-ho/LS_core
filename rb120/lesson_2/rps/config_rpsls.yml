@@ -1,0 +1,16 @@
+choices:
+  rock:
+    inputs: ['r', 'rock']
+    beats: ['lizard', 'scissors']
+  paper:
+    inputs: ['p', 'paper']
+    beats: ['rock', 'spock']
+  scissors:
+    inputs: ['sc', 'scissors']
+    beats: ['paper', 'lizard']
+  lizard:
+    inputs: ['l', 'lizard']
+    beats: ['spock', 'paper']
+  spock:
+    inputs: ['sp', 'spock']
+    beats: ['scissors', 'rock']
