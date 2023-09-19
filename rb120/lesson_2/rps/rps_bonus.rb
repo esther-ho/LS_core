@@ -20,7 +20,20 @@ module Displayable
     end
   end
 
+  def display_round_results
+    display_moves
+    puts
+    display_winner
+    puts
+    display_score
+    puts
+    puts "Press [enter] to continue."
+    gets
+  end
+
   def display_moves
+    system 'clear'
+
     puts "#{human.name} chose #{human.move}."
     puts "#{computer.name} chose #{computer.move}."
   end
@@ -34,8 +47,19 @@ module Displayable
       when :computer then "#{computer.name} won!"
       else                "It's a tie!"
       end
-      
+
     puts message
+  end
+
+  def display_score
+    puts "#{human.name}'s score: #{human.score}"
+    puts "#{computer.name}'s score: #{computer.score}"
+  end
+
+  def display_congrats
+    winner = determine_grand_winner
+
+    puts "#{winner.name} is the grand winner!"
   end
 
   def display_goodbye_message
@@ -62,6 +86,7 @@ module Promptable
   end
 
   def prompt_choice
+    system 'clear'
     choice = nil
 
     loop do
@@ -122,7 +147,7 @@ class Move
 end
 
 class Player
-  attr_reader :name, :move
+  attr_reader :name, :move, :score
 
   def update_score
     self.score += 1
@@ -134,8 +159,7 @@ class Player
 
   private
 
-  attr_accessor :score
-  attr_writer :name, :move
+  attr_writer :name, :move, :score
 
   def initialize
     set_name
@@ -201,16 +225,20 @@ class RPSGame
   def play
     display_welcome_message
     choose_opponent
-    human.choose
-    computer.choose
-    display_moves
-    display_winner
+    until game_over?
+      human.choose
+      computer.choose
+      display_round_results
+    end
+    display_congrats
     display_goodbye_message
   end
 
   private
 
   attr_accessor :human, :computer
+
+  WIN_SCORE = 3
 
   def initialize
     @human = Human.new
@@ -231,6 +259,14 @@ class RPSGame
     else
       :tie
     end
+  end
+
+  def game_over?
+    [human.score, computer.score].any?(WIN_SCORE)
+  end
+
+  def determine_grand_winner
+    human.score > computer.score ? human : computer
   end
 end
 
