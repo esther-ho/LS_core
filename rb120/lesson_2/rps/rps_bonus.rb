@@ -77,17 +77,6 @@ module Promptable
     gets.chomp.strip.downcase
   end
 
-  def prompt_invalid(type = :choice)
-    message =
-      case type
-      when :choice then puts "Sorry, invalid choice."
-      when :name then "Sorry, please enter a valid name."
-      when :yn then puts "Sorry, please enter y or n."
-      end
-
-    puts message
-  end
-
   def prompt_choice(choice)
     message =
       case choice
@@ -95,11 +84,27 @@ module Promptable
         "Please choose: [r]ock, [p]aper, [sc]issors, [l]izard, [sp]ock." \
         "\nAlternatively, view move [h]istory."
       when :opponent
-        "Choose an opponent: [1] Spongebob, [2] Patrick, or [3] Squidward."
+        "Choose opponent: [1]Spongebob, [2]Patrick, [3]Squidward, or [r]andom."
       end
 
     puts message
     gets.chomp.strip.downcase
+  end
+
+  def prompt_play_again
+    puts "Want to play again? Enter [y]es or [n]o."
+    gets.chomp.strip.downcase
+  end
+
+  def prompt_invalid(type = :choice)
+    message =
+      case type
+      when :choice then puts "Sorry, invalid choice."
+      when :name then "Sorry, please enter a valid name."
+      when :yes_no then puts "Sorry, please enter [y]es or [n]o."
+      end
+
+    puts message
   end
 end
 
@@ -173,7 +178,7 @@ class Human < Player
 
     loop do
       name = prompt_name
-      break if name =~ /^[a-z]+ *([a-z]+)*$/i
+      break if name =~ /^[a-z]+ *([a-z]+)*$/
       prompt_invalid(:name)
     end
 
@@ -244,12 +249,14 @@ class RPSGame
   def play
     display_welcome_message
     choose_opponent
-    until game_over?
-      human.choose
-      computer.choose
-      display_round_results
+
+    loop do
+      play_match
+      display_congrats
+      break unless play_again?
+      reset_match
     end
-    display_congrats
+
     display_goodbye_message
   end
 
@@ -269,16 +276,20 @@ class RPSGame
     self.computer = valid_opponent.new
   end
 
+  def random_opponent
+    OPPONENTS.sample
+  end
+
   def valid_opponent
     choice = nil
 
     loop do
       choice = prompt_choice(:opponent)
-      break if choice =~ /^[1-3]$/
+      break if choice =~ /^[1-3]|r$/
       prompt_invalid
     end
 
-    OPPONENTS[choice.to_i - 1]
+    choice == 'r' ? random_opponent : OPPONENTS[choice.to_i - 1]
   end
 
   def determine_winner
@@ -299,6 +310,32 @@ class RPSGame
 
   def determine_grand_winner
     human.score > computer.score ? human : computer
+  end
+
+  def play_again?
+    answer = nil
+
+    loop do
+      answer = prompt_play_again
+      break if answer =~ /^(y|yes|n|no)$/
+      prompt_invalid(:yes_no)
+    end
+
+    answer =~ /^(y|yes)$/
+  end
+
+  def play_match
+    until game_over?
+      human.choose
+      computer.choose
+      display_round_results
+    end
+  end
+
+  def reset_match
+    human.reset_score
+    computer.reset_score
+    self.computer = random_opponent.new
   end
 end
 
