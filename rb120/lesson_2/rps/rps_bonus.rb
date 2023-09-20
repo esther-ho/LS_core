@@ -10,6 +10,34 @@ module Displayable
     puts "Welcome to Rock, Paper, Scissors, Lizard, Spock!"
   end
 
+  def display_rules
+    system 'clear'
+    puts CONFIG['rules']
+    gets
+  end
+
+  def display_opponents
+    system 'clear'
+
+    difficulty = ['Normal', 'Too easy', 'Easy']
+    puts "Choose an opponent (1, 2, or 3):\n\n #  Opponent ---- Difficulty "
+
+    difficulty.zip(RPSGame::OPPONENTS).map.with_index do |(diff, opponent), i|
+      "\n[#{i + 1}] #{opponent} ---- #{diff}"
+    end
+  end
+
+  def display_opponent_greeting
+    greeting = CONFIG['greetings'][computer.name]
+    puts greeting
+  end
+
+  def display_continue
+    puts
+    puts "Press [enter] to continue."
+    gets
+  end
+
   def display_history(choice)
     return if choice !~ /^h|history$/ || Move.history.empty?
     system 'clear'
@@ -24,14 +52,15 @@ module Displayable
   end
 
   def display_round_results
+    winner = determine_winner
+
     display_moves
     puts
-    display_winner
+    display_winner(winner)
+    display_opponent_comment(winner)
     puts
     display_score
-    puts
-    puts "Press [enter] to continue."
-    gets
+    display_continue
   end
 
   def display_moves
@@ -41,14 +70,23 @@ module Displayable
     puts "#{computer.name} chose #{computer.move}."
   end
 
-  def display_winner
-    winner = determine_winner
-
+  def display_winner(winner)
     message =
       case winner
       when :human    then "#{human.name} won!"
       when :computer then "#{computer.name} won!"
       else                "It's a tie!"
+      end
+
+    puts message
+  end
+
+  def display_opponent_comment(winner)
+    message =
+      case winner
+      when :human    then CONFIG['lose'][computer.name]
+      when :computer then CONFIG['win'][computer.name]
+      else                CONFIG['tie'][computer.name]
       end
 
     puts message
@@ -77,6 +115,19 @@ module Promptable
     gets.chomp.strip.downcase
   end
 
+  def prompt_yes_no(prompt_to)
+    prompt =
+      case prompt_to
+      when :view_rules
+        "Would you like to learn the rules of the game? Enter [y]es or [n]o."
+      when :play_again
+        "Want to play again? Enter [y]es or [n]o."
+      end
+
+    puts prompt
+    gets.chomp.strip.downcase
+  end
+
   def prompt_choice(choice)
     message =
       case choice
@@ -84,19 +135,14 @@ module Promptable
         "Please choose: [r]ock, [p]aper, [sc]issors, [l]izard, [sp]ock." \
         "\nAlternatively, view move [h]istory."
       when :opponent
-        "Choose opponent: [1]Spongebob, [2]Patrick, [3]Squidward, or [r]andom."
+        display_opponents
       end
 
     puts message
     gets.chomp.strip.downcase
   end
 
-  def prompt_play_again
-    puts "Want to play again? Enter [y]es or [n]o."
-    gets.chomp.strip.downcase
-  end
-
-  def prompt_invalid(type = :choice)
+  def prompt_invalid(type)
     message =
       case type
       when :choice then puts "Sorry, invalid choice."
@@ -119,6 +165,10 @@ class Move
 
   def self.history
     @@history
+  end
+
+  def self.reset_history
+    @@history = []
   end
 
   protected
@@ -195,7 +245,7 @@ class Human < Player
       next if display_history(choice)
       choice = find_move(choice)
       break if choice
-      prompt_invalid
+      prompt_invalid(:choice)
     end
 
     choice
@@ -247,13 +297,13 @@ class RPSGame
   include Promptable
 
   def play
-    display_welcome_message
+    welcome_player
     choose_opponent
 
     loop do
       play_match
       display_congrats
-      break unless play_again?
+      break unless answer_yes?(:play_again)
       reset_match
     end
 
@@ -262,7 +312,8 @@ class RPSGame
 
   private
 
-  attr_accessor :human, :computer
+  attr_reader :human
+  attr_accessor :computer
 
   OPPONENTS = [Spongebob, Patrick, Squidward]
   WIN_SCORE = 3
@@ -272,8 +323,27 @@ class RPSGame
     @computer = nil
   end
 
+  def welcome_player
+    display_welcome_message
+    answer_yes?(:view_rules) ? display_rules : display_continue
+  end
+
+  def answer_yes?(prompt_to)
+    answer = nil
+
+    loop do
+      answer = prompt_yes_no(prompt_to)
+      break if answer =~ /^(y|yes|n|no)$/
+      prompt_invalid(:yes_no)
+    end
+
+    answer =~ /^(y|yes)$/
+  end
+
   def choose_opponent
     self.computer = valid_opponent.new
+    display_opponent_greeting
+    display_continue
   end
 
   def random_opponent
@@ -286,10 +356,18 @@ class RPSGame
     loop do
       choice = prompt_choice(:opponent)
       break if choice =~ /^[1-3]|r$/
-      prompt_invalid
+      prompt_invalid(:choice)
     end
 
     choice == 'r' ? random_opponent : OPPONENTS[choice.to_i - 1]
+  end
+
+  def play_match
+    until game_over?
+      human.choose
+      computer.choose
+      display_round_results
+    end
   end
 
   def determine_winner
@@ -312,30 +390,14 @@ class RPSGame
     human.score > computer.score ? human : computer
   end
 
-  def play_again?
-    answer = nil
-
-    loop do
-      answer = prompt_play_again
-      break if answer =~ /^(y|yes|n|no)$/
-      prompt_invalid(:yes_no)
-    end
-
-    answer =~ /^(y|yes)$/
-  end
-
-  def play_match
-    until game_over?
-      human.choose
-      computer.choose
-      display_round_results
-    end
-  end
-
   def reset_match
+    system 'clear'
     human.reset_score
     computer.reset_score
+    Move.reset_history
     self.computer = random_opponent.new
+    display_opponent_greeting
+    display_continue
   end
 end
 
