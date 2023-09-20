@@ -10,13 +10,16 @@ module Displayable
     puts "Welcome to Rock, Paper, Scissors, Lizard, Spock!"
   end
 
-  def display_history
+  def display_history(choice)
+    return if choice !~ /^h|history$/ || Move.history.empty?
     system 'clear'
 
     puts "------ Move History ------"
+    puts
 
     Move.history.each_slice(2) do |(human, computer)|
       puts "(you) #{human}   -   #{computer}"
+      puts
     end
   end
 
@@ -41,7 +44,7 @@ module Displayable
   def display_winner
     winner = determine_winner
 
-    message = 
+    message =
       case winner
       when :human    then "#{human.name} won!"
       when :computer then "#{computer.name} won!"
@@ -58,7 +61,6 @@ module Displayable
 
   def display_congrats
     winner = determine_grand_winner
-
     puts "#{winner.name} is the grand winner!"
   end
 
@@ -71,59 +73,35 @@ module Promptable
   private
 
   def prompt_name
-    system 'clear'
+    puts "Hello, what's your name?"
+    gets.chomp.strip.downcase
+  end
 
-    name = nil
+  def prompt_invalid(type)
+    message =
+      case type
+      when :name then "Sorry, please enter a valid name."
+      when :choice then puts "Sorry, invalid choice."
+      when :yn then puts "Sorry, please enter y or n."
+      end
 
-    loop do
-      puts "Hello, what's your name?"
-      name = gets.chomp.strip
-      break if name =~ /^[a-z]+ *([a-z]+)*$/i
-      puts "Sorry, please enter a valid name."
-    end
-
-    name.split.map(&:capitalize).join(' ')
+    puts message
   end
 
   def prompt_choice
-    system 'clear'
-    choice = nil
-
-    loop do
-      puts "Please choose [r]ock, [p]aper, [sc]issors, [l]izard, [sp]ock, or [h]istory."
-      choice = gets.chomp.strip.downcase
-
-      if choice == 'h' && !Move.history.empty?
-        display_history
-        puts
-        next
-      end
-
-      break if Move.valid?(choice)
-      puts "Sorry, invalid choice."
-    end
-
-    Move.find(choice)
+    puts "Please choose [r]ock, [p]aper, [sc]issors, " \
+         "[l]izard, [sp]ock, or [h]istory."
+    gets.chomp.strip.downcase
   end
 end
 
 class Move
   VALUES = CONFIG['choices']
-  
+
   @@history = []
 
   def >(other_move)
     VALUES[value]['beats'].include?(other_move.value)
-  end
-
-  def self.valid?(choice)
-    valid_values = VALUES.map { |_, v| v.values_at('inputs') }.flatten
-
-    valid_values.include?(choice)
-  end
-
-  def self.find(abbreviation)
-    VALUES.select { |_, v| v['inputs'].include?(abbreviation) }.keys.first
   end
 
   def self.history
@@ -131,7 +109,7 @@ class Move
   end
 
   protected
-  
+
   attr_reader :value
 
   private
@@ -172,13 +150,46 @@ class Human < Player
   include Promptable
 
   def choose
-    self.move = Move.new(prompt_choice)
+    self.move = Move.new(valid_move)
   end
 
   private
 
   def set_name
-    self.name = prompt_name
+    self.name = valid_name
+  end
+
+  def valid_name
+    system 'clear'
+    name = nil
+
+    loop do
+      name = prompt_name
+      break if name =~ /^[a-z]+ *([a-z]+)*$/i
+      prompt_invalid(:name)
+    end
+
+    name.split.map(&:capitalize).join(' ')
+  end
+
+  def valid_move
+    system 'clear'
+
+    choice = nil
+
+    loop do
+      choice = prompt_choice
+      next if display_history(choice)
+      choice = find_move(choice)
+      break if choice
+      prompt_invalid(:choice)
+    end
+
+    choice
+  end
+
+  def find_move(choice)
+    Move::VALUES.select { |_, v| v['inputs'].include?(choice) }.keys.first
   end
 end
 
