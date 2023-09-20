@@ -77,20 +77,28 @@ module Promptable
     gets.chomp.strip.downcase
   end
 
-  def prompt_invalid(type)
+  def prompt_invalid(type = :choice)
     message =
       case type
-      when :name then "Sorry, please enter a valid name."
       when :choice then puts "Sorry, invalid choice."
+      when :name then "Sorry, please enter a valid name."
       when :yn then puts "Sorry, please enter y or n."
       end
 
     puts message
   end
 
-  def prompt_choice
-    puts "Please choose [r]ock, [p]aper, [sc]issors, " \
-         "[l]izard, [sp]ock, or [h]istory."
+  def prompt_choice(choice)
+    message =
+      case choice
+      when :move
+        "Please choose: [r]ock, [p]aper, [sc]issors, [l]izard, [sp]ock." \
+        "\nAlternatively, view move [h]istory."
+      when :opponent
+        "Choose an opponent: [1] Spongebob, [2] Patrick, or [3] Squidward."
+      end
+
+    puts message
     gets.chomp.strip.downcase
   end
 end
@@ -178,11 +186,11 @@ class Human < Player
     choice = nil
 
     loop do
-      choice = prompt_choice
+      choice = prompt_choice(:move)
       next if display_history(choice)
       choice = find_move(choice)
       break if choice
-      prompt_invalid(:choice)
+      prompt_invalid
     end
 
     choice
@@ -249,6 +257,7 @@ class RPSGame
 
   attr_accessor :human, :computer
 
+  OPPONENTS = [Spongebob, Patrick, Squidward]
   WIN_SCORE = 3
 
   def initialize
@@ -257,7 +266,19 @@ class RPSGame
   end
 
   def choose_opponent
-    self.computer = Computer.subclasses.sample.new
+    self.computer = valid_opponent.new
+  end
+
+  def valid_opponent
+    choice = nil
+
+    loop do
+      choice = prompt_choice(:opponent)
+      break if choice =~ /^[1-3]$/
+      prompt_invalid
+    end
+
+    OPPONENTS[choice.to_i - 1]
   end
 
   def determine_winner
