@@ -44,7 +44,9 @@ module Displayable
     return if choice !~ /^h|history$/
     system 'clear'
 
-    if Move.history.empty?
+    history = Move.history
+
+    if history.any? { |_, v| v.empty? }
       puts '------ No move history ------'
       puts
       return true
@@ -53,8 +55,8 @@ module Displayable
     puts "------ Move History ------"
     puts
 
-    Move.history.each_slice(2) do |(human, computer)|
-      puts "(you) #{human}   -   #{computer}"
+    history[:human].each_with_index do |human, i|
+      puts "(you) #{human}   -   #{history[:computer][i]}"
       puts
     end
   end
@@ -165,7 +167,7 @@ end
 class Move
   VALUES = CONFIG['choices']
 
-  @@history = []
+  @@history = {human: [], computer: []}
 
   def >(other_move)
     VALUES[value]['beats'].include?(other_move.value)
@@ -176,7 +178,7 @@ class Move
   end
 
   def self.reset_history
-    @@history = []
+    @@history = {human: [], computer: []}
   end
 
   protected
@@ -187,7 +189,6 @@ class Move
 
   def initialize(value)
     @value = value
-    @@history << value.capitalize
   end
 
   def to_s
@@ -222,6 +223,7 @@ class Human < Player
 
   def choose
     self.move = Move.new(valid_move)
+    Move.history[:human] << move
   end
 
   private
@@ -272,6 +274,7 @@ class Computer < Player
 
   def choose
     self.move = Move.new(choices.sample)
+    Move.history[:computer] << move
   end
 
   private
