@@ -14,6 +14,7 @@ module Displayable
     system 'clear'
     puts CONFIG['rules']
     gets
+    system 'clear'
   end
 
   def display_opponents
@@ -22,7 +23,7 @@ module Displayable
     difficulty = ['Normal', 'Too easy', 'Easy']
     puts "Choose an opponent (1, 2, or 3):\n\n #  Opponent ---- Difficulty "
 
-    difficulty.zip(RPSGame::OPPONENTS).map.with_index do |(diff, opponent), i|
+    difficulty.zip(Computer::OPPONENTS).map.with_index do |(diff, opponent), i|
       "\n[#{i + 1}] #{opponent} ---- #{diff}"
     end
   end
@@ -36,17 +37,26 @@ module Displayable
     puts
     puts "Press [enter] to continue."
     gets
+    system 'clear'
   end
 
   def display_history(choice)
-    return if choice !~ /^h|history$/ || Move.history.empty?
+    return if choice !~ /^h|history$/
     system 'clear'
+
+    history = Move.history
+
+    if history.any? { |_, v| v.empty? }
+      puts '------ No move history ------'
+      puts
+      return true
+    end
 
     puts "------ Move History ------"
     puts
 
-    Move.history.each_slice(2) do |(human, computer)|
-      puts "(you) #{human}   -   #{computer}"
+    history[:human].each_with_index do |human, i|
+      puts "(you) #{human}   -   #{history[:computer][i]}"
       puts
     end
   end
@@ -157,7 +167,7 @@ end
 class Move
   VALUES = CONFIG['choices']
 
-  @@history = []
+  @@history = {human: [], computer: []}
 
   def >(other_move)
     VALUES[value]['beats'].include?(other_move.value)
@@ -168,7 +178,7 @@ class Move
   end
 
   def self.reset_history
-    @@history = []
+    @@history = {human: [], computer: []}
   end
 
   protected
@@ -179,7 +189,6 @@ class Move
 
   def initialize(value)
     @value = value
-    @@history << value.capitalize
   end
 
   def to_s
@@ -214,6 +223,7 @@ class Human < Player
 
   def choose
     self.move = Move.new(valid_move)
+    Move.history[:human] << move
   end
 
   private
@@ -257,44 +267,55 @@ class Human < Player
 end
 
 class Computer < Player
+  include Displayable
+  include Promptable
+
+  OPPONENTS = ['Spongebob', 'Patrick', 'Squidward']
+
   def choose
     self.move = Move.new(choices.sample)
+    Move.history[:computer] << move
   end
 
   private
 
   def set_name
-    self.name = self.class.to_s
-  end
-end
+    opponent = (RPSGame.match_count > 1 ? random_opponent : valid_opponent)
 
-class Spongebob < Computer
-  private
+    self.name = opponent
+  end
+
+  def random_opponent
+    OPPONENTS.sample
+  end
+
+  def valid_opponent
+    choice = nil
+
+    loop do
+      choice = prompt_choice(:opponent)
+      break if choice =~ /^[1-3]|r$/
+      prompt_invalid(:choice)
+      display_continue
+    end
+
+    choice == 'r' ? random_opponent : OPPONENTS[choice.to_i - 1]
+  end
 
   def choices
-    Move::VALUES.keys
-  end
-end
-
-class Patrick < Computer
-  private
-
-  def choices
-    ['paper']
-  end
-end
-
-class Squidward < Computer
-  private
-
-  def choices
-    ['rock', 'paper']
+    case name
+    when 'Spongebob' then Move::VALUES.keys
+    when 'Patrick'   then ['paper']
+    when 'Squidward' then ['rock', 'paper']
+    end
   end
 end
 
 class RPSGame
   include Displayable
   include Promptable
+
+  @@match = 1
 
   def play
     welcome_player
@@ -310,12 +331,15 @@ class RPSGame
     display_goodbye_message
   end
 
+  def self.match_count
+    @@match
+  end
+
   private
 
   attr_reader :human
   attr_accessor :computer
 
-  OPPONENTS = [Spongebob, Patrick, Squidward]
   WIN_SCORE = 3
 
   def initialize
@@ -341,25 +365,9 @@ class RPSGame
   end
 
   def choose_opponent
-    self.computer = valid_opponent.new
+    self.computer = Computer.new
     display_opponent_greeting
     display_continue
-  end
-
-  def random_opponent
-    OPPONENTS.sample
-  end
-
-  def valid_opponent
-    choice = nil
-
-    loop do
-      choice = prompt_choice(:opponent)
-      break if choice =~ /^[1-3]|r$/
-      prompt_invalid(:choice)
-    end
-
-    choice == 'r' ? random_opponent : OPPONENTS[choice.to_i - 1]
   end
 
   def play_match
@@ -368,6 +376,8 @@ class RPSGame
       computer.choose
       display_round_results
     end
+
+    @@match += 1
   end
 
   def determine_winner
@@ -393,9 +403,8 @@ class RPSGame
   def reset_match
     system 'clear'
     human.reset_score
-    computer.reset_score
     Move.reset_history
-    self.computer = random_opponent.new
+    self.computer = Computer.new
     display_opponent_greeting
     display_continue
   end
