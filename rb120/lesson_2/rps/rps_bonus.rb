@@ -14,6 +14,7 @@ module Displayable
     system 'clear'
     puts CONFIG['rules']
     gets
+    system 'clear'
   end
 
   def display_opponents
@@ -36,11 +37,18 @@ module Displayable
     puts
     puts "Press [enter] to continue."
     gets
+    system 'clear'
   end
 
   def display_history(choice)
-    return if choice !~ /^h|history$/ || Move.history.empty?
+    return if choice !~ /^h|history$/
     system 'clear'
+
+    if Move.history.empty?
+      puts '------ No move history ------'
+      puts
+      return true
+    end
 
     puts "------ Move History ------"
     puts
@@ -357,6 +365,7 @@ class RPSGame
       choice = prompt_choice(:opponent)
       break if choice =~ /^[1-3]|r$/
       prompt_invalid(:choice)
+      display_continue
     end
 
     choice == 'r' ? random_opponent : OPPONENTS[choice.to_i - 1]
