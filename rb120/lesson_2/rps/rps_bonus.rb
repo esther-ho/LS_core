@@ -294,7 +294,7 @@ class Computer < Player
 
     loop do
       choice = prompt_choice(:opponent)
-      break if choice =~ /^[1-3]|r$/
+      break if choice =~ /^[1-3]$|^r$/
       prompt_invalid(:choice)
       display_continue
     end
