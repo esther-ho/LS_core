@@ -40,21 +40,16 @@ module Displayable
     system 'clear'
   end
 
-  def display_history(choice)
+  def display_history
     system 'clear'
-
     history = Move.history
 
     if history.any? { |_, v| v.empty? }
-      puts '------ No move history ------'
-      puts
+      puts ['------ No move history ------', '']
     else
-      puts "------ Move History ------"
-      puts
-
+      puts ["------ Move History ------", '']
       history[:human].each_with_index do |human, i|
-        puts "(you) #{human}   -   #{history[:computer][i]}"
-        puts
+        puts ["(you) #{human}   -   #{history[:computer][i]}", '']
       end
     end
   end
@@ -151,21 +146,20 @@ module Promptable
   end
 
   def prompt_invalid(type)
-    message =
-      case type
-      when :choice then "Sorry, invalid choice."
-      when :name then "Sorry, please enter a valid name."
-      when :yes_no then "Sorry, please enter [y]es or [n]o."
-      end
+    messages = {
+      choice: "Sorry, invalid choice.",
+      name: "Sorry, please enter a valid name.",
+      yes_no: "Sorry, please enter [y]es or [n]o."
+    }
 
-    puts message
+    puts messages[type]
   end
 end
 
 class Move
   VALUES = CONFIG['choices']
 
-  @@history = {human: [], computer: []}
+  @@history = { human: [], computer: [] }
 
   def >(other_move)
     VALUES[value]['beats'].include?(other_move.value)
@@ -176,7 +170,7 @@ class Move
   end
 
   def self.reset_history
-    @@history = {human: [], computer: []}
+    @@history = { human: [], computer: [] }
   end
 
   protected
@@ -250,12 +244,7 @@ class Human < Player
 
     loop do
       choice = prompt_choice(:move)
-
-      if choice =~ /^h|history$/
-        display_history(choice)
-        next
-      end
-
+      next display_history if choice =~ /^h|history$/
       choice = find_move(choice)
       break if choice
       prompt_invalid(:choice)
