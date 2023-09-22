@@ -41,7 +41,6 @@ module Displayable
   end
 
   def display_history(choice)
-    return if choice !~ /^h|history$/
     system 'clear'
 
     history = Move.history
@@ -49,15 +48,14 @@ module Displayable
     if history.any? { |_, v| v.empty? }
       puts '------ No move history ------'
       puts
-      return true
-    end
-
-    puts "------ Move History ------"
-    puts
-
-    history[:human].each_with_index do |human, i|
-      puts "(you) #{human}   -   #{history[:computer][i]}"
+    else
+      puts "------ Move History ------"
       puts
+
+      history[:human].each_with_index do |human, i|
+        puts "(you) #{human}   -   #{history[:computer][i]}"
+        puts
+      end
     end
   end
 
@@ -252,7 +250,12 @@ class Human < Player
 
     loop do
       choice = prompt_choice(:move)
-      next if display_history(choice)
+
+      if choice =~ /^h$|^history$/
+        display_history(choice)
+        next
+      end
+
       choice = find_move(choice)
       break if choice
       prompt_invalid(:choice)
