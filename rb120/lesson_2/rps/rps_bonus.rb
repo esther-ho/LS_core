@@ -153,9 +153,9 @@ module Promptable
   def prompt_invalid(type)
     message =
       case type
-      when :choice then puts "Sorry, invalid choice."
+      when :choice then "Sorry, invalid choice."
       when :name then "Sorry, please enter a valid name."
-      when :yes_no then puts "Sorry, please enter [y]es or [n]o."
+      when :yes_no then "Sorry, please enter [y]es or [n]o."
       end
 
     puts message
@@ -297,12 +297,12 @@ class Computer < Player
 
     loop do
       choice = prompt_choice(:opponent)
-      break if choice =~ /^([1-3]|r)$/
+      break if choice =~ /^[1-3]$/
       prompt_invalid(:choice)
       display_continue
     end
 
-    choice == 'r' ? random_opponent : OPPONENTS[choice.to_i - 1]
+    OPPONENTS[choice.to_i - 1]
   end
 
   def choices
