@@ -283,7 +283,7 @@ class Computer < Player
   private
 
   def set_name
-    opponent = (RPSGame.match_count > 1 ? random_opponent : valid_opponent)
+    opponent = (RPSGame.matches_played > 0 ? random_opponent : valid_opponent)
 
     self.name = opponent
   end
@@ -318,7 +318,7 @@ class RPSGame
   include Displayable
   include Promptable
 
-  @@match = 1
+  @@matches_played = 0
 
   def play
     welcome_player
@@ -334,8 +334,8 @@ class RPSGame
     display_goodbye_message
   end
 
-  def self.match_count
-    @@match
+  def self.matches_played
+    @@matches_played
   end
 
   private
@@ -380,7 +380,7 @@ class RPSGame
       display_round_results
     end
 
-    @@match += 1
+    @@matches_played += 1
   end
 
   def determine_winner
