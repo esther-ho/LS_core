@@ -236,7 +236,7 @@ class Human < Player
 
     loop do
       name = prompt_name
-      break if name =~ /^[a-z]+ *([a-z]+)*$/
+      break if name =~ /^[a-z]+ {0,1}[a-z]{0,}$/
       prompt_invalid(:name)
     end
 
@@ -251,7 +251,7 @@ class Human < Player
     loop do
       choice = prompt_choice(:move)
 
-      if choice =~ /^h$|^history$/
+      if choice =~ /^h|history$/
         display_history(choice)
         next
       end
@@ -297,7 +297,7 @@ class Computer < Player
 
     loop do
       choice = prompt_choice(:opponent)
-      break if choice =~ /^[1-3]$|^r$/
+      break if choice =~ /^([1-3]|r)$/
       prompt_invalid(:choice)
       display_continue
     end
