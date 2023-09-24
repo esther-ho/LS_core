@@ -258,7 +258,7 @@ class Human < Player
 end
 
 class Computer < Player
-  OPPONENTS = ['Spongebob', 'Patrick', 'Squidward']
+  OPPONENTS = ['SpongeBob', 'Patrick', 'Squidward']
 
   def choose
     self.move = Move.new(choices.sample)
@@ -292,7 +292,7 @@ class Computer < Player
 
   def choices
     case name
-    when 'Spongebob' then Move::VALUES.keys
+    when 'SpongeBob' then Move::VALUES.keys
     when 'Patrick'   then ['paper']
     when 'Squidward' then ['rock', 'paper']
     end

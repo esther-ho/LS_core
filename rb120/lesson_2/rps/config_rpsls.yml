@@ -16,22 +16,22 @@ choices:
     beats: ['scissors', 'rock']
 
 greetings:
-  Spongebob: "Spongebob: \"Hi, how are ya?\""
+  SpongeBob: "SpongeBob: \"Hi, how are ya?\""
   Patrick: "Patrick: \"Hey Patrick! D-oh, I'm Patrick.\""
   Squidward: "Squidward: \"Is it time for you to already ruin my day?\""
 
 win:
-  Spongebob: "Spongebob: \"If you believe in yourself and with a tiny pinch of magic, all your dreams can come true.\""
+  SpongeBob: "SpongeBob: \"If you believe in yourself and with a tiny pinch of magic, all your dreams can come true.\""
   Patrick: "Patrick: \"Here comes a giant fist!\""
   Squidward: "Squidward: \"I'm a winner, see my prize! You're a loser who sits and cries.\""
 
 lose:
-  Spongebob: "Spongebob: \"Hey, if I close my eyes it doesn't seem so dark.\""
+  SpongeBob: "SpongeBob: \"Hey, if I close my eyes it doesn't seem so dark.\""
   Patrick: "Patrick: \"Are you the bad guy?\""
   Squidward: "Squidward: \"Well, it wouldn't be the first time you ruined everything.\""
 
 tie:
-  Spongebob: "Spongebob: \"Gary, I'm absorbing these blows like I'm made of some sort of spongy material.\""
+  SpongeBob: "SpongeBob: \"Gary, I'm absorbing these blows like I'm made of some sort of spongy material.\""
   Patrick: "Patrick: \"Do it again; I wasn't looking!\""
   Squidward: "Squidward: \"Too bad that didn't kill me.\""
 
