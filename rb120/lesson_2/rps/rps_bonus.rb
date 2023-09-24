@@ -332,7 +332,6 @@ class RPSGame
 
   def initialize
     @human = Human.new
-    @computer = nil
   end
 
   def welcome_player
