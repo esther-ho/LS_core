@@ -189,6 +189,8 @@ class Move
 end
 
 class Player
+  include Displayable
+  include Promptable
   attr_reader :name, :move, :score
 
   def update_score
@@ -210,9 +212,6 @@ class Player
 end
 
 class Human < Player
-  include Displayable
-  include Promptable
-
   def choose
     self.move = Move.new(valid_move)
     Move.history[:human] << move
@@ -259,9 +258,6 @@ class Human < Player
 end
 
 class Computer < Player
-  include Displayable
-  include Promptable
-
   OPPONENTS = ['Spongebob', 'Patrick', 'Squidward']
 
   def choose
