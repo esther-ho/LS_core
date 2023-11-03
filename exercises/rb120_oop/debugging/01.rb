@@ -10,6 +10,10 @@ class Library
   def check_in(book)
     books.push(book)
   end
+
+  def display_books
+    books.each(&:display_data)
+  end
 end
 
 class Book
@@ -46,6 +50,7 @@ community_library.check_in(wrinkle_in_time)
 # community_library.books.display_data
 
 # Updated code
-community_library.books.each { |book| book.display_data }
+# community_library.books.each { |book| book.display_data }
 
 # Alternatively, the code in the `Library` class can be altered to include a method to display books
+community_library.display_books
