@@ -31,7 +31,7 @@ module Mailing
     false
   end
 
-  def send(destination, mail)
+  def send_mail(destination, mail)
     "Sending #{mail} from #{name} to: #{destination}"
     # Omitting the actual sending.
   end
@@ -90,8 +90,9 @@ johns_phone_service   = TelephoneService.new('John', 122, '555-232-1121')
 johns_postal_service  = PostalService.new('John', '47 Sunshine Ave.')
 ellens_postal_service = PostalService.new('Ellen', '860 Blackbird Ln.')
 
-puts johns_postal_service.send(ellens_postal_service.street_address, Postcard.new('Greetings from Silicon Valley!'))
+puts johns_postal_service.send_mail(ellens_postal_service.street_address, Postcard.new('Greetings from Silicon Valley!'))
 # => undefined method `860 Blackbird Ln.' for #<PostalService:0x00005571b4aaebe8> (NoMethodError)
 # The `#send` method invoked on line 91 is not the `#send` instance method defined in the `Mailing` module.
 # Instead, the `#send` method invoked is the `Object#send` method. `Object#send` takes several arguments, and the first argument can be either a symbol or string that references a method.
 # The error can be fixed by including the `Mailing` module within the `PostalService` class.
+# The `#send` method within the `Mailing` module can be renamed to prevent method overriding.
