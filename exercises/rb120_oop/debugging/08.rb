@@ -33,12 +33,13 @@ class TaskManager
 
 # Because the local variable `tasks` is initialized, the `tasks` that `#select` is invoked on is not the getter method but instead the local variable.
 # To differentiate the getter method from the local variable, we can prepend `tasks` with `self`.
+# Since the getter method is shadowed by the local variable, the local variable can also be renamed
   def display_high_priority_tasks
-    tasks = self.tasks.select do |task|
+    high_priority_tasks = tasks.select do |task|
       task.priority == :high
     end
 
-    display(tasks)
+    display(high_priority_tasks)
   end
 
   private
