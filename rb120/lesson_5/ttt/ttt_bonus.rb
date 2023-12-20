@@ -69,8 +69,6 @@ class Board
     [1, 5, 9], [3, 5, 7]
   ]
 
-  attr_reader :squares
-
   def initialize
     @squares = {}
     (1..9).each { |k| @squares[k] = Square.new }
@@ -105,12 +103,6 @@ class Board
     nil
   end
 
-  def winning_line?(squares)
-    markers = squares.reject(&:unmarked?).map(&:marker)
-    return false unless markers.size == 3
-    markers.uniq.size == 1
-  end
-
   def possible_winning_markers
     possible_wins = {}
 
@@ -126,12 +118,22 @@ class Board
     possible_wins
   end
 
-  def possible_winning_line?(squares)
-    squares.one?(&:unmarked?) && squares.map(&:marker).uniq.size == 2
-  end
-
   def someone_won?
     !!winning_marker
+  end
+
+  private
+
+  attr_reader :squares
+
+  def winning_line?(squares)
+    markers = squares.reject(&:unmarked?).map(&:marker)
+    return false unless markers.size == 3
+    markers.uniq.size == 1
+  end
+
+  def possible_winning_line?(squares)
+    squares.one?(&:unmarked?) && squares.map(&:marker).uniq.size == 2
   end
 end
 
@@ -194,6 +196,13 @@ class Computer < Player
 end
 
 class TTTGame
+  MARKERS = ['O', 'X']
+  MIDDLE_SQUARE = 5
+
+  def initialize
+    @board = Board.new
+  end
+
   def play
     system 'clear'
     Displayable.welcome
@@ -207,15 +216,8 @@ class TTTGame
 
   private
 
-  MARKERS = ['O', 'X']
-  MIDDLE_SQUARE = 5
-
   attr_reader :human, :computer, :board
   attr_accessor :current_marker
-
-  def initialize
-    @board = Board.new
-  end
 
   def clear_screen_and_display_board
     system 'clear'
