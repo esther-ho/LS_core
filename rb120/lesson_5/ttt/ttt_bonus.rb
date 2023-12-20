@@ -67,6 +67,10 @@ class Board
   def []=(key, marker)
     squares[key].marker = marker
   end
+
+  def full?
+    unmarked_squares.empty?
+  end
 end
 
 class Square
@@ -139,13 +143,14 @@ class TTTGame
     Displayable.welcome
     set_players
     board.draw
-    human_moves
-    computer_moves
+    player_move
+    board.draw
   end
 
   private
 
   attr_reader :human, :computer
+  attr_accessor :current_marker
 
   def set_players
     @human = Human.new
@@ -171,7 +176,33 @@ class TTTGame
 
   def first_to_move
     choice = valid_choice(:first_turn, ['Yes', 'No'])
-    @current_marker = (choice == 'Yes' ? human.marker : computer.marker)
+    self.current_marker = if choice == 'Yes'
+                            human.marker
+                          else
+                            computer.marker
+                          end
+  end
+
+  def player_move
+    loop do
+      current_player_moves
+      break if board.full?
+      board.draw
+    end
+  end
+
+  def human_turn?
+    current_marker == human.marker
+  end
+
+  def current_player_moves
+    if human_turn?
+      human_moves
+      self.current_marker = computer.marker
+    else
+      computer_moves
+      self.current_marker = human.marker
+    end
   end
 
   def human_moves
