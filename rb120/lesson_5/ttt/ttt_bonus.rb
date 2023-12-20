@@ -171,28 +171,32 @@ class Computer < Player
 end
 
 class TTTGame
-  MARKERS = ['O', 'X']
-
-  attr_reader :board
-
-  def initialize
-    @board = Board.new
-  end
-
   def play
+    system 'clear'
     Displayable.welcome
     set_players
-    board.draw
+    clear_screen_and_display_board
     player_move
-    board.draw
+    clear_screen_and_display_board
     Displayable.round_result(who_won, computer.name)
     Displayable.goodbye
   end
 
   private
 
-  attr_reader :human, :computer
+  MARKERS = ['O', 'X']
+
+  attr_reader :human, :computer, :board
   attr_accessor :current_marker
+
+  def initialize
+    @board = Board.new
+  end
+
+  def clear_screen_and_display_board
+    system 'clear'
+    board.draw
+  end
 
   def set_players
     @human = Human.new
@@ -229,7 +233,7 @@ class TTTGame
     loop do
       current_player_moves
       break if board.someone_won? || board.full?
-      board.draw
+      clear_screen_and_display_board
     end
   end
 
