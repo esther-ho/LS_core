@@ -11,8 +11,9 @@ module Displayable
   def self.prompt(key)
     messages = {
       name: "=> Hello, what's your name?",
-      marker: "=> Choose a marker:\n",
-      first_turn: "=> Would you like to begin first?\n"
+      marker: "=> Choose a marker:",
+      first_turn: "=> Would you like to begin first?",
+      square: "=> Choose a square:"
     }
 
     puts messages[key]
@@ -25,6 +26,15 @@ module Displayable
     (1..count).to_a.zip(options).each do |num, option|
       puts "[#{num}] #{option}"
     end
+  end
+
+  def self.joinor(options)
+    message = case options.size
+              when 1    then options
+              when 1..2 then options.join(' or ')
+              else           "#{options[0..-2].join(', ')} or #{options[-1]}"
+              end
+    puts message
   end
 
   def self.invalid(type)
@@ -49,10 +59,20 @@ class Board
   def draw
     puts CONFIG['board'] % squares.values
   end
+
+  def unmarked_squares
+    squares.select { |_, square| square.unmarked? }.keys
+  end
+
+  def []=(key, marker)
+    squares[key].marker = marker
+  end
 end
 
 class Square
   INITIAL_MARKER = ' '
+
+  attr_accessor :marker
 
   def initialize(marker = INITIAL_MARKER)
     @marker = marker
@@ -60,6 +80,10 @@ class Square
 
   def to_s
     @marker
+  end
+
+  def unmarked?
+    @marker == INITIAL_MARKER
   end
 end
 
@@ -115,6 +139,7 @@ class TTTGame
     Displayable.welcome
     set_players
     board.draw
+    human_moves
   end
 
   private
@@ -136,7 +161,7 @@ class TTTGame
     choice = nil
     loop do
       choice = gets.chomp.strip
-      break if choice =~ /^\d$/ && (1..(options.count + 1)).include?(choice.to_i)
+      break if choice =~ /^\d$/ && (1..(options.size + 1)).include?(choice.to_i)
       Displayable.invalid(:choice)
     end
 
@@ -146,6 +171,24 @@ class TTTGame
   def first_to_move
     choice = valid_choice(:first_turn, ['Yes', 'No'])
     @current_marker = (choice == 'Yes' ? human.marker : computer.marker)
+  end
+
+  def human_moves
+    Displayable.prompt(:square)
+    Displayable.joinor(board.unmarked_squares)
+    board[valid_square] = human.marker
+  end
+
+  def valid_square
+    square = nil
+
+    loop do
+      square = gets.chomp.strip
+      break if square =~ /^\d$/ && board.unmarked_squares.include?(square.to_i)
+      Displayable.invalid(:choice)
+    end
+
+    square.to_i
   end
 end
 
