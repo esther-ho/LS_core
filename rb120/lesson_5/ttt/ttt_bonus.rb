@@ -140,6 +140,7 @@ class TTTGame
     set_players
     board.draw
     human_moves
+    computer_moves
   end
 
   private
@@ -189,6 +190,10 @@ class TTTGame
     end
 
     square.to_i
+  end
+
+  def computer_moves
+    board[board.unmarked_squares.sample] = computer.marker
   end
 end
 
