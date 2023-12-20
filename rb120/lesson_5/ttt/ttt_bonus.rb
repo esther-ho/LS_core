@@ -5,7 +5,7 @@ CONFIG = Psych.load_file('config_ttt.yml')
 
 module Displayable
   def self.welcome
-    puts "=> Welcome to Tic Tac Toe!\n"
+    puts "=> Welcome to Tic Tac Toe!"
   end
 
   def self.prompt(key)
@@ -39,16 +39,36 @@ module Displayable
 
   def self.invalid(type)
     messages = {
-      choice: "Sorry, that's not a valid choice.",
-      name: "Sorry, please enter a valid name.",
-      yes_no: "Sorry, please enter [y]es or [n]o."
+      choice: "=> Sorry, that's not a valid choice.",
+      name: "=> Sorry, please enter a valid name.",
+      yes_no: "=> Sorry, please enter [y]es or [n]o."
     }
 
     puts messages[type]
   end
+
+  def self.round_result(winner, name)
+    messages = {
+      human: "=> You won!",
+      computer: "=> #{name} won!",
+      tie: "=> It's a tie!"
+    }
+
+    puts messages[winner]
+  end
+
+  def self.goodbye
+    puts "=> Thank you for playing Tic Tac Toe! Goodbye!"
+  end
 end
 
 class Board
+  WINNING_LINES = [
+    [1, 2, 3], [4, 5, 6], [7, 8, 9],
+    [1, 4, 7], [2, 5, 8], [3, 6, 9],
+    [1, 5, 9], [3, 5, 7]
+  ]
+
   attr_reader :squares
 
   def initialize
@@ -71,6 +91,25 @@ class Board
   def full?
     unmarked_squares.empty?
   end
+
+  def winning_marker
+    WINNING_LINES.each do |line|
+      squares = @squares.values_at(*line)
+      return squares[0].marker if winning_line?(squares)
+    end
+
+    nil
+  end
+
+  def winning_line?(squares)
+    markers = squares.reject(&:unmarked?).map(&:marker)
+    return false unless markers.size == 3
+    markers.uniq.size == 1
+  end
+
+  def someone_won?
+    !!winning_marker
+  end
 end
 
 class Square
@@ -92,6 +131,7 @@ class Square
 end
 
 class Player
+  attr_reader :name
   attr_accessor :marker
 
   def initialize
@@ -145,6 +185,8 @@ class TTTGame
     board.draw
     player_move
     board.draw
+    Displayable.round_result(who_won, computer.name)
+    Displayable.goodbye
   end
 
   private
@@ -186,7 +228,7 @@ class TTTGame
   def player_move
     loop do
       current_player_moves
-      break if board.full?
+      break if board.someone_won? || board.full?
       board.draw
     end
   end
@@ -225,6 +267,14 @@ class TTTGame
 
   def computer_moves
     board[board.unmarked_squares.sample] = computer.marker
+  end
+
+  def who_won
+    case board.winning_marker
+    when human.marker    then :human
+    when computer.marker then :computer
+    else                      :tie
+    end
   end
 end
 
