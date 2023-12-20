@@ -8,12 +8,23 @@ module Displayable
     puts "=> Welcome to Tic Tac Toe!\n"
   end
 
-  def self.prompt_name
-    puts "=> Hello, what's your name?"
+  def self.prompt(key)
+    messages = {
+      name: "=> Hello, what's your name?",
+      marker: "=> Choose a marker:\n",
+      first_turn: "=> Would you like to begin first?\n"
+    }
+
+    puts messages[key]
   end
 
-  def self.prompt_marker
-    puts "=> Choose a marker:\n"
+  def self.choices(options)
+    options += ['Random']
+    count = options.count
+
+    (1..count).to_a.zip(options).each do |num, option|
+      puts "[#{num}] #{option}"
+    end
   end
 
   def self.invalid(type)
@@ -54,7 +65,7 @@ end
 
 class Player
   attr_accessor :marker
-  
+
   def initialize
     set_name
   end
@@ -68,7 +79,7 @@ class Human < Player
   end
 
   def valid_name
-    Displayable.prompt_name
+    Displayable.prompt(:name)
 
     answer = nil
     loop do
@@ -113,29 +124,29 @@ class TTTGame
   def set_players
     @human = Human.new
     @computer = Computer.new
-    human.marker = valid_marker
+    human.marker = valid_choice(:marker, MARKERS)
     computer.marker = (MARKERS - [human.marker])[0]
+    @current_marker = first_to_move
   end
 
-  def valid_marker
-    Displayable.prompt_marker
-    valid_choices = MARKERS + ['Random']
-    count = valid_choices.count
-
-    (1..count).to_a.zip(valid_choices).each do |num, marker|
-      puts "[#{num}] #{marker}"
-    end
+  def valid_choice(key, options)
+    Displayable.prompt(key)
+    Displayable.choices(options)
 
     choice = nil
     loop do
-      choice = gets.chomp
-      break if choice =~ /^\d$/ && (1..count).include?(choice.to_i)
+      choice = gets.chomp.strip
+      break if choice =~ /^\d$/ && (1..(options.count + 1)).include?(choice.to_i)
       Displayable.invalid(:choice)
     end
 
-    choice == '3' ? MARKERS.sample : MARKERS[choice.to_i - 1]
+    choice == '3' ? options.sample : options[choice.to_i - 1]
   end
 
+  def first_to_move
+    choice = valid_choice(:first_turn, ['Yes', 'No'])
+    @current_marker = (choice == 'Yes' ? human.marker : computer.marker)
+  end
 end
 
 TTTGame.new.play
