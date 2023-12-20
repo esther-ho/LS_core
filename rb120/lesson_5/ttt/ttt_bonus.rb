@@ -84,6 +84,10 @@ class Board
     squares.select { |_, square| square.unmarked? }.keys
   end
 
+  def [](key)
+    squares[key]
+  end
+
   def []=(key, marker)
     squares[key].marker = marker
   end
@@ -94,7 +98,7 @@ class Board
 
   def winning_marker
     WINNING_LINES.each do |line|
-      squares = @squares.values_at(*line)
+      squares = self.squares.values_at(*line)
       return squares[0].marker if winning_line?(squares)
     end
 
@@ -105,6 +109,25 @@ class Board
     markers = squares.reject(&:unmarked?).map(&:marker)
     return false unless markers.size == 3
     markers.uniq.size == 1
+  end
+
+  def possible_winning_markers
+    possible_wins = {}
+
+    WINNING_LINES.each do |line|
+      squares = self.squares.values_at(*line)
+      if possible_winning_line?(squares)
+        winning_marker = squares.reject(&:unmarked?)[0].marker
+        winning_square = line.find { |key| self.squares[key].unmarked? }
+        possible_wins[winning_marker] = winning_square
+      end
+    end
+
+    possible_wins
+  end
+
+  def possible_winning_line?(squares)
+    squares.one?(&:unmarked?) && squares.map(&:marker).uniq.size == 2
   end
 
   def someone_won?
@@ -185,6 +208,7 @@ class TTTGame
   private
 
   MARKERS = ['O', 'X']
+  MIDDLE_SQUARE = 5
 
   attr_reader :human, :computer, :board
   attr_accessor :current_marker
@@ -270,7 +294,25 @@ class TTTGame
   end
 
   def computer_moves
-    board[board.unmarked_squares.sample] = computer.marker
+    next_move = if board[MIDDLE_SQUARE].unmarked?
+                  MIDDLE_SQUARE
+                else
+                  computer_attack || computer_defend || computer_random
+                end
+
+    board[next_move] = computer.marker
+  end
+
+  def computer_attack
+    board.possible_winning_markers[computer.marker]
+  end
+
+  def computer_defend
+    board.possible_winning_markers[human.marker]
+  end
+
+  def computer_random
+    board.unmarked_squares.sample
   end
 
   def who_won
