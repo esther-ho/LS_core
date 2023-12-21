@@ -3,7 +3,7 @@ require 'pry'
 
 CONFIG = Psych.load_file('config_ttt.yml')
 
-module Displayable
+module Display
   def self.welcome
     puts "=> Welcome to Tic Tac Toe!"
   end
@@ -177,13 +177,13 @@ class Human < Player
   end
 
   def valid_name
-    Displayable.prompt(:name)
+    Display.prompt(:name)
 
     answer = nil
     loop do
       answer = gets.chomp.strip
       break if answer =~ /^[a-z]+ {0,1}[a-z]{0,}$/i
-      Displayable.invalid(:name)
+      Display.invalid(:name)
     end
 
     answer.split.map(&:capitalize).join(' ')
@@ -210,10 +210,10 @@ class TTTGame
 
   def play
     system 'clear'
-    Displayable.welcome
+    Display.welcome
     set_players
     main_game
-    Displayable.goodbye
+    Display.goodbye
   end
 
   private
@@ -234,14 +234,14 @@ class TTTGame
   end
 
   def valid_choice(key, options)
-    Displayable.prompt(key)
-    Displayable.choices(options)
+    Display.prompt(key)
+    Display.choices(options)
 
     choice = nil
     loop do
       choice = gets.chomp.strip
       break if choice =~ /^\d$/ && (1..(options.size + 1)).include?(choice.to_i)
-      Displayable.invalid(:choice)
+      Display.invalid(:choice)
     end
 
     choice == '3' ? options.sample : options[choice.to_i - 1]
@@ -258,7 +258,7 @@ class TTTGame
       clear_screen_and_display_board
       player_move
       clear_screen_and_display_board
-      Displayable.round_result(round_winner, computer.name)
+      Display.round_result(round_winner, computer.name)
       break unless play_again?
       reset
     end
@@ -287,8 +287,8 @@ class TTTGame
   end
 
   def human_moves
-    Displayable.prompt(:square)
-    Displayable.joinor(board.unmarked_squares)
+    Display.prompt(:square)
+    Display.joinor(board.unmarked_squares)
     board[valid_square] = human.marker
   end
 
@@ -298,7 +298,7 @@ class TTTGame
     loop do
       square = gets.chomp.strip
       break if square =~ /^\d$/ && board.unmarked_squares.include?(square.to_i)
-      Displayable.invalid(:choice)
+      Display.invalid(:choice)
     end
 
     square.to_i
@@ -335,13 +335,13 @@ class TTTGame
   end
 
   def play_again?
-    Displayable.prompt(:play_again)
+    Display.prompt(:play_again)
 
     answer = nil
     loop do
       answer = gets.chomp.strip.downcase
       break if answer =~ /^(y|n|yes|no)$/
-      Displayable.invalid(:yes_no)
+      Display.invalid(:yes_no)
     end
 
     answer.match?(/^(y|yes)$/)
