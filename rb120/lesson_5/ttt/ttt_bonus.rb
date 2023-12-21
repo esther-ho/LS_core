@@ -10,7 +10,7 @@ module Display
 
   def self.prompt(key)
     messages = {
-      name: "=> Hello, what's your name?",
+      name: "=> What's your name?",
       marker: "=> Choose a marker:",
       first_turn: "=> Would you like to begin first?",
       square: "=> Choose a square:",
@@ -56,6 +56,23 @@ module Display
     }
 
     puts messages[winner]
+  end
+
+  def self.scoreboard(human_info, computer_info)
+    puts
+    [human_info, computer_info].each do |info|
+      puts format("%{name}'s score: %{score}", info)
+    end
+    puts
+  end
+
+  def self.continue
+    puts "=> Press [enter] to continue."
+    gets
+  end
+
+  def self.grand_winner(name)
+    puts "=> #{name} is the winner of the match!"
   end
 
   def self.goodbye
@@ -162,10 +179,19 @@ end
 
 class Player
   attr_reader :name
-  attr_accessor :marker
+  attr_accessor :marker, :score
 
   def initialize
     set_name
+    @score = 0
+  end
+
+  def update_score
+    self.score += 1
+  end
+
+  def reset_score
+    self.score = 0
   end
 end
 
@@ -203,6 +229,7 @@ end
 class TTTGame
   MARKERS = ['O', 'X']
   MIDDLE_SQUARE = 5
+  ROUNDS_TO_WIN = 3
 
   def initialize
     @board = Board.new
@@ -255,12 +282,23 @@ class TTTGame
 
   def main_game
     loop do
+      play_match
+      display_grand_winner
+      break unless play_again?
+    end
+
+    reset_match
+  end
+
+  def play_match
+    loop do
       clear_screen_and_display_board
       player_move
-      clear_screen_and_display_board
-      Display.round_result(round_winner, computer.name)
-      break unless play_again?
-      reset
+      display_result
+      display_score
+      break if game_over?
+      Display.continue
+      reset_round
     end
   end
 
@@ -326,12 +364,56 @@ class TTTGame
     board.unmarked_squares.sample
   end
 
+  def display_result
+    clear_screen_and_display_board
+    Display.round_result(round_winner, computer.name)
+  end
+
   def round_winner
     case board.winning_marker
-    when human.marker    then :human
-    when computer.marker then :computer
-    else                      :tie
+    when human.marker
+      human.update_score
+      :human
+    when computer.marker
+      computer.update_score
+      :computer
+    else
+      :tie
     end
+  end
+
+  def display_score
+    human_info = { name: human.name, score: human.score }
+    computer_info = { name: computer.name, score: computer.score }
+    Display.scoreboard(human_info, computer_info)
+  end
+
+  def reset_round
+    @current_marker = alternate_first_player
+    board.reset
+  end
+
+  def reset_match
+    human.reset_score
+    computer.reset_score
+  end
+
+  def alternate_first_player
+    marker = (first_marker == human.marker ? computer.marker : human.marker)
+    @first_marker = marker
+  end
+
+  def game_over?
+    [human.score, computer.score].any?(ROUNDS_TO_WIN)
+  end
+
+  def display_grand_winner
+    name = nil
+    [human, computer].each do |player|
+      name = player.name if player.score == ROUNDS_TO_WIN
+    end
+
+    Display.grand_winner(name)
   end
 
   def play_again?
@@ -345,16 +427,6 @@ class TTTGame
     end
 
     answer.match?(/^(y|yes)$/)
-  end
-
-  def reset
-    @current_marker = alternate_first_player
-    board.reset
-  end
-
-  def alternate_first_player
-    marker = (first_marker == human.marker ? computer.marker : human.marker)
-    @first_marker = marker
   end
 end
 
