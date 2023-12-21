@@ -1,5 +1,5 @@
 # Twenty-One is a card game consisting of a dealer and a player, where the participants try to get as close to 21 as possible without going over.
-# 
+
 # Here is an overview of the game:
 # Both participants are initially dealt 2 cards from a 52-card deck.
 # Player sees 2 cards but sees only one of dealer's cards
@@ -59,7 +59,7 @@ class Player
     # bust
 
   def initialize
-    hand = []
+    @hand = []
   end
 
   def hit
@@ -73,19 +73,28 @@ class Player
 end
 
 class Deck
-  # has cards
+  SUITS = ["\u2664", "\u2665", "\u2667", "\u2666"]
+  NAMES = [
+    '2', '3', '4', '5', '6', '7', '8',
+    '9', '10', 'Jack', 'Queen', 'King', 'Ace'
+  ]
+  VALUES = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]
+
+  attr_reader :cards
 
   def initialize
     @cards = []
+    reset
+  end
+
+  def reset
+    SUITS.product(NAMES.zip(VALUES)).each do |suit, (name, value)|
+      cards << Card.new(suit, name, value)
+    end
   end
 end
 
 class Card
-  # has:
-    # suit
-    # name
-    # value
-
   def initialize(suit, name, value)
     @suit = suit
     @name = name
@@ -115,4 +124,3 @@ class Game
     display_result
   end
 end
-
