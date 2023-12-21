@@ -229,7 +229,7 @@ class Human < Player
 end
 
 class Computer < Player
-  OPPONENTS = ['Bubbles', 'Blossom', 'Buttercup']
+  OPPONENTS = ['Baymax', 'Eve', 'WALL-E']
 
   private
 
