@@ -21,16 +21,16 @@
 # If both dealer and player stay, highest total wins
 # If equal totals, tie.
 
+module Handable
+  def add_to_hand(card)
+    hand << card
+  end
+end
+
 class Dealer
-  # Collaborator: Deck
-  # Has:
-    # deck
-    # hand
-  # Can:
-    # deal
-    # hit
-    # stay
-    # bust
+  include Handable
+
+  attr_reader :hand
 
   def initialize
     @deck = Deck.new
@@ -38,6 +38,7 @@ class Dealer
   end
 
   def deal
+    deck.draw
   end
 
   def hit
@@ -48,15 +49,16 @@ class Dealer
 
   def busted?
   end
+
+  private
+
+  attr_reader :deck
 end
 
 class Player
-  # Has:
-    # hand
-  # Can:
-    # hit
-    # stay
-    # bust
+  include Handable
+
+  attr_reader :hand
 
   def initialize
     @hand = []
@@ -92,6 +94,10 @@ class Deck
       cards << Card.new(suit, name, value)
     end
   end
+
+  def draw
+    cards.delete(cards.sample)
+  end
 end
 
 class Card
@@ -103,12 +109,7 @@ class Card
 end
 
 class Game
-  # Collaborator: Dealer, Player
-  # Has:
-    # Dealer
-    # Player
-  # Can:
-    # start game
+  DEAL_CARDS = 2
 
   def initialize
     @dealer = Dealer.new
@@ -122,5 +123,16 @@ class Game
     dealer_move unless player_busted
     compare_hands unless dealer_busted
     display_result
+  end
+
+  private
+
+  attr_reader :dealer, :player
+
+  def deal_cards
+    DEAL_CARDS.times do
+      player.add_to_hand(dealer.deal)
+      dealer.add_to_hand(dealer.deal)
+    end
   end
 end
