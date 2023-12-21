@@ -48,6 +48,18 @@ module Display
     puts messages[type]
   end
 
+  def self.start_game
+    puts "=> You will be playing against the computer."
+    puts "=> The goal is to get 3 marks in a row."
+    puts "=> First one to win 3 rounds is the winner of the match!"
+    puts "=> Press [enter] to continue."
+    gets
+  end
+
+  def self.markers(human, computer)
+    puts "You are '#{human}'. Your opponent is '#{computer}'."
+  end
+
   def self.round_result(winner, name)
     messages = {
       human: "=> You won!",
@@ -239,6 +251,7 @@ class TTTGame
     system 'clear'
     Display.welcome
     set_players
+    Display.start_game
     main_game
     Display.goodbye
   end
@@ -249,6 +262,8 @@ class TTTGame
 
   def clear_screen_and_display_board
     system 'clear'
+    Display.markers(human.marker, computer.marker)
+    puts
     board.draw
   end
 
@@ -285,9 +300,8 @@ class TTTGame
       play_match
       display_grand_winner
       break unless play_again?
+      reset_match
     end
-
-    reset_match
   end
 
   def play_match
@@ -394,6 +408,7 @@ class TTTGame
   end
 
   def reset_match
+    reset_round
     human.reset_score
     computer.reset_score
   end
