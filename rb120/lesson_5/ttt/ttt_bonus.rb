@@ -13,7 +13,8 @@ module Displayable
       name: "=> Hello, what's your name?",
       marker: "=> Choose a marker:",
       first_turn: "=> Would you like to begin first?",
-      square: "=> Choose a square:"
+      square: "=> Choose a square:",
+      play_again: "=> Would you like to play again? Enter [y]es or [n]o."
     }
 
     puts messages[key]
@@ -30,9 +31,9 @@ module Displayable
 
   def self.joinor(options)
     message = case options.size
-              when 1    then options
-              when 1..2 then options.join(' or ')
-              else           "#{options[0..-2].join(', ')} or #{options[-1]}"
+              when 1 then options
+              when 2 then options.join(' or ')
+              else        "#{options[0..-2].join(', ')} or #{options[-1]}"
               end
     puts message
   end
@@ -71,7 +72,7 @@ class Board
 
   def initialize
     @squares = {}
-    (1..9).each { |k| @squares[k] = Square.new }
+    reset
   end
 
   def draw
@@ -120,6 +121,10 @@ class Board
 
   def someone_won?
     !!winning_marker
+  end
+
+  def reset
+    (1..9).each { |k| squares[k] = Square.new }
   end
 
   private
@@ -207,17 +212,13 @@ class TTTGame
     system 'clear'
     Displayable.welcome
     set_players
-    clear_screen_and_display_board
-    player_move
-    clear_screen_and_display_board
-    Displayable.round_result(who_won, computer.name)
+    main_game
     Displayable.goodbye
   end
 
   private
 
-  attr_reader :human, :computer, :board
-  attr_accessor :current_marker
+  attr_reader :human, :computer, :board, :first_marker, :current_marker
 
   def clear_screen_and_display_board
     system 'clear'
@@ -248,11 +249,19 @@ class TTTGame
 
   def first_to_move
     choice = valid_choice(:first_turn, ['Yes', 'No'])
-    self.current_marker = if choice == 'Yes'
-                            human.marker
-                          else
-                            computer.marker
-                          end
+    marker = (choice == 'Yes' ? human.marker : computer.marker)
+    @first_marker = marker
+  end
+
+  def main_game
+    loop do
+      clear_screen_and_display_board
+      player_move
+      clear_screen_and_display_board
+      Displayable.round_result(round_winner, computer.name)
+      break unless play_again?
+      reset
+    end
   end
 
   def player_move
@@ -270,10 +279,10 @@ class TTTGame
   def current_player_moves
     if human_turn?
       human_moves
-      self.current_marker = computer.marker
+      @current_marker = computer.marker
     else
       computer_moves
-      self.current_marker = human.marker
+      @current_marker = human.marker
     end
   end
 
@@ -317,12 +326,35 @@ class TTTGame
     board.unmarked_squares.sample
   end
 
-  def who_won
+  def round_winner
     case board.winning_marker
     when human.marker    then :human
     when computer.marker then :computer
     else                      :tie
     end
+  end
+
+  def play_again?
+    Displayable.prompt(:play_again)
+
+    answer = nil
+    loop do
+      answer = gets.chomp.strip.downcase
+      break if answer =~ /^(y|n|yes|no)$/
+      Displayable.invalid(:yes_no)
+    end
+
+    answer.match?(/^(y|yes)$/)
+  end
+
+  def reset
+    @current_marker = alternate_first_player
+    board.reset
+  end
+
+  def alternate_first_player
+    marker = (first_marker == human.marker ? computer.marker : human.marker)
+    @first_marker = marker
   end
 end
 
