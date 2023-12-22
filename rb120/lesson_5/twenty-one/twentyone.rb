@@ -21,20 +21,26 @@
 # If both dealer and player stay, highest total wins
 # If equal totals, tie.
 
-module Handable
+class Participant
+  def initialize
+    @hand = Hand.new
+  end
+
   def add_to_hand(card)
     hand << card
   end
+
+  def show_hand(hide_one: false)
+    hand.display(hide_one)
+  end
 end
 
-class Dealer
-  include Handable
-
+class Dealer < Participant
   attr_reader :hand
 
   def initialize
+    super
     @deck = Deck.new
-    @hand = []
   end
 
   def deal
@@ -55,14 +61,8 @@ class Dealer
   attr_reader :deck
 end
 
-class Player
-  include Handable
-
+class Player < Participant
   attr_reader :hand
-
-  def initialize
-    @hand = []
-  end
 
   def hit
   end
@@ -74,12 +74,37 @@ class Player
   end
 end
 
+class Hand
+  attr_reader :cards
+
+  def initialize
+    @cards = []
+  end
+
+  def <<(card)
+    cards << card
+  end
+
+  def display(hide_one)
+    format(hide_one).transpose.each { |line| puts line.join('  ') }
+  end
+
+  private
+
+  def format(hide_one)
+    if hide_one
+      cards.map.with_index do |card, i|
+        i == 0 ? card.display(hidden: true) : card.display
+      end
+    else
+      cards.map(&:display)
+    end
+  end
+end
+
 class Deck
   SUITS = ["\u2664", "\u2665", "\u2667", "\u2666"]
-  NAMES = [
-    '2', '3', '4', '5', '6', '7', '8',
-    '9', '10', 'Jack', 'Queen', 'King', 'Ace'
-  ]
+  NAMES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
   VALUES = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]
 
   attr_reader :cards
@@ -101,10 +126,32 @@ class Deck
 end
 
 class Card
+  LAYOUT = {
+    edge: ["+-----+"],
+    shown_1d: ["|%{name}    |", "|  %{suit}  |", "|    %{name}|"],
+    shown_2d: ["|%{name}   |", "|  %{suit}  |", "|   %{name}|"],
+    hidden: ["|#####|", "|#####|", "|#####|"]
+  }
+
+  attr_reader :suit, :name, :value
+
   def initialize(suit, name, value)
     @suit = suit
     @name = name
     @value = value
+  end
+
+  def display(hidden: false)
+    layout = (name.size < 2 ? :shown_1d : :shown_2d)
+    shown = LAYOUT[layout].map do |line|
+      format(line, { name: name, suit: suit })
+    end
+
+    if hidden
+      LAYOUT[:edge] + LAYOUT[:hidden] + LAYOUT[:edge]
+    else
+      LAYOUT[:edge] + shown + LAYOUT[:edge]
+    end
   end
 end
 
@@ -116,13 +163,13 @@ class Game
     @player = Player.new
   end
 
-  def play
+  def start
     deal_cards
     show_initial_cards
-    player_move
-    dealer_move unless player_busted
-    compare_hands unless dealer_busted
-    display_result
+    # player_move
+    # dealer_move unless player_busted
+    # compare_hands unless dealer_busted
+    # display_result
   end
 
   private
@@ -135,4 +182,11 @@ class Game
       dealer.add_to_hand(dealer.deal)
     end
   end
+
+  def show_initial_cards
+    dealer.show_hand(hide_one: true)
+    player.show_hand
+  end
 end
+
+Game.new.start
