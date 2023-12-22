@@ -21,7 +21,38 @@
 # If both dealer and player stay, highest total wins
 # If equal totals, tie.
 
+module Display
+  def self.choices
+    choices = Participant::CHOICES.map do |text|
+      "[#{text[0].capitalize}]#{text[1..-1]}"
+    end
+
+    puts "\n==> #{choices.join(' or ')}?"
+  end
+
+  def self.invalid(key)
+    messages = {
+      choice: "==> Sorry, that's not a valid choice."
+    }
+
+    puts messages[key]
+  end
+
+  def self.decision(player, key)
+    name = (player.instance_of?(Dealer) ? "Dealer" : "You")
+    decisions = { h: 'hit', s: 'stay' }
+    puts "==> #{name} chose to #{decisions[key]}!"
+  end
+
+  def self.continue
+    puts "==> Press [enter] to continue."
+    gets
+  end
+end
+
 class Participant
+  CHOICES = ['hit', 'stay']
+
   def initialize
     @hand = Hand.new
   end
@@ -30,14 +61,21 @@ class Participant
     hand << card
   end
 
-  def show_hand(hide_one: false)
-    hand.display(hide_one)
+  def show_hand
+    hand.display
   end
 
-  def show_total(hide: false)
+  def show_total
     name = (instance_of?(Dealer) ? "Dealer's" : "Your")
-    total = (hide ? "?" : hand_total)
-    puts "#{name} hand total: #{total}"
+    puts "#{name} hand total: #{hand_total}"
+  end
+
+  def hide_hand
+    hand.display(hide_one: true)
+  end
+
+  def hide_total
+    puts "#{self.class}'s hand total: ?"
   end
 
   def busted?
@@ -73,12 +111,26 @@ class Dealer < Participant
 end
 
 class Player < Participant
-  attr_reader :hand
+  attr_reader :hand, :choice
 
-  def hit
+  def choose_move
+    self.choice = valid_choice
   end
 
-  def stay
+  private
+
+  attr_writer :choice
+
+  def valid_choice
+    choice = nil
+    loop do
+      Display.choices
+      choice = gets.chomp.strip.downcase
+      break if choice =~ /^(h|hit|s|stay)$/
+      Display.invalid(:choice)
+    end
+
+    choice[0].to_sym
   end
 end
 
@@ -98,7 +150,7 @@ class Hand
     correct_for_aces
   end
 
-  def display(hide_one)
+  def display(hide_one: false)
     format(hide_one).transpose.each { |line| puts line.join('  ') }
   end
 
@@ -192,8 +244,8 @@ class Game
 
   def start
     deal_cards
-    show_initial_cards
-    # player_move
+    show_cards(hide_dealer: true)
+    player_turn
     # dealer_move unless player_busted
     # compare_hands unless dealer_busted
     # display_result
@@ -210,11 +262,38 @@ class Game
     end
   end
 
-  def show_initial_cards
-    dealer.show_hand(hide_one: true)
-    dealer.show_total(hide: true)
+  def show_cards(hide_dealer: false)
+    system 'clear'
+
+    if hide_dealer
+      dealer.hide_hand
+      dealer.hide_total
+    else
+      dealer.show_hand
+      dealer.show_total
+    end
+
     player.show_hand
     player.show_total
+  end
+
+  def player_turn
+    loop do
+      player.choose_move
+      break if player.choice == :s
+      player_hit
+      show_cards(hide_dealer: true)
+    end
+
+    Display.decision(player, player.choice)
+    Display.continue
+    show_cards
+  end
+
+  def player_hit
+    Display.decision(player, player.choice)
+    Display.continue
+    player.add_to_hand(dealer.deal)
   end
 end
 
