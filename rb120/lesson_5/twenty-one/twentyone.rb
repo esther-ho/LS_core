@@ -137,17 +137,26 @@ end
 class Hand
   BUSTED = 21
 
-  attr_reader :cards, :total
+  attr_reader :cards
 
   def initialize
     @cards = []
-    @total = 0
   end
 
   def <<(card)
     cards << card
-    self.total += card.value
-    correct_for_aces
+  end
+
+  def total
+    sum = cards.map(&:value).sum
+    aces = cards.count { |card| card.name == 'A' }
+
+    while sum > BUSTED && aces > 0
+      sum -= 10
+      aces -= 1
+    end
+
+    sum
   end
 
   def display(hide_one: false)
@@ -160,8 +169,6 @@ class Hand
 
   private
 
-  attr_writer :total
-
   def format(hide_one)
     if hide_one
       cards.map.with_index do |card, i|
@@ -169,14 +176,6 @@ class Hand
       end
     else
       cards.map(&:display)
-    end
-  end
-
-  def correct_for_aces
-    aces = cards.count { |card| card.name == 'A' }
-    while busted? && aces > 0
-      self.total -= 10
-      aces -= 1
     end
   end
 end
