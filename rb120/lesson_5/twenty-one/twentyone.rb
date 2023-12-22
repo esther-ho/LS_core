@@ -58,11 +58,7 @@ class Participant
 
   def show_hand
     hand.display
-  end
-
-  def show_total
-    name = (instance_of?(Dealer) ? "Dealer's" : "Your")
-    puts "#{name} hand total: #{hand_total}"
+    show_total
   end
 
   def busted?
@@ -76,6 +72,11 @@ class Participant
   private
 
   attr_writer :choice
+
+  def show_total
+    name = (instance_of?(Dealer) ? "Dealer's" : "Your")
+    puts "#{name} hand total: #{hand_total}"
+  end
 end
 
 class Dealer < Participant
@@ -92,10 +93,7 @@ class Dealer < Participant
 
   def hide_hand
     hand.display(hide_one: true)
-  end
-
-  def hide_total
-    puts "#{self.class}'s hand total: ?"
+    hide_total
   end
 
   def choose_move
@@ -105,6 +103,10 @@ class Dealer < Participant
   private
 
   attr_reader :deck
+
+  def hide_total
+    puts "#{self.class}'s hand total: ?"
+  end
 end
 
 class Player < Participant
@@ -262,17 +264,8 @@ class Game
 
   def show_cards(hide_dealer: false)
     system 'clear'
-
-    if hide_dealer
-      dealer.hide_hand
-      dealer.hide_total
-    else
-      dealer.show_hand
-      dealer.show_total
-    end
-
+    hide_dealer ? dealer.hide_hand : dealer.show_hand
     player.show_hand
-    player.show_total
   end
 
   def player_turn
