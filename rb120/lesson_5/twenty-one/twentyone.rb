@@ -149,7 +149,7 @@ class Hand
 
   def total
     sum = cards.map(&:value).sum
-    aces = cards.count { |card| card.name == 'A' }
+    aces = cards.count { |card| card.rank == 'A' }
 
     while sum > BUSTED && aces > 0
       sum -= 10
@@ -182,8 +182,11 @@ end
 
 class Deck
   SUITS = ["\u2664", "\u2665", "\u2667", "\u2666"]
-  NAMES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-  VALUES = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]
+  RANK_VALUES = {
+    '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6,
+    '7' => 7, '8' => 8, '9' => 9, '10' => 10, 'J' => 10,
+    'Q' => 10, 'K' => 10, 'A' => 11
+  }
 
   attr_reader :cards
 
@@ -193,8 +196,8 @@ class Deck
   end
 
   def reset
-    SUITS.product(NAMES.zip(VALUES)).each do |suit, (name, value)|
-      cards << Card.new(suit, name, value)
+    SUITS.product(RANK_VALUES.to_a).each do |suit, (rank, value)|
+      cards << Card.new(suit, rank, value)
     end
   end
 
@@ -206,23 +209,23 @@ end
 class Card
   LAYOUT = {
     edge: ["+-----+"],
-    shown_1d: ["|%{name}    |", "|  %{suit}  |", "|    %{name}|"],
-    shown_2d: ["|%{name}   |", "|  %{suit}  |", "|   %{name}|"],
+    shown_1d: ["|%{rank}    |", "|  %{suit}  |", "|    %{rank}|"],
+    shown_2d: ["|%{rank}   |", "|  %{suit}  |", "|   %{rank}|"],
     hidden: ["|#####|", "|#####|", "|#####|"]
   }
 
-  attr_reader :suit, :name, :value
+  attr_reader :suit, :rank, :value
 
-  def initialize(suit, name, value)
+  def initialize(suit, rank, value)
     @suit = suit
-    @name = name
+    @rank = rank
     @value = value
   end
 
   def display(hidden: false)
-    layout = (name.size < 2 ? :shown_1d : :shown_2d)
+    layout = (rank.size < 2 ? :shown_1d : :shown_2d)
     shown = LAYOUT[layout].map do |line|
-      format(line, { name: name, suit: suit })
+      format(line, { rank: rank, suit: suit })
     end
 
     if hidden
