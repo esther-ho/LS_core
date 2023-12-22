@@ -33,6 +33,20 @@ class Participant
   def show_hand(hide_one: false)
     hand.display(hide_one)
   end
+
+  def show_total(hide: false)
+    name = (instance_of?(Dealer) ? "Dealer's" : "Your")
+    total = (hide ? "?" : hand_total)
+    puts "#{name} hand total: #{total}"
+  end
+
+  def busted?
+    hand.busted?
+  end
+
+  def hand_total
+    hand.total
+  end
 end
 
 class Dealer < Participant
@@ -53,9 +67,6 @@ class Dealer < Participant
   def stay
   end
 
-  def busted?
-  end
-
   private
 
   attr_reader :deck
@@ -69,27 +80,35 @@ class Player < Participant
 
   def stay
   end
-
-  def busted?
-  end
 end
 
 class Hand
-  attr_reader :cards
+  BUSTED = 21
+
+  attr_reader :cards, :total
 
   def initialize
     @cards = []
+    @total = 0
   end
 
   def <<(card)
     cards << card
+    self.total += card.value
+    correct_for_aces
   end
 
   def display(hide_one)
     format(hide_one).transpose.each { |line| puts line.join('  ') }
   end
 
+  def busted?
+    total > BUSTED
+  end
+
   private
+
+  attr_writer :total
 
   def format(hide_one)
     if hide_one
@@ -98,6 +117,14 @@ class Hand
       end
     else
       cards.map(&:display)
+    end
+  end
+
+  def correct_for_aces
+    aces = cards.count { |card| card.name == 'A' }
+    while busted? && aces > 0
+      self.total -= 10
+      aces -= 1
     end
   end
 end
@@ -185,7 +212,9 @@ class Game
 
   def show_initial_cards
     dealer.show_hand(hide_one: true)
+    dealer.show_total(hide: true)
     player.show_hand
+    player.show_total
   end
 end
 
