@@ -70,14 +70,6 @@ class Participant
     puts "#{name} hand total: #{hand_total}"
   end
 
-  def hide_hand
-    hand.display(hide_one: true)
-  end
-
-  def hide_total
-    puts "#{self.class}'s hand total: ?"
-  end
-
   def busted?
     hand.busted?
   end
@@ -103,6 +95,14 @@ class Dealer < Participant
   end
 
   def stay
+  end
+
+  def hide_hand
+    hand.display(hide_one: true)
+  end
+
+  def hide_total
+    puts "#{self.class}'s hand total: ?"
   end
 
   private
