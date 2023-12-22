@@ -23,11 +23,7 @@
 
 module Display
   def self.choices
-    choices = Participant::CHOICES.map do |text|
-      "[#{text[0].capitalize}]#{text[1..-1]}"
-    end
-
-    puts "\n==> #{choices.join(' or ')}?"
+    puts "\n==> [H]it or [S]tay?"
   end
 
   def self.invalid(key)
@@ -38,10 +34,9 @@ module Display
     puts messages[key]
   end
 
-  def self.decision(player, key)
+  def self.decision(player, choice)
     name = (player.instance_of?(Dealer) ? "Dealer" : "You")
-    decisions = { h: 'hit', s: 'stay' }
-    puts "==> #{name} chose to #{decisions[key]}!"
+    puts "\n==> #{name} chose to #{choice}!"
   end
 
   def self.continue
@@ -51,7 +46,7 @@ module Display
 end
 
 class Participant
-  CHOICES = ['hit', 'stay']
+  attr_reader :hand, :choice
 
   def initialize
     @hand = Hand.new
@@ -77,10 +72,14 @@ class Participant
   def hand_total
     hand.total
   end
+
+  private
+
+  attr_writer :choice
 end
 
 class Dealer < Participant
-  attr_reader :hand
+  DEALER_MIN = 17
 
   def initialize
     super
@@ -91,18 +90,16 @@ class Dealer < Participant
     deck.draw
   end
 
-  def hit
-  end
-
-  def stay
-  end
-
   def hide_hand
     hand.display(hide_one: true)
   end
 
   def hide_total
     puts "#{self.class}'s hand total: ?"
+  end
+
+  def choose_move
+    self.choice = (hand_total < DEALER_MIN ? :hit : :stay)
   end
 
   private
@@ -119,8 +116,6 @@ class Player < Participant
 
   private
 
-  attr_writer :choice
-
   def valid_choice
     choice = nil
     loop do
@@ -130,7 +125,7 @@ class Player < Participant
       Display.invalid(:choice)
     end
 
-    choice[0].to_sym
+    choice[0] == 'h' ? :hit : :stay
   end
 end
 
@@ -248,6 +243,7 @@ class Game
     deal_cards
     show_cards(hide_dealer: true)
     player_turn
+    dealer_turn
     # dealer_move unless player_busted
     # compare_hands unless dealer_busted
     # display_result
@@ -282,7 +278,7 @@ class Game
   def player_turn
     loop do
       player.choose_move
-      break if player.choice == :s
+      break if player.choice == :stay
       player_hit
       show_cards(hide_dealer: true)
     end
@@ -296,6 +292,25 @@ class Game
     Display.decision(player, player.choice)
     Display.continue
     player.add_to_hand(dealer.deal)
+  end
+
+  def dealer_turn
+    loop do
+      dealer.choose_move
+      break if dealer.choice == :stay
+      dealer_hit
+      show_cards
+    end
+
+    Display.decision(dealer, dealer.choice)
+    Display.continue
+    show_cards
+  end
+
+  def dealer_hit
+    Display.decision(dealer, dealer.choice)
+    Display.continue
+    dealer.add_to_hand(dealer.deal)
   end
 end
 
