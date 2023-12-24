@@ -21,6 +21,8 @@
 # If both dealer and player stay, highest total wins
 # If equal totals, tie.
 
+require 'pry'
+
 module Display
   def self.choices
     puts "\n==> [H]it or [S]tay?"
@@ -42,6 +44,21 @@ module Display
   def self.continue
     puts "==> Press [enter] to continue."
     gets
+  end
+
+  def self.busted(player)
+    name = (player.instance_of?(Dealer) ? "Dealer" : "You")
+    puts "\n==> #{name} busted!"
+  end
+
+  def self.round_winner(key)
+    message = {
+      player: "==> You win!",
+      dealer: "==> Dealer wins!",
+      tie: "==> It's a tie!"
+    }
+
+    puts message[key]
   end
 end
 
@@ -65,7 +82,7 @@ class Participant
     hand.busted?
   end
 
-  def hand_total
+  def total
     hand.total
   end
 
@@ -75,7 +92,7 @@ class Participant
 
   def show_total
     name = (instance_of?(Dealer) ? "Dealer's" : "Your")
-    puts "#{name} hand total: #{hand_total}"
+    puts "#{name} hand total: #{total}"
   end
 end
 
@@ -97,7 +114,7 @@ class Dealer < Participant
   end
 
   def choose_move
-    self.choice = (hand_total < DEALER_MIN ? :hit : :stay)
+    self.choice = (total < DEALER_MIN ? :hit : :stay)
   end
 
   private
@@ -245,10 +262,8 @@ class Game
   def start
     deal_cards
     player_move
-    dealer_move
-    # dealer_move unless player_busted
-    # compare_hands unless dealer_busted
-    # display_result
+    dealer_move unless player.busted?
+    display_round_winner
   end
 
   private
@@ -287,8 +302,10 @@ class Game
       current_player.choose_move
       break if current_player.choice == :stay
       current_player_hit
+      break if current_player.busted?
     end
 
+    return if current_player.busted?
     Display.decision(current_player, current_player.choice)
     Display.continue
   end
@@ -304,6 +321,29 @@ class Game
     end
 
     show_cards
+  end
+
+  def someone_busted?
+    player.busted? || dealer.busted?
+  end
+
+  def display_busted
+    Display.busted(current_player)
+  end
+
+  def compare_hands
+    if player.busted? || dealer.total > player.total
+      :dealer
+    elsif dealer.busted? || player.total > dealer.total
+      :player
+    else
+      :tie
+    end
+  end
+
+  def display_round_winner
+    display_busted if someone_busted?
+    Display.round_winner(compare_hands)
   end
 end
 
