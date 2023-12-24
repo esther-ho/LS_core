@@ -239,13 +239,13 @@ class Game
   def initialize
     @dealer = Dealer.new
     @player = Player.new
+    @current_player = player
   end
 
   def start
     deal_cards
-    show_cards(hide_dealer: true)
-    player_turn
-    dealer_turn
+    player_move
+    dealer_move
     # dealer_move unless player_busted
     # compare_hands unless dealer_busted
     # display_result
@@ -253,7 +253,7 @@ class Game
 
   private
 
-  attr_reader :dealer, :player
+  attr_reader :dealer, :player, :current_player
 
   def deal_cards
     DEAL_CARDS.times do
@@ -262,48 +262,48 @@ class Game
     end
   end
 
-  def show_cards(hide_dealer: false)
+  def show_cards
     system 'clear'
-    hide_dealer ? dealer.hide_hand : dealer.show_hand
+    player_turn? ? dealer.hide_hand : dealer.show_hand
     player.show_hand
   end
 
-  def player_turn
-    loop do
-      player.choose_move
-      break if player.choice == :stay
-      player_hit
-      show_cards(hide_dealer: true)
-    end
-
-    Display.decision(player, player.choice)
-    Display.continue
-    show_cards
+  def player_turn?
+    current_player == player
   end
 
-  def player_hit
-    Display.decision(player, player.choice)
-    Display.continue
-    player.add_to_hand(dealer.deal)
+  def player_move
+    current_player_move
   end
 
-  def dealer_turn
+  def dealer_move
+    @current_player = dealer
+    current_player_move
+  end
+
+  def current_player_move
     loop do
-      dealer.choose_move
-      break if dealer.choice == :stay
-      dealer_hit
       show_cards
+      current_player.choose_move
+      break if current_player.choice == :stay
+      current_player_hit
     end
 
-    Display.decision(dealer, dealer.choice)
+    Display.decision(current_player, current_player.choice)
     Display.continue
-    show_cards
   end
 
-  def dealer_hit
-    Display.decision(dealer, dealer.choice)
+  def current_player_hit
+    Display.decision(current_player, current_player.choice)
     Display.continue
-    dealer.add_to_hand(dealer.deal)
+
+    if player_turn?
+      player.add_to_hand(dealer.deal)
+    else
+      dealer.add_to_hand(dealer.deal)
+    end
+
+    show_cards
   end
 end
 
