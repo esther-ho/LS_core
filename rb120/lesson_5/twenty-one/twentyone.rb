@@ -46,13 +46,19 @@ module Display
 
     puts message[key]
   end
+
+  def self.scoreboard(player_score, dealer_score)
+    puts "\n=> Your score: #{player_score}"
+    puts "=> Dealer's score: #{dealer_score}"
+  end
 end
 
 class Participant
-  attr_reader :hand, :choice
+  attr_reader :hand, :choice, :score
 
   def initialize
     @hand = Hand.new
+    @score = 0
   end
 
   def add_to_hand(card)
@@ -72,9 +78,17 @@ class Participant
     hand.total
   end
 
+  def >(other_hand)
+    total > other_hand.total
+  end
+
+  def win
+    self.score += 1
+  end
+
   private
 
-  attr_writer :choice
+  attr_writer :choice, :score
 
   def show_total
     name = (instance_of?(Dealer) ? "Dealer's" : "Your")
@@ -251,6 +265,7 @@ class Game
     player_move
     dealer_move unless player.busted?
     display_round_winner
+    display_score
   end
 
   private
@@ -318,19 +333,43 @@ class Game
     Display.busted(current_player)
   end
 
-  def compare_hands
-    if player.busted? || dealer.total > player.total
+  def busted_lose
+    if player_turn?
+      dealer.win
       :dealer
-    elsif dealer.busted? || player.total > dealer.total
+    else
+      player.win
+      :player
+    end
+  end
+
+  def compare_hands
+    if dealer > player
+      dealer.win
+      :dealer
+    elsif player > dealer
+      player.win
       :player
     else
       :tie
     end
   end
 
+  def round_winner
+    if someone_busted?
+      busted_lose
+    else
+      compare_hands
+    end
+  end
+
   def display_round_winner
     display_busted if someone_busted?
-    Display.round_winner(compare_hands)
+    Display.round_winner(round_winner)
+  end
+
+  def display_score
+    Display.scoreboard(player.score, dealer.score)
   end
 end
 
