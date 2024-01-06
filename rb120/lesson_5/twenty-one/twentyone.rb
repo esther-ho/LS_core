@@ -1,36 +1,22 @@
-# Twenty-One is a card game consisting of a dealer and a player, where the participants try to get as close to 21 as possible without going over.
-
-# Here is an overview of the game:
-# Both participants are initially dealt 2 cards from a 52-card deck.
-# Player sees 2 cards but sees only one of dealer's cards
-# The player takes the first turn, and can "hit" or "stay".
-# If the player busts, he loses. If he stays, it's the dealer's turn.
-# The dealer must hit until his cards add up to at least 17.
-# If he busts, the player wins. If both player and dealer stays, then the highest total wins.
-# If both totals are equal, then it's a tie, and nobody wins.
-
-# Consist of dealer and player
-# Use 52 card deck
-# Participants aim score close to 21 without going over
-# First, participants are dealt 2 cards from deck
-# Player goes first: hit or stay
-# If player busts, player loses
-# If player stays, dealers turn
-# Dealer hit until cards total at least 17
-# If dealer busts, player wins
-# If both dealer and player stay, highest total wins
-# If equal totals, tie.
-
 require 'pry'
 
 module Display
+  def self.start_game
+    system 'clear'
+    puts "=> Welcome to Twenty-One!"
+    puts "\n=> You will be playing against the dealer."
+    puts "=> The goal is to get as close to 21 as possible, without going over."
+    puts "=> First one to win 3 rounds is the winner of the match!"
+    continue
+  end
+
   def self.choices
-    puts "\n==> [H]it or [S]tay?"
+    puts "\n=> [H]it or [S]tay?"
   end
 
   def self.invalid(key)
     messages = {
-      choice: "==> Sorry, that's not a valid choice."
+      choice: "=> Sorry, that's not a valid choice."
     }
 
     puts messages[key]
@@ -38,24 +24,24 @@ module Display
 
   def self.decision(player, choice)
     name = (player.instance_of?(Dealer) ? "Dealer" : "You")
-    puts "\n==> #{name} chose to #{choice}!"
+    puts "\n=> #{name} chose to #{choice}!"
   end
 
   def self.continue
-    puts "==> Press [enter] to continue."
+    puts "\n=> Press [enter] to continue."
     gets
   end
 
   def self.busted(player)
     name = (player.instance_of?(Dealer) ? "Dealer" : "You")
-    puts "\n==> #{name} busted!"
+    puts "\n=> #{name} busted!"
   end
 
   def self.round_winner(key)
     message = {
-      player: "==> You win!",
-      dealer: "==> Dealer wins!",
-      tie: "==> It's a tie!"
+      player: "=> You win!",
+      dealer: "=> Dealer wins!",
+      tie: "=> It's a tie!"
     }
 
     puts message[key]
@@ -260,6 +246,7 @@ class Game
   end
 
   def start
+    Display.start_game
     deal_cards
     player_move
     dealer_move unless player.busted?
