@@ -10,13 +10,19 @@ module Display
     continue
   end
 
-  def self.choices
-    puts "\n=> [H]it or [S]tay?"
+  def self.prompt(key)
+    messages = {
+      choices: "\n=> [H]it or [S]tay?",
+      play_again: "\n=> Would you like to play again? Enter [y]es or [n]o."
+    }
+
+    puts messages[key]
   end
 
   def self.invalid(key)
     messages = {
-      choice: "=> Sorry, that's not a valid choice."
+      choice: "=> Sorry, that's not a valid choice.",
+      yes_no: "=> Sorry, please enter [y]es or [n]o."
     }
 
     puts messages[key]
@@ -59,6 +65,10 @@ module Display
     }
 
     puts messages[key]
+  end
+
+  def self.goodbye
+    puts "=> Thank you for playing Twenty-One! Goodbye!"
   end
 end
 
@@ -118,7 +128,7 @@ class Dealer < Participant
 
   def initialize
     super
-    @deck = Deck.new
+    reset_deck
   end
 
   def deal
@@ -136,7 +146,12 @@ class Dealer < Participant
 
   def new_hand
     super
-    @deck = Deck.new
+    reset_deck
+  end
+
+  def reset
+    super
+    reset_deck
   end
 
   private
@@ -145,6 +160,10 @@ class Dealer < Participant
 
   def hide_total
     puts "#{self.class}'s hand total: ?"
+  end
+
+  def reset_deck
+    @deck = Deck.new
   end
 end
 
@@ -160,7 +179,7 @@ class Player < Participant
   def valid_choice
     choice = nil
     loop do
-      Display.choices
+      Display.prompt(:choices)
       choice = gets.chomp.strip.downcase
       break if choice =~ /^(h|hit|s|stay)$/
       Display.invalid(:choice)
@@ -284,8 +303,15 @@ class Game
 
   def start
     Display.start_game
-    play_round
-    display_grand_winner
+
+    loop do
+      play_match
+      display_grand_winner
+      break unless play_again?
+      reset_match
+    end
+
+    Display.goodbye
   end
 
   private
@@ -305,7 +331,7 @@ class Game
     player.show_hand
   end
 
-  def play_round
+  def play_match
     loop do
       deal_cards
       player_move
@@ -314,7 +340,7 @@ class Game
       display_score
       break if game_over?
       Display.continue
-      reset_round
+      reset_hands
     end
   end
 
@@ -409,8 +435,12 @@ class Game
     [player.score, dealer.score].any?(ROUNDS_TO_WIN)
   end
 
-  def reset_round
+  def reset_current_player
     @current_player = player
+  end
+
+  def reset_hands
+    reset_current_player
     player.new_hand
     dealer.new_hand
   end
@@ -419,6 +449,25 @@ class Game
     winner = (player.score == ROUNDS_TO_WIN ? :player : :dealer)
 
     Display.grand_winner(winner)
+  end
+
+  def play_again?
+    Display.prompt(:play_again)
+
+    answer = nil
+    loop do
+      answer = gets.chomp.strip.downcase
+      break if answer =~ /^(y|n|yes|no)$/
+      Display.invalid(:yes_no)
+    end
+
+    answer.match?(/^(y|yes)$/)
+  end
+
+  def reset_match
+    reset_current_player
+    player.reset
+    dealer.reset
   end
 end
 
