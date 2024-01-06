@@ -51,14 +51,22 @@ module Display
     puts "\n=> Your score: #{player_score}"
     puts "=> Dealer's score: #{dealer_score}"
   end
+
+  def self.grand_winner(key)
+    messages = {
+      player: "=> You're the winner of the match!",
+      dealer: "=> The dealer is the winner of the match!"
+    }
+
+    puts messages[key]
+  end
 end
 
 class Participant
   attr_reader :hand, :choice, :score
 
   def initialize
-    @hand = Hand.new
-    @score = 0
+    reset
   end
 
   def add_to_hand(card)
@@ -84,6 +92,15 @@ class Participant
 
   def win
     self.score += 1
+  end
+
+  def new_hand
+    @hand = Hand.new
+  end
+
+  def reset
+    new_hand
+    self.score = 0
   end
 
   private
@@ -115,6 +132,11 @@ class Dealer < Participant
 
   def choose_move
     self.choice = (total < DEALER_MIN ? :hit : :stay)
+  end
+
+  def new_hand
+    super
+    @deck = Deck.new
   end
 
   private
@@ -252,6 +274,7 @@ end
 
 class Game
   DEAL_CARDS = 2
+  ROUNDS_TO_WIN = 3
 
   def initialize
     @dealer = Dealer.new
@@ -261,11 +284,8 @@ class Game
 
   def start
     Display.start_game
-    deal_cards
-    player_move
-    dealer_move unless player.busted?
-    display_round_winner
-    display_score
+    play_round
+    display_grand_winner
   end
 
   private
@@ -283,6 +303,19 @@ class Game
     system 'clear'
     player_turn? ? dealer.hide_hand : dealer.show_hand
     player.show_hand
+  end
+
+  def play_round
+    loop do
+      deal_cards
+      player_move
+      dealer_move unless player.busted?
+      display_round_winner
+      display_score
+      break if game_over?
+      Display.continue
+      reset_round
+    end
   end
 
   def player_turn?
@@ -370,6 +403,22 @@ class Game
 
   def display_score
     Display.scoreboard(player.score, dealer.score)
+  end
+
+  def game_over?
+    [player.score, dealer.score].any?(ROUNDS_TO_WIN)
+  end
+
+  def reset_round
+    @current_player = player
+    player.new_hand
+    dealer.new_hand
+  end
+
+  def display_grand_winner
+    winner = (player.score == ROUNDS_TO_WIN ? :player : :dealer)
+
+    Display.grand_winner(winner)
   end
 end
 
