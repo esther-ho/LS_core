@@ -1,5 +1,3 @@
-require 'pry'
-
 module Display
   def self.start_game
     system 'clear'
