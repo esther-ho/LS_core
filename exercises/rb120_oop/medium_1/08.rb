@@ -1,7 +1,8 @@
 class Card
   include Comparable
 
-  VALUES = { 'Jack' => 11, 'Queen' => 12, 'King' => 13, 'Ace' => 14 }.freeze
+  RANK_VALUES = { 'Jack' => 11, 'Queen' => 12, 'King' => 13, 'Ace' => 14 }.freeze
+  SUIT_VALUES = { 'Diamonds' => 0, 'Clubs' => 1, 'Hearts' => 2, 'Spades' => 3 }.freeze
 
   attr_reader :rank, :suit
 
@@ -13,11 +14,19 @@ class Card
   protected
 
   def <=>(other_card)
-    value <=> other_card.value
+    if rank == other_card.rank
+      suit_value <=> other_card.suit_value
+    else
+      rank_value <=> other_card.rank_value
+    end
   end
 
-  def value
-    VALUES.fetch(rank, rank)
+  def rank_value
+    RANK_VALUES.fetch(rank, rank)
+  end
+
+  def suit_value
+    SUIT_VALUES.fetch(suit)
   end
 
   def to_s
@@ -51,5 +60,5 @@ puts cards.max.rank == 'Jack'
 cards = [Card.new(8, 'Diamonds'),
          Card.new(8, 'Clubs'),
          Card.new(8, 'Spades')]
-puts cards.min.rank == 8
-puts cards.max.rank == 8
+puts cards.min.suit == 'Diamonds'
+puts cards.max.suit == 'Spades'
