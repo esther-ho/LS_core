@@ -34,8 +34,7 @@ class PokerHand
   private
 
   def royal_flush?
-    return if @hand.map(&:suit).uniq.count > 1
-    @hand.map(&:value).sort == [10, 11, 12, 13, 14]
+    straight_flush? && @hand.min.rank == 10
   end
 
   def straight_flush?
@@ -43,15 +42,15 @@ class PokerHand
   end
 
   def four_of_a_kind?
-    @rank_count.values.one?(4)
+    n_of_a_kind?(4)
   end
 
   def full_house?
-    @rank_count.values.sort == [2, 3]
+    n_of_a_kind?(2) && n_of_a_kind?(3)
   end
 
   def flush?
-    hand_suit.uniq.size == 1
+    @hand.map(&:suit).uniq.size == 1
   end
 
   def straight?
@@ -60,7 +59,7 @@ class PokerHand
   end
 
   def three_of_a_kind?
-    @rank_count.values.one?(3)
+    n_of_a_kind?(3)
   end
 
   def two_pair?
@@ -68,11 +67,11 @@ class PokerHand
   end
 
   def pair?
-    @rank_count.values.one?(2)
+    n_of_a_kind?(2)
   end
 
-  def hand_suit
-    @hand.map(&:suit)
+  def n_of_a_kind?(n)
+    @rank_count.values.one?(n)
   end
 end
 
@@ -230,11 +229,11 @@ hand = PokerHand.new([
 ])
 puts hand.evaluate == 'Pair'
 
-# hand = PokerHand.new([
-#   Card.new(2,      'Hearts'),
-#   Card.new('King', 'Clubs'),
-#   Card.new(5,      'Diamonds'),
-#   Card.new(9,      'Spades'),
-#   Card.new(3,      'Diamonds')
-# ])
-# puts hand.evaluate == 'High card'
+hand = PokerHand.new([
+  Card.new(2,      'Hearts'),
+  Card.new('King', 'Clubs'),
+  Card.new(5,      'Diamonds'),
+  Card.new(9,      'Spades'),
+  Card.new(3,      'Diamonds')
+])
+puts hand.evaluate == 'High card'
