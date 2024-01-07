@@ -9,11 +9,12 @@ class Minilang
     @program = program
   end
 
-  def eval
+  def eval(conversion = nil)
     @register = 0
     @stack = []
+    updated_program = (conversion ? format(program, conversion) : program)
 
-    @program.split.each do |token|
+    updated_program.split.each do |token|
       eval_token(token)
     rescue MinilangError => error
       puts error.message
@@ -22,6 +23,10 @@ class Minilang
   end
 
   private
+
+  def program
+    @program.clone
+  end
 
   def eval_token(token)
     if token =~ /^-*\d+$/
@@ -104,3 +109,13 @@ Minilang.new('-3 PUSH 5 SUB PRINT').eval
 
 Minilang.new('6 PUSH').eval
 # (nothing printed; no PRINT commands)
+
+CENTIGRADE_TO_FAHRENHEIT =
+  '5 PUSH %<degrees_c>d PUSH 9 MULT DIV PUSH 32 ADD PRINT'
+minilang = Minilang.new(CENTIGRADE_TO_FAHRENHEIT)
+minilang.eval(degrees_c: 100)
+# 212
+minilang.eval(degrees_c: 0)
+# 32
+minilang.eval(degrees_c: -40)
+# -40
