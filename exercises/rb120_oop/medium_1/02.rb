@@ -3,37 +3,30 @@ class FixedArray
     @array = [nil] * length
   end
 
+  # `#fetch` raises an IndexError if index is out of bounds
   def [](index)
-    if valid_index?(index)
-      array[index]
-    else
-      raise IndexError
-    end
+    array.fetch(index)
   end
 
-  def []=(index, object)
-    if valid_index?(index)
-      array[index] = object
-    else
-      raise IndexError
-    end
+  # invoking `#[]` will raise an IndexError if index is invalud
+  def []=(index, value)
+    self[index]
+    array[index] = value
   end
 
+  # Returning a copy of the array object prevents unwanted manipulation
   def to_a
-    array
+    array.clone
   end
 
+  # String conversion is done on the array copy
   def to_s
-    array.to_s
+    to_a.to_s
   end
 
   private
 
   attr_reader :array
-
-  def valid_index?(index)
-    index < array.size
-  end
 end
 
 
