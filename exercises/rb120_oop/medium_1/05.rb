@@ -1,64 +1,73 @@
-class Minilang
-  COMMANDS = %w(PUSH ADD SUB MULT DIV MOD POP PRINT)
+class MinilangError < StandardError; end
+class InvalidTokenError < MinilangError; end
+class EmptyStackError < MinilangError; end
 
-  def initialize(commands)
-    @commands = commands.split
-    @register = 0
-    @stack = []
+class Minilang
+  TOKENS = %w(PUSH ADD SUB MULT DIV MOD POP PRINT)
+
+  def initialize(program)
+    @program = program
   end
 
   def eval
-    @commands.each do |command|
-      raise StandardError, "Invalid token: #{command}" unless valid_token?(command)
+    @register = 0
+    @stack = []
 
-      if command =~ /^-*\d+$/
-        @register = command.to_i
-      else
-        send(command.downcase)
-      end
+    @program.split.each do |token|
+      eval_token(token)
+    rescue MinilangError => error
+      puts error.message
+      break
     end
   end
 
   private
 
-  def push()
+  def eval_token(token)
+    if token =~ /^-*\d+$/
+      @register = token.to_i
+    elsif TOKENS.include?(token)
+      check_stack unless ['PUSH', 'PRINT'].include?(token)
+      send(token.downcase)
+    else
+      raise MinilangError, "Invalid token: #{token}"
+    end
+  end
+
+  def push
     @stack.push(@register)
   end
 
   def add
-    @register += @stack.pop unless empty_stack
+    @register += @stack.pop
   end
 
   def sub
-    @register -= @stack.pop unless empty_stack
+    @register -= @stack.pop
   end
 
   def mult
-    @register *= @stack.pop unless empty_stack
+    @register *= @stack.pop
   end
 
   def div
-    @register /= @stack.pop unless empty_stack
+    @register /= @stack.pop
   end
 
   def mod
-    @register %= @stack.pop unless empty_stack
+    @register %= @stack.pop
   end
 
   def pop
-    @register = @stack.pop unless empty_stack
+    @register = @stack.pop
   end
 
   def print
     puts @register
   end
 
-  def empty_stack
-    raise StandardError, "Empty stack!" if @stack.empty?
-  end
-
-  def valid_token?(command)
-    command =~ /^-*\d+$/ || COMMANDS.include?(command)
+  def check_stack
+    raise EmptyStackError, "Empty stack!" if @stack.empty?
   end
 end
 
@@ -78,8 +87,8 @@ Minilang.new('5 PUSH 10 PRINT POP PRINT').eval
 # 10
 # 5
 
-# Minilang.new('5 PUSH POP POP PRINT').eval
-# # Empty stack!
+Minilang.new('5 PUSH POP POP PRINT').eval
+# Empty stack!
 
 Minilang.new('3 PUSH PUSH 7 DIV MULT PRINT ').eval
 # 6
@@ -87,8 +96,8 @@ Minilang.new('3 PUSH PUSH 7 DIV MULT PRINT ').eval
 Minilang.new('4 PUSH PUSH 7 MOD MULT PRINT ').eval
 # 12
 
-# Minilang.new('-3 PUSH 5 XSUB PRINT').eval
-# # Invalid token: XSUB
+Minilang.new('-3 PUSH 5 XSUB PRINT').eval
+# Invalid token: XSUB
 
 Minilang.new('-3 PUSH 5 SUB PRINT').eval
 # 8
