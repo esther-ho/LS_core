@@ -8,11 +8,20 @@ class Machine
     flip_switch(:off)
   end
 
+  # add method to display current state
+  def display_state
+    puts "Machine is #{switch}."
+  end
+
   private
 
-  attr_writer :switch
+  attr_accessor :switch
 
   def flip_switch(desired_state)
     self.switch = desired_state
   end
 end
+
+machine = Machine.new
+machine.start
+machine.display_state
