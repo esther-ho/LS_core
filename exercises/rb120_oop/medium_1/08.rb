@@ -1,6 +1,8 @@
 class Card
   include Comparable
 
+  VALUES = { 'Jack' => 11, 'Queen' => 12, 'King' => 13, 'Ace' => 14 }.freeze
+
   attr_reader :rank, :suit
 
   def initialize(rank, suit)
@@ -11,17 +13,11 @@ class Card
   protected
 
   def <=>(other_card)
-    num_rank <=> other_card.num_rank
+    value <=> other_card.value
   end
 
-  def num_rank
-    non_num_values = { jack: 11, queen: 12, king: 13, ace: 14}
-
-    if rank.is_a?(Integer)
-      rank
-    else
-      non_num_values[rank.downcase.to_sym]
-    end
+  def value
+    VALUES.fetch(rank, rank)
   end
 
   def to_s
