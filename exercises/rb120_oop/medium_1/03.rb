@@ -13,7 +13,5 @@ class Graduate < Student
 end
 
 class Undergraduate < Student
-  def initialize(name, year)
-    super
-  end
+  # the `#initialize` method can be removed since there are no differences compared to the `Student#initialize` method
 end
