@@ -5,19 +5,20 @@ Minitest::Reporters.use!
 require_relative 'car'
 
 class CarTest < Minitest::Test
+  def setup
+    @car = Car.new
+  end
+
   def test_car_exists
-    car = Car.new
-    assert(car)
+    assert(@car)
   end
 
   def test_wheels
-    car = Car.new
-    assert_equal(4, car.wheels)
+    assert_equal(4, @car.wheels)
   end
 
   def test_name_is_nil
-    car = Car.new
-    assert_nil(car.name)
+    assert_nil(@car.name)
   end
 
   def test_raise_initialize_with_arg
@@ -27,14 +28,12 @@ class CarTest < Minitest::Test
   end
 
   def test_instance_of_car
-    car = Car.new
-    assert_instance_of(Car, car)
+    assert_instance_of(Car, @car)
   end
 
   def test_includes_car
-    car = Car.new
     arr = [1, 2, 3]
-    arr << car
-    assert_includes(arr, car)
+    arr << @car
+    assert_includes(arr, @car)
   end
 end
