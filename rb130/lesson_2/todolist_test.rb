@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use!
@@ -163,5 +166,34 @@ class TodoListTest < Minitest::Test
     new_list = @list.select(&:done?)
     assert_instance_of(TodoList, new_list) && refute_same(@list, new_list)
     assert(new_list.done?)
+  end
+
+  def test_find_by_title
+    refute(@list.find_by_title("Cook lunch"))
+    assert_same(@todo1, @list.find_by_title("Buy milk"))
+  end
+
+  def test_all_done
+    @list.all_done.each { |todo| assert(todo.done?) }
+  end
+
+  def test_all_not_done
+    @list.all_not_done.each { |todo| refute(todo.done?) }
+  end
+
+  def test_mark_done
+    refute(@list.find_by_title("Cook lunch"))
+    @list.mark_done("Buy milk")
+    assert(@list.find_by_title("Buy milk").done?)
+  end
+
+  def test_mark_all_done
+    @list.mark_all_done
+    @list.each { |todo| assert(todo.done?) }
+  end
+
+  def test_mark_all_undone
+    @list.mark_all_undone
+    @list.each { |todo| refute(todo.done?) }
   end
 end
