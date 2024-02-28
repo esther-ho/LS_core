@@ -35,5 +35,22 @@ Unllvz Fybavzfxv
 Tregehqr Oynapu
 LIST
 
-p names = names.split("\n")
+names = names.split("\n")
 puts decrypt(names)
+
+# Without reference and using ASCII
+
+def decrypt_name(names)
+  names.map do |name|
+    name.gsub(/[a-z]/i) { |char| decrypt_char(char) }
+  end
+end
+
+def decrypt_char(char)
+  case char
+  when 'A'..'M', 'a'..'m' then (char.ord + 13).chr   
+  else                         (char.ord - 13).chr
+  end
+end
+
+puts decrypt_name(names)
