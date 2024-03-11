@@ -4,7 +4,7 @@ puts my_proc
 puts my_proc.class
 my_proc.call
 my_proc.call('cat')
-# Procs have leniet arity.
+# Procs have lenient arity.
 # Executing the code on line 5 doesn't raise an error even though no arguments were passed to `my_proc`.
 # Instead, the `thing` variable in the proc references `nil`.
 
