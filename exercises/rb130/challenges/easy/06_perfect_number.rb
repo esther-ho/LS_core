@@ -37,16 +37,19 @@ Output: string
 class PerfectNumber
   def self.classify(number)
     raise StandardError, "Number must be positive." if number < 1
-    case sum_of_divisors(number) - number
-    when 0    then 'perfect'
-    when 1..  then 'abundant'
-    else           'deficient'
+    case sum_of_divisors(number) <=> number
+    when 0  then 'perfect'
+    when 1  then 'abundant'
+    when -1 then 'deficient'
     end
   end
 
-  def self.sum_of_divisors(number)
-    (1..number / 2).select do |divisor|
-      number % divisor == 0
-    end.sum
+  class << self
+    private
+    def sum_of_divisors(number)
+      (1..number / 2).select do |divisor|
+        number % divisor == 0
+      end.sum
+    end
   end
 end
