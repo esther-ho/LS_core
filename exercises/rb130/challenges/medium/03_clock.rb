@@ -45,7 +45,7 @@ class Clock
   MIN_PER_DAY = MIN_PER_HOUR * 24
 
   def self.at(hour, min = 0)
-    Clock.new(hour * MIN_PER_HOUR + min)
+    new(hour * MIN_PER_HOUR + min)
   end
 
   def initialize(total_min)
@@ -54,12 +54,11 @@ class Clock
   
   def +(min)
     new_total_min = (@total_min + min) % MIN_PER_DAY
-    Clock.new(new_total_min)
+    self.class.new(new_total_min)
   end
   
   def -(min)
-    new_total_min = (@total_min - min) % MIN_PER_DAY
-    Clock.new(new_total_min)
+    self + (-min)
   end
   
   def ==(other)
