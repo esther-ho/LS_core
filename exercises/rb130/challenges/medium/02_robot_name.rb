@@ -40,10 +40,6 @@ class Robot
     @name = nil
   end
 
-  def self.names
-    @@names
-  end
-
   private
 
   def generate_name
