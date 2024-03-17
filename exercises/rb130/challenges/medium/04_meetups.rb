@@ -43,47 +43,21 @@ Output: date object or nil
 require 'date'
 
 class Meetup
-  DAYS_OF_WEEK = %w(sunday monday tuesday wednesday thursday friday saturday)
-  ORDINALS = { 'first' => 1, 'second' => 2, 'third' => 3, 'fourth' => 4, 'fifth' => 5 }
-
-  attr_reader :days_in_month
+  ORDINALS = %w(first second third fourth fifth)
 
   def initialize(year, month)
-    @year = year
-    @month = month
-    build_days_in_month
+    @start_date = Date.civil(year, month)
+    @end_date = Date.civil(year, month, -1)
   end
 
   def day(day_of_week, ordinal)
-    dates = @days_in_month[day_of_week.downcase]
+    day_of_week = (day_of_week.downcase + '?').to_sym
+    possible_dates = (@start_date..@end_date).select(&day_of_week)
 
     case ordinal.downcase
-    when 'teenth' then teenth_date(dates)
-    when 'last'   then dates[-1]
-    else               dates[ORDINALS[ordinal.downcase] - 1]
+    when 'teenth' then possible_dates.find { |date| date.day.between?(13, 19) }
+    when 'last'   then possible_dates[-1]
+    else               possible_dates[ORDINALS.index(ordinal.downcase)]
     end
-  end
-
-  private
-
-  def build_days_in_month
-    @days_in_month = {}
-    1.upto(total_days) do |day|
-      date = Date.new(@year, @month, day)
-      cday = DAYS_OF_WEEK[date.wday]
-      if @days_in_month[cday]
-        @days_in_month[cday] << date
-      else
-        @days_in_month[cday] = [date]
-      end
-    end
-  end
-
-  def total_days
-    Date.new(@year, @month, -1).day
-  end
-
-  def teenth_date(dates)
-    dates.find { |date| date.day.between?(13, 19) }
   end
 end
