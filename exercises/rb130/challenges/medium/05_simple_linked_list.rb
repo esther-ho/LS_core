@@ -102,7 +102,7 @@ class SimpleLinkedList
   end
   
   def peek
-    list.last.datum if list.last
+    empty? ? nil : list.last.datum
   end
 
   def head
@@ -123,9 +123,7 @@ class SimpleLinkedList
   end
 
   def reverse
-    list.reverse.each_with_object(self.class.new) do |el, new_list|
-      new_list.push(el.datum)
-    end
+    self.class.from_a(to_a.reverse)
   end
 
   private
