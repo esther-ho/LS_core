@@ -1,13 +1,16 @@
 =begin
 --- P
 Input: string of integers
-Output: an array of subarrays where each subarray has the number of digits specified
+Output: an array of subarrays where,
+- each subarray has the number of digits specified
 Rules:
-- Subarrays are consecutive - e.g. digit appearing in first subarray may appear in next subarray
-- Raise an error if the specified length is longer than the length of the given string
+- Subarrays are consecutive
+  - e.g. digit appearing in first subarray may appear in next subarray
+- Raise error if specified length is longer than length of given string
 Class needs:
 - #initialize takes a string
-- #slices takes a length and returns an array of subarrays, and raises ArgumentError if given length > string length
+- #slices takes a length and returns an array of subarrays
+  - raises ArgumentError if given length > string length
 --- E
 '01234'.slices(3) => [[0, 1, 2], [1, 2, 3], [2, 3, 4]]
 --- D

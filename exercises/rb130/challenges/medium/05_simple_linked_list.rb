@@ -12,8 +12,8 @@ Class needs:
 - Element#next returns `Element` object contained in self
 - Element#tail? returns `true` if self#next is `nil`
 - SimpleLinkedList#size returns length of linked list
-- SimpleLinkedList#push takes one argument and ADDS `Element` object to linked list
-- SimpleLinkedList#pop removes last added element in linked list and returns the data
+- SimpleLinkedList#push takes one argument, ADDS `Element` object to linked list
+- SimpleLinkedList#pop removes last added element in linked list, returns data
 - SimpleLinkedList#empty? returns true if linked list is empty
 - SimpleLinkedList#peek returns DATUM of last added element in linked list
 - SimpleLinkedList#head returns last added element in linked list
@@ -45,11 +45,11 @@ Output: linked list object
   - Assign "next" to nil as default
 - SimpleLinkedList#size returns length of linked list
   - Check @list field
-- SimpleLinkedList#push takes one argument and ADDS `Element` object to linked list
+- SimpleLinkedList#push takes one argument, ADDS `Element` object to linked list
   - Instantiate `Element` object
   - Modify "next" field in new element to last element in list
   - Add new element to list
-- SimpleLinkedList#pop removes last added element in linked list and returns the data
+- SimpleLinkedList#pop removes last added element in linked list, returns data
   - Modify "next" field of second-last element to nil
   - Remove last element
   - Return datum of popped element
@@ -59,23 +59,28 @@ Output: linked list object
 - SimpleLinkedList::from_a takes one argument and converts it to a linked list
   - Argument is either nil or an array object
   - Instantiate `SimpleLinkedList` object
-  - Reverse array, iterate through array elements and invoke #push on each iteration, passing in each array element as an argument
+  - Reverse array
+  - iterate through array elements
+  - invoke #push on each iteration, passing in each element
 - SimpleLinkedList#to_a converts linked list to an array of data
-  - Iterate through the linked list, invoke #data on each element, and return new array in REVERSE
+  - Iterate through the linked list
+  - invoke #data on each element
+  - return new array in REVERSE
 - SimpleLinkedList#reverse reverses the order of the linked list
   - Instantiate new linked list object
   - self#next points to the previous element rather than the next element
   - Reverse array of elements
-  - Iterate through array and assign the "next" field of the current element to that of the next element
+  - Iterate through array
+  - assign the "next" field of the current element to that of the next element
   - Return new linked list
 =end
 
 class Element
   attr_reader :datum, :next
 
-  def initialize(datum, _next = nil)
+  def initialize(datum, next_element = nil)
     @datum = datum
-    @next = _next
+    @next = next_element
   end
 
   def tail?
@@ -92,7 +97,7 @@ class SimpleLinkedList
     return new unless array
     array.reverse.each_with_object(new) { |datum, list| list.push(datum) }
   end
-  
+
   def size
     list.size
   end
@@ -100,7 +105,7 @@ class SimpleLinkedList
   def empty?
     list.empty?
   end
-  
+
   def peek
     empty? ? nil : list.last.datum
   end

@@ -38,7 +38,8 @@ Output: multiple strings
 --- A
 - Print line with correct spacing based on the letter
   - If 'A', print only 'A' with no spaces
-  - Else, print two letter separated by odd length of spaces based on the sequence from 'A'
+  - Else, print two letters
+    - Letters separated by increasing odd length of spaces
     e.g 'B' -> 1 space, 'C' -> 3 spaces, 'D' -> 5 spaces etc
 - Add spaces to lines based on the length of widest length
   - Find difference between lengths of current line and widest line
@@ -55,15 +56,15 @@ class Diamond
 
   def self.multi_line(letter)
     widest = single_line(letter).length
-    
-    ('A'..letter).map do |letter|
-      current_line = single_line(letter)
+
+    ('A'..letter).map do |current_letter|
+      current_line = single_line(current_letter)
       diff = widest - current_line.size
       spaces = ' ' * (diff / 2)
-      spaces + current_line + spaces + "\n"
+      "#{spaces}#{current_line}#{spaces}\n"
     end
   end
-  
+
   def self.single_line(letter)
     case letter
     when 'A'
@@ -71,8 +72,8 @@ class Diamond
     when 'B'
       'B B'
     else
-      space_length = 1 + 2 * (letter.ord - 'B'.ord)
-      letter + ' ' * space_length + letter
+      space_length = 1 + (2 * (letter.ord - 'B'.ord))
+      letter + (' ' * space_length) + letter
     end
   end
 end

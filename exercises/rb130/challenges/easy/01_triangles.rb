@@ -41,8 +41,11 @@ class Triangle
   private
 
   def validate_triangle(sides)
-    raise ArgumentError, "Length of sides must be greater than 0" if any_nonpositive_side?(sides)
-    raise ArgumentError, "Sum of any 2 sides must be greater than the 3rd side" if invalid_side_sum?(sides)
+    if any_nonpositive_side?(sides)
+      raise ArgumentError, "Length of sides must be greater than 0"
+    elsif invalid_side_sum?(sides)
+      raise ArgumentError, "Sum of any 2 sides must be greater than 3rd side"
+    end
   end
 
   def any_nonpositive_side?(sides)

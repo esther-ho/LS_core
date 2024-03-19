@@ -5,7 +5,8 @@ Input: one or two integers
   - two represents the range of verses
 Output: a string, corresponding to the verses of the song
 Rules:
-- All verses have the same lines, with the number of bottles changed, except for the last verse
+- All verses have the same lines
+  - but the number of bottles changed, except for the last verse
 - If given multiple integers, the integers do not have to be consecutive
 Class needs:
 - ::verse takes one integer and prints the specific lyrics
@@ -29,25 +30,26 @@ Output: string
 =end
 
 class Verse
+  VERSES = {
+    0 => "No more bottles of beer on the wall, no more bottles of beer.\n" \
+         "Go to the store and buy some more, 99 bottles of beer on the wall.\n",
+    1 => "1 bottle of beer on the wall, 1 bottle of beer.\n" \
+         "Take it down and pass it around, " \
+         "no more bottles of beer on the wall.\n",
+    2 => "2 bottles of beer on the wall, 2 bottles of beer.\n" \
+         "Take one down and pass it around, 1 bottle of beer on the wall.\n",
+    :many => "%d bottles of beer on the wall, %d bottles of beer.\n" \
+             "Take one down and pass it around, " \
+             "%d bottles of beer on the wall.\n"
+  }
+
   def initialize(bottles)
     @bottles = bottles
   end
 
   def single_verse
-    case @bottles
-    when 0
-      "No more bottles of beer on the wall, no more bottles of beer.\n" \
-      "Go to the store and buy some more, 99 bottles of beer on the wall.\n"
-    when 1
-      "1 bottle of beer on the wall, 1 bottle of beer.\n" \
-      "Take it down and pass it around, no more bottles of beer on the wall.\n"
-    when 2
-      "2 bottles of beer on the wall, 2 bottles of beer.\n" \
-      "Take one down and pass it around, 1 bottle of beer on the wall.\n"
-    else
-      "#{@bottles} bottles of beer on the wall, #{@bottles} bottles of beer.\n" \
-      "Take one down and pass it around, #{@bottles - 1} bottles of beer on the wall.\n"
-    end
+    return VERSES[@bottles] unless @bottles > 2
+    format(VERSES[:many], @bottles, @bottles, @bottles - 1)
   end
 end
 
@@ -58,7 +60,7 @@ class BeerSong
 
   def self.verses(first, last)
     range = (last..first).to_a.reverse
-    range.map { |line| verse(line)  }.join("\n")
+    range.map { |line| verse(line) }.join("\n")
   end
 
   def self.lyrics

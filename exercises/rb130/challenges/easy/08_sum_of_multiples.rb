@@ -1,7 +1,8 @@
 =begin
 --- P
 Input: a positive integer and a set containing a single or multiple integers
-Output: an integer, which is the sum of multiples of the integers in the set that are less than the first number
+Output: an integer
+  - the sum of multiples in the set that are less than the first number
 Rules:
 - If a set is not given, use a default set of 3 and 5
 - Multiples that are repeated are only counted once
@@ -30,7 +31,7 @@ class SumOfMultiples
 
   def to(ceiling)
     (1...ceiling).select do |num|
-      @set.any? { |divisor| num % divisor == 0 } 
+      @set.any? { |divisor| num % divisor == 0 }
     end.sum
   end
 

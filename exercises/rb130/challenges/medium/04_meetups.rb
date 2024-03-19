@@ -51,7 +51,7 @@ class Meetup
   end
 
   def day(day_of_week, ordinal)
-    day_of_week = (day_of_week.downcase + '?').to_sym
+    day_of_week = "#{day_of_week.downcase}?".to_sym
     possible_dates = (@start_date..@end_date).select(&day_of_week)
 
     case ordinal.downcase

@@ -13,7 +13,7 @@ Rules:
 Class needs:
 - ::classify takes an integer and returns a string
 --- E
-6 => 'perfect' # (1 + 2 + 3) == 6 
+6 => 'perfect' # (1 + 2 + 3) == 6
 28 => 'perfect' # (1 + 2 + 4 + 7 + 14) == 28
 15 => 'deficient' # (1 + 3 + 5) == 9
 24 => 'abundant' # (1 + 2 + 3 + 4 + 6 + 8 + 12) == 36
@@ -25,8 +25,10 @@ Output: string
 --- A
 - Raise StandardError if non-positive integer is given
 - Find divisors for given number
-  - Iterate through 1 to numbers half of the original number (numbers more than half of the original number can't be divisors)
-    - If given number is divisible by number at current iteration, select the current number
+  - Iterate through 1 to numbers half of the original number
+    - numbers more than half of the original number can't be divisors
+    - If given number is divisible by number at current iteration
+      - Select the current number
 - Sum divisors
 - Compare sum to given number
   - If sum is equal to given number, return 'perfect'
@@ -46,6 +48,7 @@ class PerfectNumber
 
   class << self
     private
+
     def sum_of_divisors(number)
       (1..number / 2).select do |divisor|
         number % divisor == 0

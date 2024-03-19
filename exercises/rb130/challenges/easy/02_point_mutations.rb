@@ -5,7 +5,8 @@
 - rules:
   - Input strings may have equal or unequal length
   - If strings are unequal, use length of shorter string
-  - Output integer is the Hamming distance - which is the number of point mutations (character differences) between the strings
+  - Output integer is the Hamming distance
+      -the number of point mutations (character differences) between the strings
 --- E
 - '', '' => 0
 - '', 'a' => 0
@@ -33,7 +34,7 @@ class DNA
   def hamming_distance(other_sequence)
     short, long = [@sequence, other_sequence].sort_by(&:size)
     short.chars.each_with_index.reduce(0) do |sum, (char, i)|
-      char != long[i] ? sum + 1 : sum
+      char == long[i] ? sum : sum +  1
     end
 
     # alternative

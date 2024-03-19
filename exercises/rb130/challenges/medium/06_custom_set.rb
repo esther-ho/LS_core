@@ -1,3 +1,4 @@
+# rubocop:disable Layout/LineLength
 =begin
 --- P
 Class needs:
@@ -57,6 +58,7 @@ CustomSet.new([1, 2]).union(CustomSet.new([2, 3])) == CustomSet.new([1, 2, 3]) =
 - CustomSet#union takes a CustomSet object and returns a new CustomSet object with elements from both the argument and self
   - add elements from argument to self
 =end
+# rubocop:enable Layout/LineLength
 
 class CustomSet
   def initialize(set = [])
@@ -78,7 +80,7 @@ class CustomSet
   def disjoint?(other)
     set.none? { |num| other.set.include?(num) }
   end
-  
+
   def eql?(other)
     set == other.set
   end
@@ -102,7 +104,7 @@ class CustomSet
   def difference(other)
     self.class.new(set - other.set)
   end
-  
+
   def union(other)
     self.class.new(set + other.set)
   end

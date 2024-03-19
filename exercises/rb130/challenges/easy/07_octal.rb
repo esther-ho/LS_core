@@ -37,9 +37,9 @@ class Octal
   def to_decimal
     return 0 unless valid_octal?
     digits = @octal_string.to_i.digits
-    
+
     digits.each_with_index.reduce(0) do |sum, (digit, i)|
-      sum + digit * 8**i
+      sum + (digit * (8**i))
     end
   end
 

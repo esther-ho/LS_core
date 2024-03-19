@@ -30,7 +30,7 @@ class Robot
 
   def name
     return @name if @name
-    generate_name while @@names.include?(@name) || @name == nil
+    generate_name while @@names.include?(@name) || @name.nil?
     @@names << @name
     @name.clone
   end

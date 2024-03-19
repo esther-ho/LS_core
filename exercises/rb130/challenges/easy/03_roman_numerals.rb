@@ -56,7 +56,7 @@ class RomanNumeral
     5 => 'V',
     4 => 'IV',
     1 => 'I'
-}
+  }
 
   def initialize(num)
     @num = num
@@ -68,9 +68,9 @@ class RomanNumeral
 
     NUM_TO_ROMAN.each do |num, roman|
       quotient, my_num = my_num.divmod(num)
-      roman_digits << roman * quotient
+      roman_digits << (roman * quotient)
     end
-  
+
     roman_digits.join
   end
 end

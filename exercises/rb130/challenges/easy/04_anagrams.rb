@@ -3,8 +3,9 @@
 Input: a string and an array of strings
 Output: an array of strings
 Rules:
-- The output array contains a subset of the given array that contain strings that are anagrams of the given string
-- An anagram is a word that can be made by rearranging all the letters in the given word
+- The output array contains a subset of the given array
+    - Subset contain strings that are anagrams of the given string
+- An anagram is a word that can be made by rearranging all letters in given word
 - Identical words are not anagrams
 - Anagrams are not case-sensitive
 Class needs:
