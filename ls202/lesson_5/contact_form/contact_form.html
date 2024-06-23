@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Contact Form</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="contact_form.css">
+  </head>
+  <body>
+    <form action="#" method="post">
+      <fieldset>
+        <dl class="partial one-half left">
+          <dt><label for="first-name">First Name</label></dt>
+          <dd>
+            <input type="text" name="first-name" id="first-name" required>
+          </dd>
+        </dl><!--
+
+        --><dl class="partial one-half right">
+          <dt><label for="last-name">Last Name</label></dt>
+          <dd>
+            <input type="text" name="last-name" id="last-name" required>
+          </dd>
+        </dl>
+
+        <dl>
+          <dt><label for="email">Email Address</label></dt>
+          <dd>
+            <input type="email" name="email" id="email"
+                  placeholder="example@domain.com" required>
+          </dd>
+        </dl>
+
+        <dl class="partial one-half left">
+          <dt><label for="city">City</label></dt>
+          <dd>
+            <input type="text" name="city" id="city" required>
+          </dd>
+        </dl><!--
+
+        --><dl class="partial one-tenth both">
+          <dt><label for="state">State</label></dt>
+          <dd>
+            <select name="state" id="state">
+              <option value="AK" selected>AK</option>
+              <option value="AL">AL</option>
+              <option value="AR">AR</option>
+              <option value="AZ">AZ</option>
+              <option value="CA">CA</option>
+              <option value="CO">CO</option>
+              <option value="CT">CT</option>
+              <option value="DC">DC</option>
+              <option value="DE">DE</option>
+              <option value="FL">FL</option>
+              <option value="GA">GA</option>
+              <option value="HI">HI</option>
+              <option value="IA">IA</option>
+              <option value="ID">ID</option>
+              <option value="IL">IL</option>
+              <option value="IN">IN</option>
+              <option value="KS">KS</option>
+              <option value="KY">KY</option>
+              <option value="LA">LA</option>
+              <option value="MA">MA</option>
+              <option value="MD">MD</option>
+              <option value="ME">ME</option>
+              <option value="MI">MI</option>
+              <option value="MN">MN</option>
+              <option value="MO">MO</option>
+              <option value="MS">MS</option>
+              <option value="MT">MT</option>
+              <option value="NC">NC</option>
+              <option value="ND">ND</option>
+              <option value="NE">NE</option>
+              <option value="NH">NH</option>
+              <option value="NJ">NJ</option>
+              <option value="NM">NM</option>
+              <option value="NV">NV</option>
+              <option value="NY">NY</option>
+              <option value="OH">OH</option>
+              <option value="OK">OK</option>
+              <option value="OR">OR</option>
+              <option value="PA">PA</option>
+              <option value="RI">RI</option>
+              <option value="SC">SC</option>
+              <option value="SD">SD</option>
+              <option value="TN">TN</option>
+              <option value="TX">TX</option>
+              <option value="UT">UT</option>
+              <option value="VA">VA</option>
+              <option value="VT">VT</option>
+              <option value="WA">WA</option>
+              <option value="WI">WI</option>
+              <option value="WV">WV</option>
+              <option value="WY">WY</option>
+            </select>
+          </dd>
+        </dl><!--
+
+        --><dl class="partial four-tenths right">
+          <dt><label for="zip">Zipcode</label></dt>
+          <dd>
+            <input type="text" name="zip" id="zip" pattern="[0-9]{5}"
+                  minlength="5" maxlength="5" placeholder="12345" required>
+          </dd>
+        </dl>
+
+        <p>Which of these colors do you like best?</p>
+        <ul>
+          <li>
+            <label>
+              <input type="radio" name="favorite-color" value="red" checked>
+              Red
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" name="favorite-color" value="orange">
+              Orange
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" name="favorite-color" value="yellow">
+              Yellow
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" name="favorite-color" value="indigo">
+              Indigo
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" name="favorite-color" value="blue">
+              Blue
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" name="favorite-color" value="violet">
+              Violet
+            </label>
+          </li>
+          </ul>
+
+        <p>Which web technologies do you want to learn?</p>
+        <ul>
+          <li>
+            <label>
+              <input type="checkbox" name="web-technology" value="html">
+              HTML
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" name="web-technology" value="css">
+              CSS
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" name="web-technology" value="javascript">
+              Javascript
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" name="web-technology" value="ruby">
+              Ruby
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" name="web-technology" value="rails">
+              Rails
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" name="web-technology" value="django">
+              Django
+            </label>
+          </li>
+        </ul>
+
+        <dl>
+        <dt><label for="comment">Comments</label></dt>
+        <dd>
+          <textarea name="comment" id="comment" rows="6" cols="80"></textarea>
+        </dd>
+        </dl>
+        <input type="hidden" name="timestamp" id="timestamp" value="2024-06-23">
+        <input type="submit" value="Send">
+        <input type="reset">
+      </fieldset>
+    </form>
+  </body>
+</html>
