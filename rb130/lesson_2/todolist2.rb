@@ -8,7 +8,7 @@ class Todo
 
   attr_accessor :title, :description, :done
 
-  def initialize(title, description='')
+  def initialize(title, description = '')
     @title = title
     @description = description
     @done = false
@@ -30,10 +30,10 @@ class Todo
     "[#{done? ? DONE_MARKER : UNDONE_MARKER}] #{title}"
   end
 
-  def ==(otherTodo)
-    title == otherTodo.title &&
-      description == otherTodo.description &&
-      done == otherTodo.done
+  def ==(other_todo)
+    title == other_todo.title &&
+      description == other_todo.description &&
+      done == other_todo.done
   end
 end
 
@@ -51,7 +51,7 @@ class TodoList
 
   # rest of class needs implementation
   def add(todo)
-    raise TypeError.new("Can only add Todo objects") unless todo.is_a?(Todo)
+    raise TypeError, "Can only add Todo objects" unless todo.is_a?(Todo)
     @todos << todo
   end
 
@@ -109,8 +109,8 @@ class TodoList
     ["---- #{title} ----", *@todos].map(&:to_s).join("\n")
   end
 
-  def each
-    @todos.each { |todo| yield(todo) }
+  def each(&block)
+    @todos.each(&block)
     self
   end
 
@@ -121,11 +121,11 @@ class TodoList
   end
 
   def find_by_title(keyword)
-    select { |todo| todo if todo.title == keyword}.first
+    select { |todo| todo if todo.title == keyword }.first
   end
 
   def all_done
-    select { |todo| todo.done? }
+    select(&:done?)
   end
 
   def all_not_done
@@ -138,10 +138,10 @@ class TodoList
   end
 
   def mark_all_done
-    each { |todo| todo.done! }
+    each(&:done!)
   end
 
   def mark_all_undone
-    each { |todo| todo.undone! }
+    each(&:undone!)
   end
 end
