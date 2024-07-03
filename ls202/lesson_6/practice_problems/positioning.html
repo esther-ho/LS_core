@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Practice Problems: Positioning</title>
+    <meta charset="UTF-8">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      section {
+        border: 5px solid #cecece;
+      }
+
+      .positioned {
+        background-color: yellow;
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 20px 10px;
+        width: 400px;
+        z-index: 2;
+      }
+
+      .fixed {
+        background-color: rgba(0, 0, 0, .6);
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+      }
+
+      .positioned span {
+        background-color: pink;
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        top: -10px;
+        left: -10px;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tincidunt justo et arcu dapibus laoreet. Vestibulum posuere libero nec ultricies malesuada. Mauris elit augue, egestas ac ante quis, tincidunt vestibulum ante. Nulla orci turpis, rutrum ut tempus non, sollicitudin sed purus. Aenean sit amet iaculis orci. Etiam dignissim nunc a aliquam maximus. Sed quis iaculis massa. Morbi molestie est vitae justo blandit porttitor. 
+      </p>
+
+      <p>
+        Nullam et nunc ligula. Fusce in efficitur urna. Fusce molestie eget mi ut congue. Morbi velit enim, ornare quis suscipit sit amet, fermentum et metus. Praesent eget condimentum velit, sit amet accumsan nulla. Vestibulum finibus non ante id varius. Duis scelerisque metus et ligula placerat, imperdiet tempus purus laoreet. Duis tempor orci at risus facilisis rutrum sit amet at odio. Phasellus efficitur gravida elit non auctor. Mauris est metus, accumsan in risus ut, eleifend mollis augue. Cras vel fringilla sapien. 
+      </p>
+
+      <p>
+        Ut non sem eu sem eleifend feugiat. Nam dignissim dui vitae tempus fermentum. Nulla arcu libero, rutrum et orci et, congue aliquet lorem. Aenean et leo et ipsum gravida efficitur. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vestibulum iaculis semper tincidunt. Curabitur vitae hendrerit tortor. Sed consequat lobortis tincidunt. Vestibulum feugiat rutrum justo non efficitur. Donec malesuada rhoncus convallis. Donec aliquet nulla est. Proin finibus ex eu risus sagittis, vulputate rutrum lorem auctor. Mauris dolor ligula, auctor vitae bibendum eu, posuere non nisi. In laoreet turpis non convallis viverra. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. 
+      </p>
+    </section>
+    
+    <div class="positioned">
+      I'm positioned!
+      <span></span>
+    </div>
+
+    <div class="fixed"></div>
+  </body>
+</html>
