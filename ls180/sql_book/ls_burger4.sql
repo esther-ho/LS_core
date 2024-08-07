@@ -31,3 +31,20 @@ SELECT burger, side, drink
   FROM orders
  WHERE side IS NOT NULL
    AND drink IS NOT NULL;
+
+-- Return the average burger cost for all orders that include fries
+SELECT AVG(burger_cost)
+  FROM orders
+ WHERE side = 'Fries';
+
+-- Return the cost of the cheapest side ordered
+SELECT MIN(side_cost)
+  FROM orders
+ WHERE side IS NOT NULL;
+
+-- Return the number of orders that include Fries and the number of orders that include Onion Rings
+SELECT side, COUNT(id)
+  FROM orders
+ WHERE side = 'Fries'
+    OR side = 'Onion Rings'
+ GROUP BY side;

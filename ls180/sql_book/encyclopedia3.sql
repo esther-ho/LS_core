@@ -66,3 +66,56 @@ SELECT first_name, last_name
  WHERE occupation LIKE '%Singer%'
    AND (occupation LIKE '%Actor%' OR occupation LIKE '%Actress%');
 
+-- Return the first row of data from the `countries` table
+SELECT *
+  FROM countries
+ LIMIT 1;
+
+-- Return the name of the country with the largest population
+SELECT name
+  FROM countries
+ ORDER BY population DESC
+ LIMIT 1;
+
+-- Return the name of the country with the second largest population
+SELECT name
+  FROM countries
+ ORDER BY population DESC
+ LIMIT 1
+OFFSET 1;
+
+-- Return all unique values from the `binomial_name` column of the `animals` table
+SELECT DISTINCT binomial_name
+  FROM animals;
+
+-- Return the longest binomial name from the `animals` table
+SELECT binomial_name
+  FROM animals
+ ORDER BY LENGTH(binomial_name) DESC
+ LIMIT 1;
+
+-- Return the first name of any celebrity born in 1958
+SELECT first_name
+  FROM celebrities
+ WHERE DATE_PART('year', date_of_birth) = '1958';
+
+-- Return the highest maximum age from the `animals` table
+SELECT MAX(max_age_years)
+  FROM animals;
+
+-- Return the average maximum weight from the `animals` table
+SELECT AVG(max_weight_kg)
+  FROM animals;
+
+-- Return the number of rows in the `countries` table
+SELECT COUNT(id)
+  FROM countries;
+
+-- Return the total population of all countries in the `countries` table
+SELECT SUM(population)
+  FROM countries;
+
+-- Return each unique conservation status code alongside the number of animals that have that code
+SELECT conservation_status, COUNT(id)
+  FROM animals
+ GROUP BY conservation_status;
