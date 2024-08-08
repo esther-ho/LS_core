@@ -100,3 +100,50 @@ VALUES (1, 3), (1, 5), (1, 6), (1, 8),
        (2, 2), (2, 5), (2, 7),
        (3, 4), (3, 2), (3, 5), (3, 5), (3, 6), (3, 10), (3, 9),
        (4, 1), (4, 5);
+
+-- Return a list of all orders and their associated product items
+SELECT o.*, p.*
+  FROM orders AS o
+ INNER JOIN order_items AS oi
+    ON o.id = oi.order_id
+ INNER JOIN products AS p
+    ON p.id = oi.product_id;
+
+-- Return the id of any order that includes Fries, and use table aliasing
+SELECT o.id
+  FROM orders AS o
+ INNER JOIN order_items AS oi
+    ON o.id = oi.order_id
+ INNER JOIN products AS p
+    ON oi.product_id = p.id
+ WHERE p.product_name = 'Fries';
+
+-- Using the previous query, return the name of any customer who ordered fries in a column called 'Customers who like Fries'
+SELECT DISTINCT c.customer_name AS "Customers who like Fries"
+  FROM customers AS c
+ INNER JOIN orders AS o
+    ON c.id = o.customer_id
+ INNER JOIN order_items AS oi
+    ON o.id = oi.order_id
+ INNER JOIN products AS p
+    ON oi.product_id = p.id
+ WHERE p.product_name = 'Fries';
+
+-- Return the total cost of Natasha O'Shea's orders
+SELECT SUM(p.product_cost)
+  FROM customers AS c
+  JOIN orders AS o
+    ON c.id = o.customer_id
+  JOIN order_items AS oi
+    ON o.id = oi.order_id
+  JOIN products AS p
+    ON oi.product_id = p.id
+ WHERE c.customer_name = 'Natasha O''Shea';
+
+-- Return the name of every product included in an order alongside the number of times it has been ordered, sorted by name ascending
+SELECT p.product_name, COUNT(oi.id)
+  FROM products AS p
+  JOIN order_items AS oi
+    ON p.id = oi.product_id
+ GROUP BY p.product_name
+ ORDER BY p.product_name;

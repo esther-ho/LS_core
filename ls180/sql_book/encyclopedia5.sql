@@ -65,3 +65,69 @@ VALUES ('Born to Run', '1975-08-25', 'Rock and roll', 'Columbia', 1),
        ('Sign o''the Times', '1987-03-30', 'Pop, R&B, Rock, Funk', 'Paisley Park, Warner Bros', 6),
        ('Elvis', '1956-10-19', 'Rock and roll, Rhythm and Blues', 'RCA Victor', 7),
        ('G.I. Blues', '1960-10-01', 'Rock and roll, Pop', 'RCA Victor', 7);
+
+-- Return all country names and their appropriate continent names
+SELECT countries.name, continents.continent_name
+  FROM countries
+ INNER JOIN continents
+    ON countries.continent_id = continents.id;
+
+-- Return all names and capitals of the European countries
+SELECT countries.name, countries.capital
+  FROM countries
+ INNER JOIN continents
+    ON countries.continent_id = continents.id
+ WHERE continents.continent_name = 'Europe';
+
+SELECT name, capital
+  FROM countries
+ WHERE continent_id = (
+  SELECT id
+    FROM continents
+   WHERE continent_name = 'Europe'
+ );
+
+-- Return the first name of any singer who had an album released under the Warner Bros label
+SELECT DISTINCT singers.first_name
+  FROM singers
+ INNER JOIN albums
+    ON singers.id = albums.singer_id
+ WHERE albums.label LIKE '%Warner Bros%';
+
+SELECT first_name
+  FROM singers
+ WHERE id IN (
+  SELECT DISTINCT singer_id
+    FROM albums
+   WHERE label LIKE '%Warner Bros%'
+ );
+
+/*
+Return the first name and last name of any singer who:
+- released an album in the 80s
+- is still living,
+along with the names of the albums and their release date
+- Order results by the singer's age (youngest first)
+*/
+SELECT s.first_name, s.last_name, a.album_name, a.released
+  FROM singers AS s
+ INNER JOIN albums AS a
+    ON s.id = a.singer_id
+ WHERE a.released BETWEEN '1980-01-01' AND '1989-12-31'
+   AND s.deceased = false
+ ORDER BY s.date_of_birth DESC;
+
+-- Return the first and last name of any singer without an associated album entry
+SELECT s.first_name, s.last_name
+  FROM singers AS s
+  LEFT JOIN albums AS a
+    ON s.id = a.singer_id
+ WHERE a.album_name IS NULL;
+
+-- Rewrite the above as a sub-query
+SELECT first_name, last_name
+  FROM singers
+ WHERE id NOT IN (
+  SELECT DISTINCT singer_id
+  FROM albums
+ );
