@@ -85,3 +85,22 @@ ALTER COLUMN designation SET NOT NULL;
 */
 ALTER TABLE planets
  ADD COLUMN semi_major_axis numeric NOT NULL;
+
+/*
+- Add a `moons` table with:
+  - `id` column that is auto-incrementing and serves as a primary key
+  - `designation` column that holds whole numbers greater than 0 and is required
+  - `semi_major_axis` column that holds a numeric value and must be greater than 0; it is not required
+  - `mass` column that is a numeric value greater than 0 but not required
+- Specify any foreign keys to tie each moon to other rows in the database
+*/
+CREATE TABLE moons (
+  id serial PRIMARY KEY,
+  designation integer NOT NULL,
+  semi_major_axis numeric,
+  mass numeric,
+  planet_id integer NOT NULL REFERENCES planets(id),
+  CHECK (designation > 0),
+  CHECK (semi_major_axis > 0.0),
+  CHECK (mass > 0.0)
+);
