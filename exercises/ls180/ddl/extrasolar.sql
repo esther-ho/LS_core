@@ -34,3 +34,10 @@ CREATE TABLE planets (
   designation char(1) UNIQUE,
   mass integer
 );
+
+/*
+- Add a `star_id` column to the `planets` table to relate each planet to its home star
+- It is required and must reference a value from the `id` column in the `stars` table
+*/
+ALTER TABLE planets
+ ADD COLUMN star_id integer NOT NULL REFERENCES stars(id);
