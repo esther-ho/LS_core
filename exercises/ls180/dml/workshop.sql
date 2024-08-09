@@ -89,3 +89,13 @@ SELECT part_number, device_id
 SELECT part_number, device_id
   FROM parts
  WHERE device_id IS NULL;
+
+-- Insert more data into the `devices` and `parts` tables
+INSERT INTO devices (name)
+VALUES ('Magnetometer');
+
+INSERT INTO parts (part_number, device_id)
+VALUES (42, 3);
+
+SELECT * FROM devices;
+SELECT * FROM parts;
