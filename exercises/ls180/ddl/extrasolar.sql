@@ -41,3 +41,7 @@ CREATE TABLE planets (
 */
 ALTER TABLE planets
  ADD COLUMN star_id integer NOT NULL REFERENCES stars(id);
+
+-- Modify the `name` column in the `stars` table to allow a name up to 50 characters long
+ALTER TABLE stars
+ALTER COLUMN name TYPE varchar(50);
