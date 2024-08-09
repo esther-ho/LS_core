@@ -49,3 +49,8 @@ ALTER COLUMN name TYPE varchar(50);
 -- Modify the `distance` column so that it allows fractional light years to any degree of precision required
 ALTER TABLE stars
 ALTER COLUMN distance TYPE numeric;
+
+-- Check that the `spectral_type` should be required and is one of the following values: 'O', 'B', 'A', 'F', 'G', 'K', 'M'
+ALTER TABLE stars
+  ADD CHECK (spectral_type IN ('O', 'B', 'A', 'F', 'G', 'K', 'M')),
+ALTER COLUMN spectral_type SET NOT NULL;
