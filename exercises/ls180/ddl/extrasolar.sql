@@ -54,3 +54,16 @@ ALTER COLUMN distance TYPE numeric;
 ALTER TABLE stars
   ADD CHECK (spectral_type IN ('O', 'B', 'A', 'F', 'G', 'K', 'M')),
 ALTER COLUMN spectral_type SET NOT NULL;
+
+-- Remove the `CHECK` constraint for `spectral_type`
+ALTER TABLE stars
+DROP CONSTRAINT stars_spectral_type_check;
+
+-- Create an enumerated type restricted to the values 'O', 'B', 'A', 'F', 'G', 'K', 'M'
+CREATE TYPE spectral_type_enum AS ENUM ('O', 'B', 'A', 'F', 'G', 'K', 'M');
+
+-- Modify the `spectral_type` column so it becomes an enumerated type restricted to 'O', 'B', 'A', 'F', 'G', 'K', 'M'
+ALTER TABLE stars
+ALTER COLUMN spectral_type
+        TYPE spectral_type_enum
+       USING spectral_type::spectral_type_enum;
