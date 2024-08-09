@@ -67,3 +67,14 @@ ALTER TABLE stars
 ALTER COLUMN spectral_type
         TYPE spectral_type_enum
        USING spectral_type::spectral_type_enum;
+
+/*
+- Modify the `mass` column in the `planets` table so that it allows for fractional masses to any degree of precision
+- Make sure the mass is required and positive
+- Make the `designation` column required
+*/
+ALTER TABLE planets
+ALTER COLUMN mass TYPE numeric,
+ALTER COLUMN mass SET NOT NULL,
+   ADD CHECK (mass > 0.0),
+ALTER COLUMN designation SET NOT NULL;
