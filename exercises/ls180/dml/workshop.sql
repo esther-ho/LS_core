@@ -32,3 +32,20 @@ CREATE TABLE parts (
   part_number integer UNIQUE NOT NULL,
   device_id integer REFERENCES devices(id)
 );
+
+-- Insert data for `devices` and `parts` tables
+INSERT INTO devices (name)
+VALUES ('Accelerometer'),
+       ('Gyroscope');
+
+INSERT INTO parts (part_number, device_id)
+VALUES (GENERATE_SERIES(5, 7), 1);
+
+INSERT INTO parts (part_number, device_id)
+VALUES (GENERATE_SERIES(50, 54), 2);
+
+INSERT INTO parts (part_number)
+VALUES (GENERATE_SERIES(35, 37));
+
+SELECT * FROM devices;
+SELECT * FROM parts;
