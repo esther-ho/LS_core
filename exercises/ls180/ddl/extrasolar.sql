@@ -45,3 +45,7 @@ ALTER TABLE planets
 -- Modify the `name` column in the `stars` table to allow a name up to 50 characters long
 ALTER TABLE stars
 ALTER COLUMN name TYPE varchar(50);
+
+-- Modify the `distance` column so that it allows fractional light years to any degree of precision required
+ALTER TABLE stars
+ALTER COLUMN distance TYPE numeric;
