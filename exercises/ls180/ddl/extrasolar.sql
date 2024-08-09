@@ -78,3 +78,10 @@ ALTER COLUMN mass TYPE numeric,
 ALTER COLUMN mass SET NOT NULL,
    ADD CHECK (mass > 0.0),
 ALTER COLUMN designation SET NOT NULL;
+
+/*
+- Add a `semi_major_axis` column in the `planets` table
+- It should have a `numeric` data type and is required for each planet
+*/
+ALTER TABLE planets
+ ADD COLUMN semi_major_axis numeric NOT NULL;
