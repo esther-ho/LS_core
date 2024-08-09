@@ -49,3 +49,43 @@ VALUES (GENERATE_SERIES(35, 37));
 
 SELECT * FROM devices;
 SELECT * FROM parts;
+
+-- Display all devices and the parts that make them up - display the `name` and `part_number`
+SELECT d.name, p.part_number
+  FROM devices AS d
+       INNER JOIN parts AS p
+       ON d.id = p.device_id;
+
+SELECT d.name, p.part_number
+  FROM devices AS d, parts AS p
+ WHERE d.id = p.device_id;
+
+-- Return all parts that have a `part_number` that starts with 3
+SELECT *
+  FROM parts
+ WHERE part_number::text LIKE '3%';
+
+-- Return the name of each device and the number of parts for that device
+SELECT d.name, COUNT(p.id)
+  FROM devices AS d
+       LEFT JOIN parts AS p
+       ON d.id = p.device_id
+ GROUP BY d.id;
+
+-- Return the above but list the devices in descending alphabetical order
+SELECT d.name, COUNT(p.id)
+  FROM devices AS d
+       LEFT JOIN parts AS p
+       ON d.id = p.device_id
+ GROUP BY d.id
+ ORDER BY d.name DESC;
+
+-- Generate a listing of parts that currently belong to a device; don't include the `id` column
+SELECT part_number, device_id
+  FROM parts
+ WHERE device_id IS NOT NULL;
+
+-- Generate a listing of parts that don't belong to a device; don't include the `id` column
+SELECT part_number, device_id
+  FROM parts
+ WHERE device_id IS NULL;
