@@ -70,3 +70,65 @@ CREATE INDEX ON bids (bidder_id, item_id);
 SELECT * FROM bidders;
 SELECT * FROM items;
 SELECT * FROM bids;
+
+-- Return all items that have had bids on them; use the `IN` operator
+SELECT name AS "Bid on Items"
+  FROM items
+ WHERE id IN (
+       SELECT DISTINCT item_id
+       FROM bids
+ );
+
+-- Return all items that have not had bids on them; use the `NOT IN` operator
+SELECT name AS "Not Bid On"
+  FROM items
+ WHERE id NOT IN (
+       SELECT DISTINCT item_id
+       FROM bids
+ );
+
+-- Return a list of names of people who has bid in the auction; use the `EXISTS` operator
+SELECT bidders.name
+  FROM bidders
+ WHERE EXISTS (
+       SELECT 1
+       FROM bids
+       WHERE bidders.id = bids.bidder_id
+ );
+
+-- Return the above with a `JOIN` clause
+SELECT bidders.name
+  FROM bidders
+  JOIN bids
+    ON bidders.id = bids.bidder_id
+ GROUP BY bidders.id
+ ORDER BY bidders.id;
+
+-- Find the largest number of bids from an individual bidder; use a subquery to generate a result table and query that table
+SELECT MAX(bid_counts.count)
+  FROM (SELECT COUNT(id)
+        FROM bids
+        GROUP BY bidder_id)
+        AS bid_counts;
+
+-- Return the number of bids on each item; use a scalar subquery that returns one column for each row
+SELECT items.name, (
+       SELECT COUNT(bids.item_id)
+       FROM bids
+       WHERE items.id = bids.item_id
+       )
+FROM items;
+
+-- Return the above with a `LEFT OUTER JOIN` clause
+SELECT items.name, COUNT(bids.item_id)
+  FROM items
+       LEFT OUTER JOIN bids
+       ON items.id = bids.item_id
+ GROUP BY items.id
+ ORDER BY items.id;
+
+-- Display the `id` for an item that matches all the data without the `AND` keyword; use row constructors
+SELECT id
+  FROM items
+ WHERE ROW(name, initial_price, sales_price)
+       = ROW('Painting', 100.00, 250.00);
