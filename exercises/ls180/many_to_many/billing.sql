@@ -177,3 +177,27 @@ VALUES (7, 1), (7, 2), (7, 3);
 SELECT * FROM customers;
 SELECT * FROM services;
 SELECT * FROM customers_services;
+
+-- Return the current expected income from "big ticket" services (costing more than $100)
+SELECT SUM(s.price)
+  FROM services AS s
+  JOIN customers_services AS cs
+    ON s.id = cs.service_id
+ WHERE s.price > 100;
+
+SELECT SUM(price)
+  FROM services
+ WHERE id IN (
+       SELECT service_id
+       FROM customers_services
+ ) AND price > 100;
+
+-- Return the hypothetical maximum income from "big ticket" services
+SELECT SUM(s.price)
+  FROM services AS s
+       CROSS JOIN customers
+ WHERE s.price > 100;
+
+SELECT SUM(services.price)
+  FROM services, customers
+ WHERE services.price > 100;
