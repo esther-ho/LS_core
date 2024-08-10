@@ -132,3 +132,34 @@ SELECT id
   FROM items
  WHERE ROW(name, initial_price, sales_price)
        = ROW('Painting', 100.00, 250.00);
+
+-- Return the query plan for the following query
+EXPLAIN SELECT name FROM bidders
+         WHERE EXISTS (
+               SELECT 1
+               FROM bids
+               WHERE bidders.id = bids.bidder_id
+         );
+
+EXPLAIN ANALYZE
+SELECT name FROM bidders
+ WHERE EXISTS (
+       SELECT 1
+       FROM bids
+       WHERE bidders.id = bids.bidder_id
+);
+
+-- Compare the following two queries
+EXPLAIN ANALYZE
+SELECT MAX(bid_counts.count)
+  FROM (SELECT COUNT(bids.id)
+          FROM bids
+         GROUP BY bids.bidder_id)
+       AS bid_counts;
+
+EXPLAIN ANALYZE
+SELECT COUNT(id) AS max
+  FROM bids
+ GROUP BY bidder_id
+ ORDER BY max DESC
+ LIMIT 1;
