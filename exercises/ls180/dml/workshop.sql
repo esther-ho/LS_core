@@ -99,3 +99,19 @@ VALUES (42, 3);
 
 SELECT * FROM devices;
 SELECT * FROM parts;
+
+-- Return the name of the oldest device from the `devices` table (assuming only 1 device)
+SELECT name
+  FROM devices
+ ORDER BY created_at ASC
+ LIMIT 1;
+
+-- Return the name of the oldest device, assuming there might be 1 or more devices
+SELECT name
+  FROM devices
+ WHERE created_at = (
+       SELECT created_at
+         FROM devices
+        ORDER BY created_at ASC
+        LIMIT 1
+ );
