@@ -80,3 +80,89 @@ VALUES (1, 1), (1, 2), (1, 3),
        (6, 1), (6, 6), (6, 7);
 
 SELECT * FROM customers_services;
+
+-- Return customer data for every customer subscribed to at least one service
+SELECT DISTINCT c.*
+  FROM customers AS c
+  JOIN customers_services AS cs
+    ON c.id = cs.customer_id;
+
+SELECT *
+  FROM customers
+ WHERE id IN (
+       SELECT customer_id
+       FROM customers_services
+ );
+
+-- Return customer data for every customer who does not subscribe to any services
+SELECT DISTINCT c.*
+  FROM customers AS c
+       LEFT JOIN customers_services AS cs
+       ON c.id = cs.customer_id
+ WHERE cs.service_id IS NULL;
+
+SELECT *
+  FROM customers
+ WHERE id NOT IN (
+       SELECT customer_id
+       FROM customers_services
+ );
+
+-- Return all customers with no services and all services with no customers
+SELECT c.*, s.*
+  FROM customers AS c
+       LEFT JOIN customers_services AS cs
+       ON c.id = cs.customer_id
+       FULL JOIN services AS s
+       ON s.id = cs.service_id
+ WHERE c.id IS NULL
+    OR s.id IS NULL;
+
+-- Return all services not currently in use (use a right outer join if using `JOIN`)
+SELECT s.description
+  FROM customers_services AS cs
+       RIGHT JOIN services AS s
+       ON s.id = cs.service_id
+ WHERE cs.service_id IS NULL;
+
+SELECT description
+  FROM services
+ WHERE id NOT IN (
+       SELECT service_id
+       FROM customers_services
+ );
+
+-- Display a list of all customer names with a comma-separated list of services they use
+SELECT c.name, STRING_AGG(s.description, ', ') AS services
+  FROM customers AS c
+       LEFT JOIN customers_services AS cs
+       ON c.id = cs.customer_id
+       LEFT JOIN services AS s
+       ON s.id = cs.service_id
+ GROUP BY c.id;
+
+-- Modify the above query so that each new service is on a new line
+SELECT CASE lag(c.name) OVER (ORDER BY c.name)
+       WHEN c.name THEN ''
+       ELSE c.name
+       END,
+       s.description
+  FROM customers AS c
+       LEFT JOIN customers_services AS cs
+       ON c.id = cs.customer_id
+       LEFT JOIN services AS s
+       ON s.id = cs.service_id;
+
+-- Return a description for every service subscribed to by at least 3 customers and include the customer count
+SELECT s.description, COUNT(cs.customer_id)
+  FROM services AS s
+  JOIN customers_services AS cs
+    ON s.id = cs.service_id
+ GROUP BY s.id
+HAVING COUNT(cs.customer_id) >= 3;
+
+-- Compute the total gross income expected
+SELECT SUM(s.price) AS gross
+  FROM services AS s
+  JOIN customers_services AS cs
+    ON s.id = cs.service_id;
