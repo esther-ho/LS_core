@@ -115,3 +115,21 @@ SELECT name
         ORDER BY created_at ASC
         LIMIT 1
  );
+
+-- Update the `device_id` for the last two parts for the 'Gyroscope' in the `parts` table with 'Accelerometer'
+UPDATE parts
+   SET device_id = 1
+ WHERE id = 8
+    OR id = 9;
+
+SELECT * FROM parts;
+
+-- Update the `device_id` so that the smallest `part_number` is associated with 'Gyroscope'
+UPDATE parts
+   SET device_id = 2
+ WHERE part_number = (
+       SELECT MIN(part_number)
+       FROM parts
+ );
+
+SELECT * FROM parts;
