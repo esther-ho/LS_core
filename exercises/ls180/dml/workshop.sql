@@ -133,3 +133,17 @@ UPDATE parts
  );
 
 SELECT * FROM parts;
+
+-- Delete all data related to the 'Accelerometer'
+ALTER TABLE parts
+DROP CONSTRAINT parts_device_id_fkey;
+
+ALTER TABLE parts
+ADD FOREIGN KEY (device_id) REFERENCES devices(id)
+                ON DELETE CASCADE;
+
+DELETE FROM devices
+ WHERE name = 'Accelerometer';
+
+SELECT * FROM devices;
+SELECT * FROM parts;
