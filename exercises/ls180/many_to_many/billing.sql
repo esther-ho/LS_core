@@ -166,3 +166,14 @@ SELECT SUM(s.price) AS gross
   FROM services AS s
   JOIN customers_services AS cs
     ON s.id = cs.service_id;
+
+-- Add a new customer
+INSERT INTO customers (name, payment_token)
+VALUES ('John Doe', 'EYODHLCN');
+
+INSERT INTO customers_services (customer_id, service_id)
+VALUES (7, 1), (7, 2), (7, 3);
+
+SELECT * FROM customers;
+SELECT * FROM services;
+SELECT * FROM customers_services;
