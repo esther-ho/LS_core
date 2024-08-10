@@ -8,12 +8,12 @@ CREATE DATABASE billing;
 - Create a `customers` table with:
   - `id` column that auto-increments and serves as primary key
   - `name` column that stores customer's name; it is required and may contain strings of any length
-  - `payment_token` column that stores a required 8-character string of solely uppercase alphabetic letters
+  - `payment_token` column that stores a required unique 8-character string of solely uppercase alphabetic letters
 */
 CREATE TABLE customers (
   id serial PRIMARY KEY,
   name text NOT NULL,
-  payment_token char(8) NOT NULL,
+  payment_token char(8) UNIQUE NOT NULL,
   CHECK (payment_token ~ '^[A-Z]+$')
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE services (
   id serial PRIMARY KEY,
   description text NOT NULL,
   price numeric(10,2) NOT NULL,
-  CHECK (price >= 0.0)
+  CHECK (price >= 0.00)
 );
 
 \d customers
