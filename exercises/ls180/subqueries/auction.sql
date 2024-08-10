@@ -61,3 +61,12 @@ CREATE INDEX ON bids (bidder_id, item_id);
 \d bidders
 \d items
 \d bids
+
+-- Import data from *.csv files
+\copy bidders FROM 'bidders.csv' WITH CSV HEADER;
+\copy items FROM 'items.csv' WITH CSV HEADER;
+\copy bids FROM 'bids.csv' WITH CSV HEADER;
+
+SELECT * FROM bidders;
+SELECT * FROM items;
+SELECT * FROM bids;
