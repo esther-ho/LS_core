@@ -33,3 +33,25 @@ CREATE TABLE services (
 
 \d customers
 \d services
+
+-- Insert data into tables
+INSERT INTO customers (name, payment_token)
+VALUES ('Pat Johnson', 'XHGOAHEQ'),
+       ('Nancy Monreal', 'JKWQPJKL'),
+       ('Lynn Blake', 'KLZXWEEE'),
+       ('Chen Ke-Hua', 'KWETYCVX'),
+       ('Scott Lakso', 'UUEAPQPS'),
+       ('Jim Pornot', 'XKJEYAZA');
+
+INSERT INTO services (description, price)
+VALUES ('Unix Hosting', 5.95),
+       ('DNS', 4.95),
+       ('Whois Registration', 1.95),
+       ('High Bandwidth', 15.00),
+       ('Business Support', 250.00),
+       ('Dedicated Hosting', 50.00),
+       ('Bulk Email',  250.00),
+       ('One-to-one Training', 999.00);
+
+SELECT * FROM customers;
+SELECT * FROM services;
