@@ -201,3 +201,20 @@ SELECT SUM(s.price)
 SELECT SUM(services.price)
   FROM services, customers
  WHERE services.price > 100;
+
+-- Delete the 'Bulk Email' service and 'Chen Ke-Hua' from the database
+DELETE FROM customers_services
+ WHERE service_id = (
+       SELECT id
+       FROM services
+       WHERE description = 'Bulk Email' 
+ );
+
+DELETE FROM services
+ WHERE description = 'Bulk Email';
+
+DELETE FROM customers
+ WHERE name = 'Chen Ke-Hua';
+
+SELECT * FROM customers;
+SELECT * FROM services;
