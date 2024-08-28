@@ -20,5 +20,13 @@ loop do
   client.puts params
   client.puts http_version
 
+  rolls = params["rolls"].to_i
+  sides = params["sides"].to_i
+
+  rolls.times do
+    roll = rand(sides) + 1
+    client.puts roll
+  end
+
   client.close
 end
