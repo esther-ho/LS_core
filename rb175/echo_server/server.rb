@@ -1,5 +1,14 @@
 require "socket"
 
+def parse_request(request_line)
+  http_method, path_and_params = request_line.split
+  path, params = path_and_params.split('?')
+  params = (params || '').split('&')
+  params = params.map { |pair| pair.split('=') }.to_h
+
+  [http_method, path, params]
+end
+
 server = TCPServer.new("localhost", 3003)
 loop do
   client = server.accept
@@ -9,16 +18,12 @@ loop do
   puts request_line
 
   
-  http_method, path_and_params, http_version = request_line.split
-  path, params = path_and_params.split('?')
-  params = (params || '').split('&')
-  params = params.map { |pair| pair.split('=') }.to_h
+  http_method, path, params = parse_request(request_line)
   
   client.puts request_line
   client.puts http_method
   client.puts path
   client.puts params
-  client.puts http_version
 
   rolls = params["rolls"].to_i
   sides = params["sides"].to_i
