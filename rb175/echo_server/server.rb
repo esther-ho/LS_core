@@ -20,7 +20,10 @@ loop do
   
   http_method, path, params = parse_request(request_line)
   
-  client.puts request_line
+  client.puts "HTTP/1.0 200 OK"
+  client.puts "Content-Type: text/html"
+  client.puts
+
   client.puts http_method
   client.puts path
   client.puts params
