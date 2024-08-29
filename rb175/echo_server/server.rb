@@ -37,6 +37,9 @@ loop do
   number = params["number"].to_i
   client.puts "<p>The current number is #{number}.</p>"
 
+  client.puts "<a href='?number=#{number + 1}'>Add one</a>"
+  client.puts "<a href='?number=#{number - 1}'>Subtract one</a>"
+
   client.puts "</body>"
   client.puts "</html>"
   client.close
