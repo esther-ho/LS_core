@@ -17,9 +17,8 @@ loop do
   next if !request_line || request_line =~ /favicon/
   puts request_line
 
-  
   http_method, path, params = parse_request(request_line)
-  
+
   client.puts "HTTP/1.0 200 OK"
   client.puts "Content-Type: text/html"
   client.puts
