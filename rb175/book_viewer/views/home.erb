@@ -24,7 +24,9 @@
 
               <ul class="pure-menu-list">
                 <li class="pure-menu-item">
-                  <a href="#" class="pure-menu-link">Chapter 1</a>
+                  <% @contents.each do |chapter| %>
+                    <a href="#" class="pure-menu-link"><%= chapter %></a>
+                  <% end %>
                 </li>
               </ul>
           </div>
@@ -42,7 +44,9 @@
           <div class="pure-menu">
             <ul class="pure-menu-list">
               <li class="pure-menu-item">
-                <a href="#" class="pure-menu-link">Chapter 1</a>
+                <% @contents.each do |chapter| %>
+                  <a href="#" class="pure-menu-link"><%= chapter %></a>
+                <% end %>
               </li>
             </ul>
           </div>
