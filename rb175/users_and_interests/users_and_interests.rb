@@ -3,7 +3,15 @@ require "sinatra/reloader"
 require "tilt/erubis"
 require "psych"
 
+before do
+  @user_data = Psych.load_file "data/users.yml"
+end
+
 get "/" do
-  user_data = Psych.load_file "data/users.yml"
-  user_data.inspect
+  redirect "/users"
+end
+
+get "/users" do
+  @users = @user_data.keys
+  erb :users
 end
