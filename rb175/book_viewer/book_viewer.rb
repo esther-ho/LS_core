@@ -4,9 +4,13 @@ require "tilt/erubis"
 
 helpers do
   def in_paragraphs(text)
-    text.split("\n\n").map do |paragraph|
-      "<p>#{paragraph}</p>"
+    text.split("\n\n").map.with_index do |paragraph, i|
+      "<p id=paragraph#{i}>#{paragraph}</p>"
     end.join
+  end
+
+  def highlight_match(text, query)
+    text.gsub(query, "<strong>#{query}</strong>")
   end
 end
 
@@ -46,7 +50,12 @@ def matching_chapters(query)
   return results if query.nil? || query.empty?
 
   each_chapter do |title, number, text|
-    results << { title: title, number: number } if text.include?(query)
+    matches = {}
+    text.split("\n\n").each_with_index do |paragraph, i|
+      matches[i] = paragraph if paragraph.include?(query)
+    end
+
+    results << { title: title, number: number, paragraphs: matches } unless matches.empty?
   end
 
   results
