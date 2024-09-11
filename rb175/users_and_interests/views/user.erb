@@ -8,6 +8,15 @@
       dd {
         margin: 1em 0;
       }
+
+      li {
+        list-style-type: none;
+        display: inline;
+      }
+
+      ul {
+        padding-left: 0;
+      }
     </style>
   </head>
   <body>
@@ -19,4 +28,11 @@
       <dd><%= @interests.join(', ') %></dd>
     </dl>
   </body>
+  <footer>
+    <ul>
+      <% @other_users.each do |user| %>
+        <li><a href="/users/<%= user %>"><%= user %></a></li>
+      <% end %>
+    </ul>
+  </footer>
 </html>

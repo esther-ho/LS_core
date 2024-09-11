@@ -5,6 +5,7 @@ require "psych"
 
 before do
   @user_data = Psych.load_file "data/users.yml"
+  @users = @user_data.keys
 end
 
 get "/" do
@@ -13,15 +14,17 @@ end
 
 get "/users/:name" do
   name = params[:name].to_sym
-  redirect "/users" unless @user_data.key?(name)
+  redirect "/users" unless @users.include?(name)
+
   @email = @user_data[name][:email]
   @interests = @user_data[name][:interests]
+
+  @other_users = @users - [name]
 
   erb :user
 end
 
 get "/users" do
-  @users = @user_data.keys
   erb :users
 end
 
