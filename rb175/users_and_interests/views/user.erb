@@ -1,38 +1,13 @@
-<html>
-  <head>
-    <style>
-      dt {
-        font-weight: bold;
-      }
+<h2><%= params[:name] %></h2>
+<dl>
+  <dt>Email</dt>
+  <dd><%= @email %></dd>
+  <dt>Interests</dt>
+  <dd><%= @interests.join(', ') %></dd>
+</dl>
 
-      dd {
-        margin: 1em 0;
-      }
-
-      li {
-        list-style-type: none;
-        display: inline;
-      }
-
-      ul {
-        padding-left: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <h2><%= params[:name] %></h2>
-    <dl>
-      <dt>Email</dt>
-      <dd><%= @email %></dd>
-      <dt>Interests</dt>
-      <dd><%= @interests.join(', ') %></dd>
-    </dl>
-  </body>
-  <footer>
-    <ul>
-      <% @other_users.each do |user| %>
-        <li><a href="/users/<%= user %>"><%= user %></a></li>
-      <% end %>
-    </ul>
-  </footer>
-</html>
+<ul class="other-users">
+  <% @other_users.each do |user| %>
+    <li><a href="/users/<%= user %>"><%= user %></a></li>
+  <% end %>
+</ul>
