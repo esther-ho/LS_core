@@ -49,3 +49,11 @@ post "/lists" do
     redirect "/lists"
   end
 end
+
+# View a single list
+get "/lists/:id" do
+  id = params[:id].to_i
+  @list = session[:lists][id]
+
+  erb :list, layout: :layout
+end
