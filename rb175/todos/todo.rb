@@ -58,3 +58,28 @@ get "/lists/:id" do
 
   erb :list, layout: :layout
 end
+
+# Render the form to rename an existing list
+get "/lists/:id/edit" do
+  id = params[:id].to_i
+  @list = session[:lists][id]
+
+  erb :edit_list, layout: :layout
+end
+
+# Rename an existing list
+post "/lists/:id" do
+  id = params[:id].to_i
+  @list = session[:lists][id]
+  list_name = params[:list_name].strip
+  error = error_for_list_name(list_name)
+
+  if error
+    session[:error] = error
+    erb :edit_list, layout: :layout
+  else
+    @list[:name] = list_name
+    session[:success] = "The list has been updated."
+    redirect "/lists/#{id}"
+  end
+end
