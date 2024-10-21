@@ -10,6 +10,9 @@
       <ul>
         <li>
           <h3><%= todo[:name] %></h3>
+          <form action="/lists/<%= @list_id %>/todos/<%= id %>/delete" method="post" class="delete">
+            <button type="submit">Delete</button>
+          </form>
         </li>
       </ul>
     <% end %>
