@@ -128,3 +128,17 @@ post "/lists/:list_id/todos/:id/delete" do
 
   redirect "/lists/#{list_id}"
 end
+
+# Update the status of a todo
+post "/lists/:list_id/todos/:id" do
+  list_id = params[:list_id].to_i
+  list = session[:lists][list_id]
+  todo_id = params[:id].to_i
+  todo = list[:todos][todo_id]
+
+  is_completed = (params[:completed] == "true")
+  todo[:completed] = is_completed
+
+  session[:success] = "The todo has been updated."
+  redirect "/lists/#{list_id}"
+end
