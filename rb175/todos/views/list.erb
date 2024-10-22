@@ -3,12 +3,12 @@
     <h2><%= @list[:name] %></h2>
     <ul>
       <li>
-        <form action="/lists/<%= params[:id] %>/complete_all" method="post">
+        <form action="/lists/<%= @list_id %>/complete_all" method="post">
           <button type="submit" class="check">Complete All</button>
         </form>
       </li>
       <li>
-        <a class="edit" href="/lists/<%= params[:id] %>/edit">Edit List</a>
+        <a class="edit" href="/lists/<%= @list_id %>/edit">Edit List</a>
       </li>
     </ul>
   </header>
