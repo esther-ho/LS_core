@@ -46,9 +46,14 @@ before do
 end
 
 # Retrieve list id and list hash when working with a single list
+# If list is not found, redirect to "/lists"
 before "/lists/:list_id/?*?" do
   @list_id = params[:list_id].to_i
   @list = session[:lists][@list_id]
+  next if @list || params[:list_id] == 'new'
+
+  session[:error] = "The specified list was not found."
+  redirect "/lists"
 end
 
 # Retrieve the todo id and the todo hash of a single todo item
