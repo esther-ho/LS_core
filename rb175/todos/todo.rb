@@ -129,9 +129,13 @@ end
 # Delete an existing list
 post "/lists/:list_id/delete" do
   session[:lists].delete_at(@list_id)
-  session[:success] = "The list has been deleted."
 
-  redirect "/lists"
+  if env["HTTP_X_REQUESTED_WITH"] == "XMLHttpRequest"
+    "/lists"
+  else
+    session[:success] = "The list has been deleted."
+    redirect "/lists"
+  end
 end
 
 # Return an error message if the todo name is invalid, and nil otherwise
@@ -159,9 +163,13 @@ end
 # Delete a todo from an existing list
 post "/lists/:list_id/todos/:todo_id/delete" do
   @list[:todos].delete_at(@todo_id)
-  session[:success] = "The todo has been deleted."
 
-  redirect "/lists/#{@list_id}"
+  if env["HTTP_X_REQUESTED_WITH"] == "XMLHttpRequest"
+    status 204
+  else
+    session[:success] = "The todo has been deleted."
+    redirect "/lists/#{@list_id}"
+  end
 end
 
 # Update the status of a todo
