@@ -46,7 +46,25 @@ get "/:filename" do
   if File.file?(file_path)
     load_file(file_path)
   else
-    session[:error] = "#{params[:filename]} does not exist."
+    session[:message] = "#{params[:filename]} does not exist."
     redirect "/"
   end
+end
+
+# Display form to edit a single file
+get "/:filename/edit" do
+  @file_name = params[:filename]
+  file_path = "#{root}/data/#{@file_name}"
+  @file_content = File.read(file_path)
+
+  erb :edit_file
+end
+
+# Update the content of an existing file
+post "/:filename" do
+  file_path = "#{root}/data/#{params[:filename]}"
+  File.write(file_path, params[:file_content])
+
+  session[:message] = "#{params[:filename]} has been updated."
+  redirect "/"
 end
