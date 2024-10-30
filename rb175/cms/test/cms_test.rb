@@ -16,16 +16,23 @@ class CMSTest < Minitest::Test
     get "/"
     assert_equal 200, last_response.status
     assert_equal "text/html;charset=utf-8", last_response["Content-Type"]
-    assert_includes last_response.body, "about.txt"
+    assert_includes last_response.body, "about.md"
     assert_includes last_response.body, "changes.txt"
     assert_includes last_response.body, "history.txt"
   end
 
-  def test_file
-    get "/about.txt"
+  def test_txt_file
+    get "/history.txt"
     assert_equal 200, last_response.status
     assert_equal "text/plain", last_response["Content-Type"]
-    assert_includes last_response.body, "Ruby is..."
+    assert_includes last_response.body, "2000 - Ruby 1.6 released."
+  end
+
+  def test_md_file
+    get "/about.md"
+    assert_equal 200, last_response.status
+    assert_equal "text/html;charset=utf-8", last_response["Content-Type"]
+    assert_includes last_response.body, "<h1>Ruby is...</h1>"
   end
 
   def test_nonexistent_file
