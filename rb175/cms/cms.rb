@@ -42,7 +42,7 @@ def load_file(path)
     headers['Content-Type'] = 'text/plain'
     content
   when '.md'
-    render_markdown(content)
+    erb render_markdown(content)
   end
 end
 

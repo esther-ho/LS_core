@@ -3,9 +3,15 @@
   <head>
     <title>Content Management System</title>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/application.css">
   </head>
   <body>
-    <%= session.delete(:message) %>
+    <% if session[:message] %>
+      <p class="message">
+        <%= session.delete(:message) %>
+      </p>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
