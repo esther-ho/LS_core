@@ -2,6 +2,7 @@ ENV["RACK_ENV"] = "test"
 
 require "minitest/autorun"
 require "rack/test"
+require "fileutils"
 
 require_relative "../cms"
 
@@ -12,7 +13,24 @@ class CMSTest < Minitest::Test
     Sinatra::Application
   end
 
+  def setup
+    FileUtils.mkdir_p(data_path)
+  end
+
+  def teardown
+    FileUtils.rm_rf(data_path)
+  end
+
+  def create_file(name, content = "")
+    file_path = File.join(data_path, name)
+    File.open(file_path, "w")  { |f| f.write(content) }
+  end
+
   def test_index
+    create_file "about.md"
+    create_file "changes.txt"
+    create_file "history.txt"
+
     get "/"
     assert_equal 200, last_response.status
     assert_equal "text/html;charset=utf-8", last_response["Content-Type"]
@@ -22,6 +40,8 @@ class CMSTest < Minitest::Test
   end
 
   def test_txt_file
+    create_file "history.txt", "2000 - Ruby 1.6 released."
+
     get "/history.txt"
     assert_equal 200, last_response.status
     assert_equal "text/plain", last_response["Content-Type"]
@@ -29,6 +49,8 @@ class CMSTest < Minitest::Test
   end
 
   def test_md_file
+    create_file "about.md", "# Ruby is..."
+
     get "/about.md"
     assert_equal 200, last_response.status
     assert_equal "text/html;charset=utf-8", last_response["Content-Type"]
@@ -49,7 +71,10 @@ class CMSTest < Minitest::Test
   end
 
   def test_edit_form
+    create_file "changes.txt"
+
     get "/changes.txt/edit"
+
     assert_equal 200, last_response.status
     assert_includes last_response.body, "<form"
     assert_includes last_response.body, %q(<textarea id="file_content")
@@ -57,6 +82,7 @@ class CMSTest < Minitest::Test
   end
 
   def test_update_file_content
+    create_file "changes.txt"
     post "/changes.txt", file_content: "test"
     assert_equal 302, last_response.status
 
