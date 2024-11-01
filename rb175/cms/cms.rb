@@ -98,9 +98,11 @@ post "/:filename" do
   redirect "/"
 end
 
-# # Delete an existing file
-# post "/:filename/delete" do
-#   file_path = File.join(data_path, params[:filename])
-#   File.delete(file_path)
-#   redirect "/"
-# end
+# Delete an existing file
+post "/:filename/delete" do
+  file_path = File.join(data_path, params[:filename])
+  File.delete(file_path)
+
+  session[:message] = "#{params[:filename]} has been deleted."
+  redirect "/"
+end

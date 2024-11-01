@@ -37,6 +37,7 @@ class CMSTest < Minitest::Test
     assert_includes last_response.body, "changes.txt"
     assert_includes last_response.body, %q(<a href="/about.md/edit")
     assert_includes last_response.body, %q(<a href="/new">New Document)
+    assert_includes last_response.body, %q(<form action="/about.md/delete")
   end
 
   def test_txt_file
@@ -124,5 +125,19 @@ class CMSTest < Minitest::Test
     assert_includes last_response.body, "<form"
     assert_includes last_response.body, %q(<input id="file_name")
     assert_includes last_response.body, %q(<button type="submit")
+  end
+
+  def test_delete_file
+    create_file "about.md"
+
+    post "/about.md/delete"
+    assert_equal 302, last_response.status
+
+    get last_response["Location"]
+    assert_equal 200, last_response.status
+    assert_includes last_response.body, "about.md has been deleted."
+
+    get "/"
+    refute_includes last_response.body, "about.md has been deleted."
   end
 end
