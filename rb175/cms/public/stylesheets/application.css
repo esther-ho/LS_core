@@ -13,6 +13,6 @@ dl, dt, dd {
   padding: 0;
 }
 
-dl, form.delete {
+.inline {
   display: inline-block;
 }
