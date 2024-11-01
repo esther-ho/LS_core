@@ -29,14 +29,14 @@ class CMSTest < Minitest::Test
   def test_index
     create_file "about.md"
     create_file "changes.txt"
-    create_file "history.txt"
 
     get "/"
     assert_equal 200, last_response.status
     assert_equal "text/html;charset=utf-8", last_response["Content-Type"]
     assert_includes last_response.body, "about.md"
     assert_includes last_response.body, "changes.txt"
-    assert_includes last_response.body, "history.txt"
+    assert_includes last_response.body, %q(<a href="/about.md/edit")
+    assert_includes last_response.body, %q(<a href="/new">New Document)
   end
 
   def test_txt_file
