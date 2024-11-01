@@ -26,6 +26,28 @@ get "/" do
   erb :index
 end
 
+# Render form to create a new file
+get "/new" do
+  erb :new_file
+end
+
+# Create a new file
+post "/create" do
+  file_name = params[:file_name].strip
+
+  if file_name.size > 0
+    file_path = File.join(data_path, file_name)
+    File.new(file_path, 'w')
+
+    session[:message] = "#{file_name} was created."
+    redirect "/"
+  else
+    status "422"
+    session[:message] = "A name is required."
+    erb :new_file
+  end
+end
+
 # Render markdown file
 def render_markdown(file)
   renderer = Redcarpet::Render::HTML.new(escape_html: true)
