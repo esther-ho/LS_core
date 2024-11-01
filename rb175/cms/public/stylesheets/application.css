@@ -16,3 +16,7 @@ dl, dt, dd {
 .inline {
   display: inline-block;
 }
+
+.user-status {
+  font-style: italic;
+}
