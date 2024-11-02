@@ -26,13 +26,28 @@ get "/" do
   erb :index
 end
 
+def signed_in?
+  !!session[:user]
+end
+
+def require_signed_in_user
+  unless signed_in?
+    session[:message] = "You must be signed in to do that."
+    redirect "/"
+  end
+end
+
 # Render form to create a new file
 get "/new" do
+  require_signed_in_user
+
   erb :new_file
 end
 
 # Create a new file
 post "/create" do
+  require_signed_in_user
+
   file_name = params[:file_name].strip
 
   if file_name.size > 0
@@ -82,6 +97,8 @@ end
 
 # Display form to edit a single file
 get "/:filename/edit" do
+  require_signed_in_user
+
   @file_name = params[:filename]
   file_path = File.join(data_path, @file_name)
   @file_content = File.read(file_path)
@@ -91,6 +108,8 @@ end
 
 # Update the content of an existing file
 post "/:filename" do
+  require_signed_in_user
+
   file_path = File.join(data_path, params[:filename])
   File.write(file_path, params[:file_content])
 
@@ -100,6 +119,8 @@ end
 
 # Delete an existing file
 post "/:filename/delete" do
+  require_signed_in_user
+
   file_path = File.join(data_path, params[:filename])
   File.delete(file_path)
 

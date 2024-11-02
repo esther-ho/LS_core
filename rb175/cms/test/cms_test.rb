@@ -30,6 +30,10 @@ class CMSTest < Minitest::Test
     last_request.session
   end
 
+  def admin_session
+    { "rack.session" => { user: "admin" } }
+  end
+
   def test_index
     create_file "about.md"
     create_file "changes.txt"
@@ -71,7 +75,7 @@ class CMSTest < Minitest::Test
   def test_edit_form
     create_file "changes.txt"
 
-    get "/changes.txt/edit"
+    get "/changes.txt/edit", {}, admin_session
 
     assert_equal 200, last_response.status
     assert_includes last_response.body, "<form"
@@ -79,9 +83,17 @@ class CMSTest < Minitest::Test
     assert_includes last_response.body, %q(<button type="submit")
   end
 
+  def test_edit_form_signed_out
+    create_file "changes.txt"
+
+    get "/changes.txt/edit"
+    assert_equal 302, last_response.status
+    assert_equal "You must be signed in to do that.", session[:message]
+  end
+
   def test_update_file_content
     create_file "changes.txt"
-    post "/changes.txt", file_content: "test"
+    post "/changes.txt", { file_content: "test" }, admin_session
     assert_equal 302, last_response.status
     assert_equal "changes.txt has been updated.", session[:message]
 
@@ -90,22 +102,41 @@ class CMSTest < Minitest::Test
     assert_includes last_response.body, "test"
   end
 
+  def test_update_file_content_signed_out
+    create_file "changes.txt"
+    post "/changes.txt", { file_content: "test" }
+    assert_equal 302, last_response.status
+    assert_equal "You must be signed in to do that.", session[:message]
+  end
+
   def test_new_file_form
-    get "/new"
+    get "/new", {}, admin_session
     assert_equal 200, last_response.status
     assert_includes last_response.body, "<form"
     assert_includes last_response.body, %q(<input id="file_name")
     assert_includes last_response.body, %q(<button type="submit")
   end
 
+  def test_new_file_form_signed_out
+    get "/new"
+    assert_equal 302, last_response.status
+    assert_equal "You must be signed in to do that.", session[:message]
+  end
+
   def test_create_new_file
-    post "/create", file_name: "test.txt"
+    post "/create", { file_name: "test.txt" }, admin_session
     assert_equal 302, last_response.status
     assert_equal "test.txt was created.", session[:message]
   end
 
-  def test_error_creating_new_file
-    post "/create", file_name: ""
+  def test_create_new_file_signed_out
+    post "/create", { file_name: "test.txt" }
+    assert_equal 302, last_response.status
+    assert_equal "You must be signed in to do that.", session[:message]
+  end
+
+  def test_create_new_file_without_name
+    post "/create", { file_name: "" }, admin_session
     assert_equal 422, last_response.status
     assert_includes last_response.body, "A name is required"
     assert_includes last_response.body, "<form"
@@ -116,9 +147,17 @@ class CMSTest < Minitest::Test
   def test_delete_file
     create_file "about.md"
 
-    post "/about.md/delete"
+    post "/about.md/delete", {}, admin_session
     assert_equal 302, last_response.status
     assert_equal "about.md has been deleted.", session[:message]
+  end
+
+  def test_delete_file_signed_out
+    create_file "about.md"
+
+    post "/about.md/delete"
+    assert_equal 302, last_response.status
+    assert_equal "You must be signed in to do that.", session[:message]
   end
 
   def test_sign_in_form
@@ -152,7 +191,7 @@ class CMSTest < Minitest::Test
   end
 
   def test_user_sign_out
-    get "/", {}, "rack.session" => { user: "admin" }
+    get "/", {}, admin_session
     post "/users/signout"
     assert_equal 302, last_response.status
     assert_equal "You have been signed out.", session[:message]
