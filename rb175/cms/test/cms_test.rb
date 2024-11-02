@@ -26,6 +26,10 @@ class CMSTest < Minitest::Test
     File.open(file_path, "w")  { |f| f.write(content) }
   end
 
+  def session
+    last_request.session
+  end
+
   def test_index
     create_file "about.md"
     create_file "changes.txt"
@@ -61,14 +65,7 @@ class CMSTest < Minitest::Test
   def test_nonexistent_file
     get "/notafile.ext"
     assert_equal 302, last_response.status
-
-    get last_response["Location"]
-
-    assert_equal 200, last_response.status
-    assert_includes last_response.body, "notafile.ext does not exist."
-
-    get "/"
-    refute_includes last_response.body, "notafile.ext does not exist."
+    assert_equal "notafile.ext does not exist.", session[:message]
   end
 
   def test_edit_form
@@ -86,13 +83,7 @@ class CMSTest < Minitest::Test
     create_file "changes.txt"
     post "/changes.txt", file_content: "test"
     assert_equal 302, last_response.status
-
-    get last_response["Location"]
-    assert_equal 200, last_response.status
-    assert_includes last_response.body, "changes.txt has been updated."
-
-    get "/"
-    refute_includes last_response.body, "changes.txt has been updated."
+    assert_equal "changes.txt has been updated.", session[:message]
 
     get "/changes.txt"
     assert_equal 200, last_response.status
@@ -110,12 +101,7 @@ class CMSTest < Minitest::Test
   def test_create_new_file
     post "/create", file_name: "test.txt"
     assert_equal 302, last_response.status
-
-    get last_response["Location"]
-    assert_equal 200, last_response.status
-
-    get "/"
-    refute_includes last_response.body, "test.txt was created."
+    assert_equal "test.txt was created.", session[:message]
   end
 
   def test_error_creating_new_file
@@ -132,13 +118,7 @@ class CMSTest < Minitest::Test
 
     post "/about.md/delete"
     assert_equal 302, last_response.status
-
-    get last_response["Location"]
-    assert_equal 200, last_response.status
-    assert_includes last_response.body, "about.md has been deleted."
-
-    get "/"
-    refute_includes last_response.body, "about.md has been deleted."
+    assert_equal "about.md has been deleted.", session[:message]
   end
 
   def test_sign_in_form
@@ -153,20 +133,18 @@ class CMSTest < Minitest::Test
   def test_user_sign_in
     post "/users/signin", { username: "admin", password: "secret" }
     assert_equal 302, last_response.status
+    assert_equal "Welcome!", session[:message]
+    assert_equal "admin", session[:user]
 
     get last_response["Location"]
-    assert_equal 200, last_response.status
-    assert_includes last_response.body, "Welcome!"
     assert_includes last_response.body, "Signed in as admin."
     assert_includes last_response.body, "Sign Out"
-
-    get "/"
-    refute_includes last_response.body, "Welcome!"
   end
 
   def test_error_signing_in
     post "/users/signin", { username: "admin", password: "test" }
     assert_equal 422, last_response.status
+    assert_nil session[:user]
     assert_includes last_response.body, "Invalid credentials"
     assert_includes last_response.body, %q(<input id="username")
     assert_includes last_response.body, %q(<input id="password")
@@ -174,18 +152,14 @@ class CMSTest < Minitest::Test
   end
 
   def test_user_sign_out
-    post "/users/signin", { username: "admin", password: "secret" }
-
-    get last_response["Location"]
-    assert_equal 200, last_response.status
-    assert_includes last_response.body, "Welcome!"
-
+    get "/", {}, "rack.session" => { user: "admin" }
     post "/users/signout"
     assert_equal 302, last_response.status
+    assert_equal "You have been signed out.", session[:message]
 
     get last_response["Location"]
     assert_equal 200, last_response.status
-    assert_includes last_response.body, "You have been signed out."
+    assert_nil session[:user]
     assert_includes last_response.body, "Sign In"
   end
 end
