@@ -2,18 +2,33 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'tilt/erubis'
 require 'redcarpet'
+require 'yaml'
+require 'bcrypt'
 
 configure do
   enable :sessions
   set :session_secret, SecureRandom.hex(32)
 end
 
+# Use the "/data" directory in production and "/data/test" directory in testing
 def data_path
   if ENV["RACK_ENV"] == "test"
     File.expand_path("../data/test", __FILE__)
   else
     File.expand_path("../data", __FILE__)
   end
+end
+
+# Use "/users.yml" file in production and "/test/users.yml" file in testing
+def load_users
+  file_path =
+    if ENV["RACK_ENV"] == "test"
+      File.expand_path("../test/users.yml", __FILE__)
+    else
+      File.expand_path("../users.yml", __FILE__)
+    end
+
+  YAML.load_file(file_path)
 end
 
 # Display the index page
@@ -135,7 +150,8 @@ end
 
 # Check if the combination of username and password is valid
 def valid_user?(username, password)
-  username == 'admin' && password == 'secret'
+  users = load_users
+  BCrypt::Password.new(users[username]) == password
 end
 
 # Sign in as a user
