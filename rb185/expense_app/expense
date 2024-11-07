@@ -20,6 +20,16 @@ class ExpenseData
 
   def list_expenses
     result = @connection.exec "SELECT * FROM expenses ORDER BY created_on ASC"
+    display_expenses(result)
+  end
+
+  def search_expenses(query)
+    sql = "SELECT * FROM expenses WHERE memo ILIKE $1"
+    result = @connection.exec_params(sql, ["%#{query}%"])
+    display_expenses(result)
+  end
+
+  def display_expenses(result)
     result.each do |tuple|
       columns = [
         tuple["id"].rjust(3),
@@ -48,6 +58,10 @@ class CLI
       @application.add_expense(amount, memo)
     when "list"
       @application.list_expenses
+    when "search"
+      query = arguments[0]
+      abort "You must provide a search term." unless query
+      @application.search_expenses(query)
     else
       display_help
     end
