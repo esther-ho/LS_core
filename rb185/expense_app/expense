@@ -18,6 +18,19 @@ class ExpenseData
     @connection.exec_params(sql, [amount, memo, date])
   end
 
+  def delete_expense(id)
+    result = @connection.exec_params("SELECT * FROM expenses WHERE id = $1", [id])
+
+    if result.ntuples == 1
+      @connection.exec_params("DELETE FROM expenses WHERE id = $1", [id])
+
+      puts "The following expense has been deleted:"
+      display_expenses(result)
+    else
+      puts "There is no expense with the id '#{id}'."
+    end
+  end
+
   def list_expenses
     result = @connection.exec "SELECT * FROM expenses ORDER BY created_on ASC"
     display_expenses(result)
@@ -56,6 +69,10 @@ class CLI
       amount, memo = arguments[0, 2]
       abort "You must provide an amount and memo." unless amount && memo
       @application.add_expense(amount, memo)
+    when "delete"
+      id = arguments[0]
+      abort "You must provide an id number." unless id
+      @application.delete_expense(id)
     when "list"
       @application.list_expenses
     when "search"
