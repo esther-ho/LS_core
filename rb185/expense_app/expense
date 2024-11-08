@@ -2,6 +2,7 @@
 
 require "pg"
 require "date"
+require "io/console"
 
 class ExpenseData
   def initialize
@@ -29,6 +30,11 @@ class ExpenseData
     else
       puts "There is no expense with the id '#{id}'."
     end
+  end
+
+  def delete_all_expenses
+    @connection.exec("DELETE FROM expenses")
+    puts "All expenses have been deleted."
   end
 
   def list_expenses
@@ -79,6 +85,10 @@ class CLI
       query = arguments[0]
       abort "You must provide a search term." unless query
       @application.search_expenses(query)
+    when "clear"
+      puts "This will remove all expenses. Are you sure? (y/n)"
+      response = $stdin.getch
+      @application.delete_all_expenses if response == 'y'
     else
       display_help
     end
