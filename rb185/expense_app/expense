@@ -7,6 +7,7 @@ require "io/console"
 class ExpenseData
   def initialize
     @connection = PG.connect(dbname: "expenses")
+    setup_schema
   end
 
   def add_expense(amount, memo)
@@ -77,6 +78,26 @@ class ExpenseData
 
     puts "-" * 50
     puts "Total #{format("%.2f", total).rjust(25)}"
+  end
+
+  def setup_schema
+    result = @connection.exec <<-SQL
+      SELECT EXISTS (
+      SELECT FROM information_schema.tables
+      WHERE table_name = 'expenses'
+      );
+      SQL
+
+    if result[0]["exists"] == 'f'
+      @connection.exec <<-SQL
+        CREATE TABLE expenses (
+        id serial PRIMARY KEY,
+        amount decimal(6,2) NOT NULL,
+        memo text NOT NULL,
+        created_on date NOT NULL
+        );
+        SQL
+    end
   end
 end
 
