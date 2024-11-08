@@ -12,7 +12,7 @@ class ExpenseData
 
   def add_expense(amount, memo)
     date = Date.today
-    sql = <<-SQL
+    sql = <<~SQL
     INSERT INTO expenses (amount, memo, created_on)
     VALUES ($1, $2, $3)
     SQL
@@ -81,7 +81,7 @@ class ExpenseData
   end
 
   def setup_schema
-    result = @connection.exec <<-SQL
+    result = @connection.exec <<~SQL
       SELECT EXISTS (
       SELECT FROM information_schema.tables
       WHERE table_name = 'expenses'
@@ -89,7 +89,7 @@ class ExpenseData
       SQL
 
     if result[0]["exists"] == 'f'
-      @connection.exec <<-SQL
+      @connection.exec <<~SQL
         CREATE TABLE expenses (
         id serial PRIMARY KEY,
         amount decimal(6,2) NOT NULL,
