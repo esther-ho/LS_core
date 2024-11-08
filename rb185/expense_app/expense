@@ -39,13 +39,26 @@ class ExpenseData
 
   def list_expenses
     result = @connection.exec "SELECT * FROM expenses ORDER BY created_on ASC"
-    display_expenses(result)
+    display_count(result)
+    display_expenses(result) if result.ntuples > 0
   end
 
   def search_expenses(query)
     sql = "SELECT * FROM expenses WHERE memo ILIKE $1"
     result = @connection.exec_params(sql, ["%#{query}%"])
-    display_expenses(result)
+    display_count(result)
+    display_expenses(result) if result.ntuples > 0
+  end
+
+  def display_count(result)
+    count = result.ntuples
+    message = case count
+              when 0 then "There are no expenses."
+              when 1 then "There is 1 expense."
+              else        "There are #{count} expenses."
+              end
+
+    puts message
   end
 
   def display_expenses(result)
@@ -59,6 +72,11 @@ class ExpenseData
 
       puts columns.join(" | ")
     end
+
+    total = result.field_values("amount").map(&:to_f).sum
+
+    puts "-" * 50
+    puts "Total #{format("%.2f", total).rjust(25)}"
   end
 end
 
